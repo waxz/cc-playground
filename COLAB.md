@@ -24,3 +24,10 @@ Python 3.13 deps with uv (~2.5 min on T4) and checks that both tasks register. U
 `colab_job_start(command="bash /content/setup.sh")`. Train with
 `cd /content/supermimic_ws/supermimic && uv run src/supermimic/scripts/train.py SuperMimic-GenCoord-G1 --runner.run_name test`
 (needs a motion file via `--motion-file`, or `WANDB_API_KEY` + access to the default W&B registry).
+
+### SuperMimic without the W&B registry
+The default registry belongs to the authors' W&B org. `colab_supermimic_motion.sh [clip]` downloads the public Unitree
+retargeted LAFAN1 G1 CSV (`lvhaidong/LAFAN1_Retargeting_Dataset`) and converts it with mjlab's `csv_to_npz` (30 -> 50 fps).
+Train with `--motion-file /content/motions_npz/lafan_run1_subject5.npz` and `WANDB_MODE=offline`:
+`.venv/bin/python -u src/supermimic/scripts/train.py SuperMimic-GenCoord-G1 --motion-file ... --num-envs 4096`
+First start spends ~4 min in Warp kernel compile + torch.compile tracing before any step prints; that is normal.
