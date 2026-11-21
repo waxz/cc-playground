@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "colab": {
+      "command": "uvx",
+      "args": ["colab-cli-mcp"]
+    }
+  }
+}
