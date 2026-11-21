@@ -1,0 +1,8 @@
+{
+ "steps": 200,
+ "mean_reward": 0.04323128772899509,
+ "reward_first_100": 0.042445057574659585,
+ "reward_last_100": 0.04401751788333058,
+ "termination_rate_per_step": 0.019375,
+ "fraction_envs_terminated_total": 1.0
+}

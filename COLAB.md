@@ -31,3 +31,10 @@ retargeted LAFAN1 G1 CSV (`lvhaidong/LAFAN1_Retargeting_Dataset`) and converts i
 Train with `--motion-file /content/motions_npz/lafan_run1_subject5.npz` and `WANDB_MODE=offline`:
 `.venv/bin/python -u src/supermimic/scripts/train.py SuperMimic-GenCoord-G1 --motion-file ... --num-envs 4096`
 First start spends ~4 min in Warp kernel compile + torch.compile tracing before any step prints; that is normal.
+
+### Results, curves and screenshots (SuperMimic)
+- `plot_train_log.py train.log out.png` plots mean reward, episode length, imagined policy reward, world-model loss and tracking errors from the train stdout log.
+- `supermimic_eval_render.py LOG_DIR --motion-file X.npz` (upload to the supermimic repo dir, run with the project venv, `MUJOCO_GL=egl`) rolls out
+  `actor.pt` + `world_model.pt` and writes `rollout.mp4`, PNG snapshots and `eval_stats.json`. Do not run it while training: the T4 has 14.5 GB and 2 CPU cores.
+- T4 limits: default policy batch (4096) OOMs; use `--runner.policy.batch-size 1024 --num-envs 256`. Each fresh process spends ~4-8 min compiling.
+- Example outputs in `results/`.
