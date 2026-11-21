@@ -17,3 +17,10 @@ Allocates a VM, runs the local script, returns its output, releases the VM. Fina
 
 Notebooks: `colab_notebook_to_script(path=..., out_path=...)` converts to a script first; avoid `colab_notebook_run_all`
 (MCP calls time out after 60s even though the run continues).
+
+## SuperMimic (waxz/supermimic)
+`colab_setup_supermimic.sh` clones `supermimic` + sibling `mjlab_research` into `/content/supermimic_ws`, installs
+Python 3.13 deps with uv (~2.5 min on T4) and checks that both tasks register. Upload to `/content/setup.sh` and run with
+`colab_job_start(command="bash /content/setup.sh")`. Train with
+`cd /content/supermimic_ws/supermimic && uv run src/supermimic/scripts/train.py SuperMimic-GenCoord-G1 --runner.run_name test`
+(needs a motion file via `--motion-file`, or `WANDB_API_KEY` + access to the default W&B registry).
