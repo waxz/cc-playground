@@ -38,3 +38,11 @@ First start spends ~4 min in Warp kernel compile + torch.compile tracing before 
   `actor.pt` + `world_model.pt` and writes `rollout.mp4`, PNG snapshots and `eval_stats.json`. Do not run it while training: the T4 has 14.5 GB and 2 CPU cores.
 - T4 limits: default policy batch (4096) OOMs; use `--runner.policy.batch-size 1024 --num-envs 256`. Each fresh process spends ~4-8 min compiling.
 - Example outputs in `results/`.
+
+### Web access through Cloudflare quick tunnels (SuperMimic on Colab)
+Quick tunnels (`*.trycloudflare.com`) need no account but are **public and unauthenticated**: anyone with the URL can open them. They die with the job/VM.
+1. `curl -sL -o /content/cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 && chmod +x /content/cloudflared`
+2. TensorBoard: `python log_to_tensorboard.py train.log /content/tb [--follow]` (the runner only logs to W&B/stdout, so event files come from the log), then
+   `.venv/bin/python -m tensorboard.main --logdir /content/tb --host 127.0.0.1 --port 6006` (venv needs `uv pip install 'setuptools<81'` for `pkg_resources`).
+3. mjlab viser viewer: `play_local.py LOG_DIR --motion-file X.npz` (upload as `supermimic_play_local.py`). Colab's own proxy owns port 8080, so viser starts on **8081**; read the port from its log.
+4. One tunnel per port, each as its own background job: `/content/cloudflared tunnel --no-autoupdate --url http://127.0.0.1:<port>`; the URL is in the job's log.
