@@ -87,8 +87,10 @@ def sh(cmd, timeout=900, cwd=None, logfile=None, env=None, stream=False):
             last = (buf[-1].strip()[:100] if buf else "-")
             prog = next((l.strip() for l in reversed(buf) if re.match(r"it \d+ \|", l)), None)  # latest training progress line
             prog = re.sub(r"\s+", " ", re.sub(r"\| wm .*?\| sim_r", "| sim_r", prog))[:140] if prog else "no training iteration logged yet (compiling)"
-            n_alive = sum(1 for c in children if c.poll() is None)
-            print(f"[hb {time.time() - t0:5.0f}s | session {(time.time() - T0) / 60:4.1f} min | {n_alive} proc] gpu util,mem: {g} | progress: {prog} | last: {last}", flush=True)
+            ps = subprocess.run("ps -eo pcpu,args | grep -E 'blinkmimic[.]train|blinkmimic[.]evaluate' | grep -v grep", shell=True, capture_output=True, text=True).stdout.split("\n")
+            ps = [l for l in ps if l.strip()]
+            n_alive = f"{len(ps)} train/eval procs, cpu% " + "/".join(l.split()[0] for l in ps)
+            print(f"[hb {time.time() - t0:5.0f}s | session {(time.time() - T0) / 60:4.1f} min | {n_alive}] gpu util,mem: {g} | progress: {prog} | last: {last}", flush=True)
 
     if stream: threading.Thread(target=heartbeat, daemon=True).start()
     try:
