@@ -1,7 +1,7 @@
 """Kaggle 2x T4 test of data-parallel BlinkMimic training (patch: blinkmimic_ddp.patch, embedded below).
 
 Push as a *script* kernel with GPU (NvidiaTeslaT4, 2 GPUs) + internet on. It runs, in order: setup of the patched repo, a short
-2-GPU training with the released recipe, and the repo's own evaluator on the final checkpoint. As soon as the evaluation
+2-GPU training with the released recipe, the repo's own evaluator on the final checkpoint, and a short --amp none speed comparison. As soon as the evaluation
 finishes (or anything fails) it kills every child process, checks that no GPU process is left, writes the report and exits, so
 the Kaggle session ends and no GPU time is wasted. A watchdog ends the run after MAX_MIN minutes whatever happens.
 
@@ -182,4 +182,11 @@ step("hardware", hardware)
 step("setup", setup)
 step("train 2-GPU", train)
 step("evaluate", evaluate)
+try:
+    step_name = "train 2-GPU amp none"
+    log(f"\n=== {step_name} ===")
+    report["steps"][step_name] = {"ok": True, "result": train_amp_none()}
+except Exception as e:
+    report["steps"]["train 2-GPU amp none"] = {"ok": False, "error": f"{type(e).__name__}: {e}"}; log(f"amp-none comparison failed (optional): {e}")
+save()
 finish(0, "training + evaluation complete")
