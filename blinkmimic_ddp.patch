@@ -1,0 +1,486 @@
+diff --git a/src/blinkmimic/ddp.py b/src/blinkmimic/ddp.py
+new file mode 100644
+index 0000000..242a280
+--- /dev/null
++++ b/src/blinkmimic/ddp.py
+@@ -0,0 +1,155 @@
++"""Data-parallel helpers for train.py. One process per GPU, each sees exactly one device (CUDA_VISIBLE_DEVICES, set by
++tools/launch_ddp.py), so every process keeps using "cuda:0". Everything is a no-op with WORLD == 1.
++
++What is synchronised (each rank has its own simulator, replay buffer and random stream):
++  * gradients of the world model, the policy and the critic: averaged before clipping and the optimizer step;
++  * RunningNorm statistics: accumulated rank-locally inside the graphs, pooled across ranks outside them (sync_norms);
++  * decisions that depend on rank-local numbers (LR-decay trigger, time budget): taken on rank 0 / max over ranks;
++  * parameters and buffers: broadcast from rank 0 at start and every --ddp_sync_every iterations (guards against drift).
++"""
++
++from __future__ import annotations
++
++import os
++
++import torch
++import torch.distributed as dist
++
++WORLD = int(os.environ.get("WORLD_SIZE", "1"))
++RANK = int(os.environ.get("RANK", "0"))
++IS_MAIN = RANK == 0
++
++
++def init():
++    if WORLD == 1:
++        return
++    backend = os.environ.get("DDP_BACKEND", "nccl")
++    if backend == "nccl":
++        dist.init_process_group("nccl", device_id=torch.device("cuda:0"))
++    else:  # gloo: CPU tests only
++        dist.init_process_group(backend)
++    dist.all_reduce(torch.zeros(1, device="cuda:0" if backend == "nccl" else "cpu"))  # NCCL communicator before any graph capture
++
++
++def per_rank(n: int, what: str) -> int:
++    assert n % WORLD == 0, f"{what}={n} is not divisible by the number of ranks ({WORLD})"
++    return n // WORLD
++
++
++@torch.no_grad()
++def allreduce_grads(params):
++    """Average the gradients of ``params`` over the ranks (one flat all-reduce)."""
++    if WORLD == 1:
++        return
++    ps = [p for p in params if p.grad is not None]
++    flat = torch.cat([p.grad.reshape(-1) for p in ps])
++    dist.all_reduce(flat)
++    flat.mul_(1.0 / WORLD)
++    off = 0
++    for p in ps:
++        n = p.numel()
++        p.grad.copy_(flat[off : off + n].view_as(p.grad))
++        off += n
++
++
++def find_norms(*modules):
++    from blinkmimic.networks import RunningNorm
++
++    return [m for mod in modules for m in mod.modules() if isinstance(m, RunningNorm)]
++
++
++@torch.no_grad()
++def prepare_norms(norms):
++    """Give every RunningNorm rank-local accumulators (starting from the current, rank-identical statistics)."""
++    if WORLD == 1:
++        return
++    for n in norms:
++        n._loc = [n.mean.clone(), n.var.clone(), n.count.clone()]
++
++
++@torch.no_grad()
++def sync_norms(norms):
++    """Pool the ranks' local statistics into each norm's mean/var/count (in place; two small all-reduces for all norms).
++    Called outside CUDA graphs once per simulator step and once per policy update, so every rank normalises with identical,
++    at most one step old, statistics of all ranks' data."""
++    if WORLD == 1:
++        return
++    means = torch.cat([n._loc[0] for n in norms])
++    dist.all_reduce(means)
++    means.mul_(1.0 / WORLD)
++    var_in, off = [], 0
++    for n in norms:
++        k = n._loc[0].numel()
++        var_in.append(n._loc[1] + (n._loc[0] - means[off : off + k]) ** 2)  # within + between-rank variance
++        off += k
++    var_g = torch.cat(var_in)
++    dist.all_reduce(var_g)
++    var_g.mul_(1.0 / WORLD)
++    counts = torch.stack([n._loc[2] for n in norms])
++    dist.all_reduce(counts)  # sum: the pooled sample count
++    off = 0
++    for i, n in enumerate(norms):
++        k = n._loc[0].numel()
++        n.mean.copy_(means[off : off + k])
++        n.var.copy_(var_g[off : off + k])
++        n.count.copy_(counts[i])
++        off += k
++
++
++@torch.no_grad()
++def broadcast_state(modules, src: int = 0):
++    """Overwrite parameters and buffers of every module with rank ``src``'s values (in place)."""
++    if WORLD == 1:
++        return
++    ts = []
++    for m in modules:
++        ts += [t.data for t in list(m.parameters()) + list(m.buffers())]
++    flat = torch.cat([t.reshape(-1).float() for t in ts])
++    dist.broadcast(flat, src)
++    off = 0
++    for t in ts:
++        t.copy_(flat[off : off + t.numel()].view_as(t).to(t.dtype))
++        off += t.numel()
++
++
++@torch.no_grad()
++def max_param_diff(modules) -> float:
++    """Largest absolute parameter difference between any rank and rank 0 (0 when in sync)."""
++    if WORLD == 1:
++        return 0.0
++    flat = torch.cat([p.data.reshape(-1).float() for m in modules for p in m.parameters()])
++    ref = flat.clone()
++    dist.broadcast(ref, 0)
++    d = (flat - ref).abs().max()
++    dist.all_reduce(d, op=dist.ReduceOp.MAX)
++    return float(d)
++
++
++def any_rank(flag: bool) -> bool:
++    if WORLD == 1:
++        return flag
++    t = torch.tensor(float(flag), device="cuda:0" if dist.get_backend() == "nccl" else "cpu")
++    dist.all_reduce(t, op=dist.ReduceOp.MAX)
++    return bool(t.item())
++
++
++def from_main(flag: bool) -> bool:
++    if WORLD == 1:
++        return flag
++    t = torch.tensor(float(flag), device="cuda:0" if dist.get_backend() == "nccl" else "cpu")
++    dist.broadcast(t, 0)
++    return bool(t.item())
++
++
++def shutdown():
++    """End of training. With captured NCCL graphs, destroy_process_group / interpreter teardown can hang (observed on 2x T4), so
++    after a barrier and flushing the logs the process leaves with os._exit(0). Call it only when everything is saved."""
++    if WORLD == 1:
++        return
++    import sys
++
++    print(f"[rank {RANK}] training done, waiting at the barrier", flush=True)
++    dist.barrier()
++    print(f"[rank {RANK}] barrier passed, exiting", flush=True)
++    sys.stdout.flush(), sys.stderr.flush()
++    os._exit(0)
+diff --git a/src/blinkmimic/networks.py b/src/blinkmimic/networks.py
+index dd4b7e6..b062919 100644
+--- a/src/blinkmimic/networks.py
++++ b/src/blinkmimic/networks.py
+@@ -21,6 +21,7 @@ def mlp(inp: int, hidden: list[int], out: int, act=nn.ELU, layer_norm: bool = Fa
+     return nn.Sequential(*layers)
+ 
+ 
++
+ class RunningNorm(nn.Module):
+     """Running mean/std normalizer; updated from data without gradients, frozen after ``max_count``."""
+ 
+@@ -30,6 +31,7 @@ class RunningNorm(nn.Module):
+         self.register_buffer("var", torch.ones(dim))
+         self.register_buffer("count", torch.zeros(()))
+         self.max_count, self.eps = max_count, eps
++        self._loc = None  # data parallel: rank-local (mean, var, count), see ddp.prepare_norms (not part of the state_dict)
+ 
+     # InstantTrack: when true, the freeze test runs on the GPU (torch.where) instead of a host-side `if`
+     no_sync: bool = False
+@@ -37,6 +39,21 @@ class RunningNorm(nn.Module):
+     @torch.no_grad()
+     def update(self, x: torch.Tensor):
+         x = x.reshape(-1, x.shape[-1]).float()
++        if self._loc is not None:
++            # data parallel: accumulate into rank-local statistics only (no collective here: this runs inside captured CUDA
++            # graphs); ddp.sync_norms pools them into mean/var/count outside the graphs
++            mean0, var0, count0 = self._loc
++            n = x.shape[0]
++            m, v = x.mean(0), x.var(0, unbiased=False)
++            tot = count0 + n
++            delta = m - mean0
++            mean = mean0 + delta * n / tot
++            var = (var0 * count0 + v * n + delta**2 * count0 * n / tot) / tot
++            live = count0 < self.max_count
++            mean0.copy_(torch.where(live, mean, mean0))
++            var0.copy_(torch.where(live, var, var0))
++            count0.copy_(torch.where(live, tot, count0))
++            return
+         if not RunningNorm.no_sync and self.count >= self.max_count:
+             return
+         n = x.shape[0]
+diff --git a/src/blinkmimic/train.py b/src/blinkmimic/train.py
+index 9611277..6a220cd 100644
+--- a/src/blinkmimic/train.py
++++ b/src/blinkmimic/train.py
+@@ -127,6 +127,8 @@ parser.add_argument("--log_every", type=int, default=50)
+ parser.add_argument("--motion_dir", type=str, default=None, help="defaults to the robot's motion directory")
+ parser.add_argument("--log_dir", type=str, default=os.path.join(REPO, "logs", "run"))
+ parser.add_argument("--seed", type=int, default=0)
++parser.add_argument("--ddp_sync_every", type=int, default=100,
++                    help="data parallel (tools/launch_ddp.py): iterations between rank-0 broadcasts of all parameters and buffers (drift guard)")
+ parser.add_argument("--resume", type=str, default=None)
+ parser.add_argument("--amp", type=str, default="bf16", choices=["none", "bf16"], help="autocast dtype for MLP matmuls")
+ args = parser.parse_args()
+@@ -151,11 +153,21 @@ from blinkmimic.sensing import ObsPipeline
+ 
+ torch.backends.cuda.matmul.allow_tf32 = True
+ torch.backends.cudnn.allow_tf32 = True
+-torch.manual_seed(args.seed)
++torch.manual_seed(args.seed)  # identical initial weights on every rank; re-seeded per rank after the models exist
+ networks.AMP_DTYPE = torch.bfloat16 if args.amp == "bf16" else None
+-dev = "cuda:0"
++dev = "cuda:0"  # data parallel: every rank sees exactly one GPU (CUDA_VISIBLE_DEVICES), so this is always the rank's own
++from blinkmimic import ddp
++
++ddp.init()
++W, RANK = ddp.WORLD, ddp.RANK
++# --num_envs and the batch sizes are GLOBAL: each rank runs a 1/W share, gradients are averaged, so one iteration matches the
++# single-GPU recipe's sample counts
++ENVS = ddp.per_rank(args.num_envs, "--num_envs")
++PI_B = ddp.per_rank(args.pi_batch, "--pi_batch")
++WM_B = ddp.per_rank(args.wm_batch, "--wm_batch")
+ os.makedirs(args.log_dir, exist_ok=True)
+-json.dump(vars(args), open(os.path.join(args.log_dir, "args.json"), "w"), indent=2)
++if RANK == 0:
++    json.dump(vars(args), open(os.path.join(args.log_dir, "args.json"), "w"), indent=2)
+ 
+ robot = get_robot(args.robot)
+ J = robot.num_joints
+@@ -178,6 +190,8 @@ wm = WorldModel(J, layout.dim, use_prev_action=robot.has_action_delay, hidden=wi
+ pi = Policy(mdp.obs_dim, GOAL_DIM, J, hist=Hh, enc_hidden=widths(args.enc_hidden), dec_hidden=widths(args.dec_hidden),
+             **policy_kwargs(vars(args), robot)).to(dev)
+ critic = Critic(CRITIC_IN).to(dev)
++ddp.broadcast_state([wm, pi, critic])
++torch.manual_seed(args.seed + 1000 * RANK)  # different simulator / replay / noise streams per rank
+ GRAPH = args.cuda_graph
+ if GRAPH:
+     assert args.no_sync and args.fused_adam, "--cuda_graph needs --no_sync --fused_adam"
+@@ -244,6 +258,10 @@ if args.resume:
+     del ck
+ 
+ 
++NORMS = ddp.find_norms(wm, pi, critic)
++ddp.prepare_norms(NORMS)  # data parallel: rank-local statistics, pooled by ddp.sync_norms after every simulator step / update
++
++
+ # per-component floors on the error normalization (pos, rot, lin vel, ang vel, q, qd increments)
+ ERR_FLOOR = torch.cat((torch.full((3,), 3e-3), torch.full((3,), 5e-3), torch.full((3,), 2e-2), torch.full((3,), 5e-2),
+                        torch.full((J,), 3e-3), torch.full((J,), 5e-2))).to(dev)  # fmt: skip
+@@ -356,13 +374,14 @@ def _mirror_windows(w: dict, n: int) -> dict:
+ 
+ 
+ def wm_update():
+-    w = buffer.sample_windows(args.wm_batch, args.wm_window)
++    w = buffer.sample_windows(WM_B, args.wm_window)
+     if mirror is not None:
+-        w = _mirror_windows(w, int(args.wm_batch * args.wm_mirror))
++        w = _mirror_windows(w, int(WM_B * args.wm_mirror))
+     S_hat = wm_rollout(w["s"], w["a"], w["a_prev"], w["xi"])
+     loss, e_last = wm_err(S_hat, w["s1"], w["mask"])
+     opt_wm.zero_grad(set_to_none=True)
+     loss.backward()
++    ddp.allreduce_grads(wm.parameters())
+     nn.utils.clip_grad_norm_(wm.parameters(), 1.0)
+     opt_wm.step()
+     m = w["mask"][:, -1]
+@@ -433,7 +452,7 @@ class Graphed:
+ 
+ 
+ def policy_update():
+-    s, h = sample_valid_starts(args.pi_batch)
++    s, h = sample_valid_starts(PI_B)
+     S = unflatten_state(s["s"])
+     xi, f, a_prev = s["xi"], s["f"], s["a_prev"]
+     xi_n = normalize_xi(xi)
+@@ -445,7 +464,7 @@ def policy_update():
+         o_hist = mdp.add_noise(o_hist)
+     set_requires_grad(wm, False)
+     set_requires_grad(critic, False)
+-    B = args.pi_batch
++    B = PI_B
+     g0 = motion.goal(f, K)
+     g = g0
+     S0 = S
+@@ -470,6 +489,7 @@ def policy_update():
+     loss = -J.mean()
+     opt_pi.zero_grad(set_to_none=True)
+     loss.backward()
++    ddp.allreduce_grads(pi.parameters())
+     gn = nn.utils.clip_grad_norm_(pi.parameters(), 1.0)
+     if args.pi_clip_value > 0:
+         nn.utils.clip_grad_value_(pi.parameters(), args.pi_clip_value)
+@@ -522,6 +542,7 @@ def policy_update():
+             v_loss = (critic_loss_c if args.fused_adam else _critic_loss)(Xf[idx], Yf[idx])
+             opt_v.zero_grad(set_to_none=True)
+             v_loss.backward()
++            ddp.allreduce_grads(critic.parameters())
+             nn.utils.clip_grad_norm_(critic.parameters(), 1.0)
+             opt_v.step()
+     return loss.detach(), v_loss.detach(), (r_sum / HZ / 0.1).mean(), gn.detach(), c.mean().detach()
+@@ -533,12 +554,12 @@ if args.compile_more:
+     # the simulator wrapper calls these once per control step in eager mode otherwise (FK + rotations: thousands of kernels)
+     mdp.reward, mdp.termination, mdp.obs = torch.compile(mdp.reward), torch.compile(mdp.termination), torch.compile(mdp.obs)
+     motion.goal = torch.compile(motion.goal)
+-env = TrackingSim(sim_cfg, args.num_envs, robot, motion, mdp, dev, gamma=args.gamma, fail_reset=args.fail_reset, bin_fix=args.bin_fix)
++env = TrackingSim(sim_cfg, ENVS, robot, motion, mdp, dev, gamma=args.gamma, fail_reset=args.fail_reset, bin_fix=args.bin_fix)
+ if INIT_BINS is not None:  # --resume: the checkpoint's reset-sampler statistics (episodes already running keep their start)
+     env.bin_G.copy_(INIT_BINS["bin_G"]), env.bin_fail.copy_(INIT_BINS["bin_fail"]), env.bin_w_avg.copy_(INIT_BINS["bin_w_avg"])
+-buffer = ReplayBuffer(args.buffer_steps, args.num_envs, dev, J, layout.dim,
++buffer = ReplayBuffer(args.buffer_steps, ENVS, dev, J, layout.dim,
+                       mdp.obs_dim if pipe.stateful else None, pipe.state_dim if pipe.stateful else None)  # fmt: skip
+-obs_hist = torch.zeros(args.num_envs, Hh, mdp.obs_dim, device=dev)
++obs_hist = torch.zeros(ENVS, Hh, mdp.obs_dim, device=dev)
+ 
+ 
+ CG = {"calls": 0}  # --collect_graph: static tensors and the graph
+@@ -625,6 +646,7 @@ def collect(n_steps: int, stats: dict):
+     if args.collect_graph:
+         for _ in range(n_steps):
+             core = collect_graphed_step()
++            ddp.sync_norms(NORMS)
+             sim_steps += args.num_envs
+             stats["r"].append(core["r_mean"].clone())
+             if args.reset_masked:  # every step appends; steps without an ended episode carry NaN means (skipped in the log)
+@@ -654,6 +676,7 @@ def collect(n_steps: int, stats: dict):
+         wm.in_norm.update(wm_in)
+         wm.out_norm.update(wm_out)
+         wm.inc_norm.update(wm_inc)
++        ddp.sync_norms(NORMS)
+         sim_steps += args.num_envs
+         stats["r"].append(out["r"].mean() / 0.1)
+         if "ep_len" in out:
+@@ -864,12 +887,12 @@ def eprobe_finish(it, lead, t0, fail_f):
+ stats = {"r": [], "ep_len": [], "ep_ret": [], "term": [], "done": []}
+ collect(args.warmup_steps, stats)  # the replay buffer is not checkpointed, so a resumed run refills it too
+ log_path = os.path.join(args.log_dir, "train_log.csv")
+-log_f = open(log_path, "a")
+-if start_it == 0:
++log_f = open(log_path, "a") if RANK == 0 else open(os.devnull, "w")  # data parallel: rank 0 writes the log
++if start_it == 0 and RANK == 0:
+     log_f.write("iteration,wall_h,sim_steps,wm_loss,wm_err8,pi_loss,v_loss,imag_rew,pi_gradnorm,imag_survival,sim_rew,ep_len,ep_ret_norm,term_frac,it_per_s,lr"
+                 ",pi_lr,pi_mult,nonfinite\n")  # fmt: skip
+     log_f.flush()
+-LOG_EXTRA = "pi_lr" in open(log_path).readline()  # lr = base LR; pi_lr = policy LR (x pi_mult)
++LOG_EXTRA = "pi_lr" in (open(log_path).readline() if os.path.exists(log_path) else "pi_lr")  # lr = base LR; pi_lr = policy LR (x pi_mult)
+ # --ckpt_light: one background writer; a failed write is re-raised in the training loop (or at the end), at most 2 queued
+ CKPT_POOL, CKPT_PENDING = (ThreadPoolExecutor(max_workers=1) if args.ckpt_light else None), []
+ 
+@@ -930,10 +953,12 @@ for it in range(start_it, args.iterations):
+     if POLICY_START is None and it + 1 >= args.wm_only_iters:
+         POLICY_START = args.wm_only_iters
+         print(f"policy updates start at iteration {POLICY_START}", flush=True)
+-        open(os.path.join(args.log_dir, "policy_start.txt"), "w").write(f"{POLICY_START}\n")
++        if RANK == 0:
++            open(os.path.join(args.log_dir, "policy_start.txt"), "w").write(f"{POLICY_START}\n")
+     if POLICY_START is not None and it >= POLICY_START:
+         n_avg0 = int(pi_avg.n_averaged) if pi_avg is not None else 0
+         pl, vl, ir, gn, surv = policy_update_g()
++        ddp.sync_norms(NORMS)  # the critic normalizer
+         if GRAPH and pi_avg is not None and int(pi_avg.n_averaged) == n_avg0:
+             pi_avg.n_averaged += 1  # ema_update (and a graph replay) does not advance the host-side counter
+         agg["pi"].append(pl), agg["v"].append(vl), agg["ir"].append(ir), agg["gn"].append(gn), agg["surv"].append(surv)
+@@ -949,22 +974,31 @@ for it in range(start_it, args.iterations):
+         extra = [lr * pi_mult, float(pi_mult), int(NONFINITE)] if LOG_EXTRA else []
+         log_f.write(",".join(f"{x:.6g}" if isinstance(x, float) else str(x) for x in row + extra) + "\n")
+         deadline = args.lr_decay_by > 0 and it + 1 >= args.lr_decay_by
+-        if args.lr_decay_ret > 0 and DECAY_AT[0] is None and (row[12] >= args.lr_decay_ret or deadline):
++        trigger = args.lr_decay_ret > 0 and DECAY_AT[0] is None and (row[12] >= args.lr_decay_ret or deadline)
++        trigger = ddp.from_main(trigger)  # data parallel: rank 0 decides (ranks see different training returns); all must agree
++        if trigger:
+             DECAY_AT[0] = it + 1
+             why = f"training return {row[12]:.3f} >= {args.lr_decay_ret}" if row[12] >= args.lr_decay_ret else f"deadline --lr_decay_by {args.lr_decay_by}"
+             print(f"--lr_decay_ret: {why} at it {it + 1}: policy LR x{args.pi_lr_mult} -> x1 over {args.lr_decay_len} its", flush=True)
+         log_f.flush()
++        if W > 1:
++            drift = ddp.max_param_diff([wm, pi, critic])
+         print(f"it {it + 1} | {wall_h:.3f} h | wm {row[3]:.4f} e8 {row[4]:.4f} | pi {row[5]:.3f} v {row[6]:.4f} imag_r {row[7]:.3f} surv {row[9]:.3f} "
+-              f"| sim_r {row[10]:.3f} ep_len {row[11]:.1f} ep_ret {row[12]:.3f} term {term_frac:.2f} | {ips:.2f} it/s", flush=True)  # fmt: skip
++              f"| sim_r {row[10]:.3f} ep_len {row[11]:.1f} ep_ret {row[12]:.3f} term {term_frac:.2f} | {ips:.2f} it/s"
++              + (f" | ddp x{W} max_param_diff {drift:.2e}" if W > 1 else ""), flush=True) if RANK == 0 else None  # fmt: skip
+         stats = {k: [] for k in stats}
+         agg = {k: [] for k in agg}
+     wall = time.time() - t_start
+-    out_of_time = args.max_hours is not None and wall >= args.max_hours * 3600
++    out_of_time = ddp.any_rank(args.max_hours is not None and wall >= args.max_hours * 3600)
++    if W > 1 and args.ddp_sync_every > 0 and (it + 1) % args.ddp_sync_every == 0:
++        ddp.broadcast_state([wm, pi, critic] + ([pi_avg.module] if pi_avg is not None else []))  # drift guard
+     timed = args.ckpt_minutes > 0 and wall >= next_ckpt_s
+     if timed:
+         next_ckpt_s += args.ckpt_minutes * 60
+     final_ck = it + 1 == args.iterations or out_of_time
+-    if args.ckpt_light and not final_ck and ((it + 1) % args.ckpt_every == 0 or timed):
++    if RANK != 0:
++        pass  # data parallel: rank 0 writes the checkpoints (all ranks hold identical weights)
++    elif args.ckpt_light and not final_ck and ((it + 1) % args.ckpt_every == 0 or timed):
+         sd = pi_avg.module.state_dict() if pi_avg is not None else pi.state_dict()
+         small = {"pi": {k: v.detach().to("cpu", copy=True) for k, v in sd.items()}, "iteration": it + 1,
+                  "wall_time": time.time() - t_start, "sim_steps": sim_steps, "args": vars(args),
+@@ -995,3 +1029,6 @@ for it in range(start_it, args.iterations):
+ if CKPT_POOL is not None:  # every background checkpoint written (a failed write raises here: non-zero exit)
+     ckpt_wait(drain=True)
+     CKPT_POOL.shutdown()
++if RANK == 0:  # tools/launch_ddp.py --done_file: everything is on disk
++    open(os.path.join(args.log_dir, "train_done.txt"), "w").write(f"{time.strftime('%Y-%m-%d %H:%M:%S')}\n")
++ddp.shutdown()
+diff --git a/tools/launch_ddp.py b/tools/launch_ddp.py
+new file mode 100644
+index 0000000..e321415
+--- /dev/null
++++ b/tools/launch_ddp.py
+@@ -0,0 +1,63 @@
++"""Launch data-parallel BlinkMimic training: one process per GPU, each restricted to its own device.
++
++    python tools/launch_ddp.py --nproc 2 -- <args of blinkmimic.train>
++
++If any rank exits (error or normal end) the others are given a short grace period and then killed, so a failed rank can never
++leave the remaining GPUs hanging in a collective. Exit code: 0 only if every rank exited 0.
++"""
++
++import argparse
++import os
++import signal
++import socket
++import subprocess
++import sys
++import time
++
++ap = argparse.ArgumentParser()
++ap.add_argument("--nproc", type=int, default=2)
++ap.add_argument("--grace", type=float, default=30.0, help="seconds the other ranks get after the first one exits")
++ap.add_argument("--done_file", default=None, help="written by rank 0 when training and all checkpoints are finished; once it exists the\n                 ranks get --grace seconds to exit, then are killed, and the launch counts as a success")
++ap.add_argument("rest", nargs=argparse.REMAINDER)
++a = ap.parse_args()
++rest = a.rest[1:] if a.rest and a.rest[0] == "--" else a.rest
++
++with socket.socket() as s:
++    s.bind(("127.0.0.1", 0))
++    port = s.getsockname()[1]
++root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
++if a.done_file and os.path.exists(a.done_file):
++    os.remove(a.done_file)
++procs = []
++for r in range(a.nproc):
++    env = dict(os.environ, RANK=str(r), WORLD_SIZE=str(a.nproc), LOCAL_RANK="0", MASTER_ADDR="127.0.0.1", MASTER_PORT=str(port),
++               CUDA_VISIBLE_DEVICES=str(r), PYTHONPATH=os.path.join(root, "src") + os.pathsep + os.environ.get("PYTHONPATH", ""),
++               TORCH_NCCL_ASYNC_ERROR_HANDLING="0", TORCH_NCCL_AVOID_RECORD_STREAMS="1", NCCL_ASYNC_ERROR_HANDLING="0")
++    procs.append(subprocess.Popen([sys.executable, "-u", "-m", "blinkmimic.train", *rest], env=env, cwd=root))
++
++
++def kill_all(*_):
++    for p in procs:
++        if p.poll() is None:
++            p.kill()
++
++
++signal.signal(signal.SIGTERM, lambda *_: (kill_all(), sys.exit(143)))
++first_done = None
++while True:
++    codes = [p.poll() for p in procs]
++    if all(c is not None for c in codes):
++        break
++    if first_done is None and a.done_file and os.path.exists(a.done_file):
++        first_done = time.time()
++        print(f"[launch_ddp] done file found; killing remaining ranks in {a.grace:.0f} s", flush=True)
++    if first_done is None and any(c is not None for c in codes):
++        first_done = time.time()
++        print(f"[launch_ddp] a rank exited with {codes}; killing the rest in {a.grace:.0f} s", flush=True)
++    if first_done is not None and time.time() - first_done > a.grace:
++        kill_all()
++    time.sleep(1)
++codes = [p.returncode for p in procs]
++print(f"[launch_ddp] exit codes {codes}", flush=True)
++ok = all(c == 0 for c in codes) or bool(a.done_file and os.path.exists(a.done_file))  # killed after a finished run still counts
++sys.exit(0 if ok else 1)
