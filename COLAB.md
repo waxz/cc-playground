@@ -58,3 +58,10 @@ Colab reclaims idle VMs, so rebuild with `colab_supermimic_bootstrap.sh` (needs 
 Verified in a no-GPU container: clone `supermimic` and `mjlab_research` as siblings, `uv sync --python 3.13` in `supermimic`, then
 `MUJOCO_GL=glfw python supermimic_play_local.py CKPT_DIR --motion-file lafan_run1_subject5.npz` (viser on :8080). Use `MUJOCO_GL=glfw`
 (or unset on a machine with a display/EGL): `egl` fails to import where libEGL is missing. Checkpoints (`actor.pt`, `world_model.pt`) are ~75 MB; keep them out of git (`checkpoints/` is ignored).
+
+### BlinkMimic on a T4 with resumable Drive checkpoints
+`colab_blinkmimic_setup.sh` (clone, `uv sync`, 40 LAFAN1 clips, sanity test; ~5 min) -> mount Drive (`colab_drive_mount_start`, user clicks Allow, then
+`colab_drive_mount_finish`; if finish reports "mount failed", call start again) -> `colab_blinkmimic_run.sh` (training) + `colab_blinkmimic_sync.sh` (copies `last.pt`
+to `Drive/Colab-MCP/blinkmimic/t4` every 60 s, atomically). The run script drops `--ckpt_light` (that mode writes no resumable `last.pt` until the end) and uses `PI_BATCH=1024`
+(2048 is the recipe default). After a VM reset: setup, mount, run again; it restores `last.pt` and passes `--resume`. Drive had only ~1.7 GB free: `last.pt` is 140 MB, the small `ckpt_*.pt` 78 MB.
+On a T4 the first start spends ~12 min compiling/capturing graphs (2 vCPUs); inductor warns it skips bf16 compilation (T4 has no bf16), so parts run uncompiled.
