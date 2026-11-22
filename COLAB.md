@@ -46,3 +46,10 @@ Quick tunnels (`*.trycloudflare.com`) need no account but are **public and unaut
    `.venv/bin/python -m tensorboard.main --logdir /content/tb --host 127.0.0.1 --port 6006` (venv needs `uv pip install 'setuptools<81'` for `pkg_resources`).
 3. mjlab viser viewer: `play_local.py LOG_DIR --motion-file X.npz` (upload as `supermimic_play_local.py`). Colab's own proxy owns port 8080, so viser starts on **8081**; read the port from its log.
 4. One tunnel per port, each as its own background job: `/content/cloudflared tunnel --no-autoupdate --url http://127.0.0.1:<port>`; the URL is in the job's log.
+
+### Paper-matched SuperMimic run on a T4 (what was launched)
+Colab reclaims idle VMs, so rebuild with `colab_supermimic_bootstrap.sh` (needs `colab_setup_supermimic.sh` -> `/content/setup.sh`,
+`colab_supermimic_motion.sh` -> `/content/motion.sh`; ~3 min). Then train with the paper's update-to-data ratio 0.4
+(`replay_ratio = 65536 / num_envs`), horizon 16 (critic makes it match H=32) and a T4-sized policy batch:
+`train.py SuperMimic-GenCoord-G1 --motion-file ... --num-envs 2048 --runner.replay-ratio 32 --runner.policy.batch-size 2048 --runner.policy.horizon 16`.
+`supermimic_play_local.py` now re-reads `actor.pt`/`world_model.pt` every 60 s, so the viewer follows training.

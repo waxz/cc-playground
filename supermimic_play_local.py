@@ -39,6 +39,28 @@ actor = build_actor(rcfg, wm, dev)
 actor.load_state_dict(torch.load(Path(a.log_dir) / "actor.pt", map_location=dev))
 actor.eval()
 
+import threading, time
+
+def _reload_loop(period=60):
+  """Follow training: re-read actor.pt / world_model.pt whenever they change on disk."""
+  paths = [Path(a.log_dir) / "actor.pt", Path(a.log_dir) / "world_model.pt"]
+  seen = None
+  while True:
+    time.sleep(period)
+    try:
+      stamp = tuple(p.stat().st_mtime for p in paths)
+      if stamp == seen or time.time() - max(stamp) < 5:  # unchanged, or still being written
+        continue
+      with torch.no_grad():
+        actor.load_state_dict(torch.load(paths[0], map_location=dev))
+        wm.load_bundle(torch.load(paths[1], map_location=dev))
+      seen = stamp
+      print(f"[reload] checkpoint updated {time.strftime('%H:%M:%S')}", flush=True)
+    except Exception as e:  # file mid-write or transient error: try again next period
+      print(f"[reload] skipped: {type(e).__name__}: {e}", flush=True)
+
+threading.Thread(target=_reload_loop, daemon=True).start()
+
 SuperMimicViserViewer(
   env=env, actor=actor, dynamics=wm.dynamics, representation=wm.representation,
   wm_vis_model=create_wm_vis_model(env.unwrapped.sim.mj_model),
