@@ -1,0 +1,195 @@
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/backends/__init__.py:46: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  self.setter(val)
+Warp 1.16.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "Tesla T4" (15 GiB, sm_75, mempool enabled)
+   Kernel cache:
+     /root/.cache/warp/1.16.0
+Module mujoco_warp._src.smooth c4020f1 load on device 'cuda:0' took 4.31 ms  (cached)
+Module _nxn_broadphase__locals__kernel_af72a12e af72a12 load on device 'cuda:0' took 0.77 ms  (cached)
+Module _primitive_narrowphase__locals__primitive_narrowphase_3ed1124a 3ed1124 load on device 'cuda:0' took 1.46 ms  (cached)
+Module mujoco_warp._src.constraint 36c8060 load on device 'cuda:0' took 0.75 ms  (cached)
+Module _friction_dof__locals__kernel_ddb8a6ec ddb8a6e load on device 'cuda:0' took 0.83 ms  (cached)
+Module _limit_slide_hinge__locals__kernel_a75b7345 a75b734 load on device 'cuda:0' took 0.81 ms  (cached)
+Module _efc_contact_init__locals__kernel_cccfaa76 cccfaa7 load on device 'cuda:0' took 0.73 ms  (cached)
+Module _efc_contact_jac_sparse__locals__kernel_2144a1f6 2144a1f load on device 'cuda:0' took 0.71 ms  (cached)
+Module _efc_contact_update__locals__kernel_d8fb6a36 d8fb6a3 load on device 'cuda:0' took 0.73 ms  (cached)
+Module mujoco_warp._src.forward bfd9fb5 load on device 'cuda:0' took 1.67 ms  (cached)
+Module mujoco_warp._src.passive d8c18c6 load on device 'cuda:0' took 2.08 ms  (cached)
+Module mujoco_warp._src.forward b068ad6 load on device 'cuda:0' took 1.65 ms  (cached)
+Module _qfrc_smooth__locals__kernel_4658f88b 4658f88 load on device 'cuda:0' took 0.64 ms  (cached)
+Module mujoco_warp._src.support ca784c5 load on device 'cuda:0' took 0.75 ms  (cached)
+Module _tile_cholesky_factorize_solve_block__locals__kernel_d59a856e 173a666 load on device 'cuda:0' took 61.68 ms  (cached)
+Module _solve_init_dof__locals__kernel_e05b1ce4 e05b1ce load on device 'cuda:0' took 0.71 ms  (cached)
+Module mujoco_warp._src.solver 3a105a0 load on device 'cuda:0' took 2.68 ms  (cached)
+Module _solve_init_jaref_kernel__locals__kernel_9aff3158 9aff315 load on device 'cuda:0' took 0.72 ms  (cached)
+Module mul_m_kernel__locals___mul_m_4f80c25f 4f80c25 load on device 'cuda:0' took 0.71 ms  (cached)
+Module _update_constraint_efc__locals__kernel_2874152a 2874152 load on device 'cuda:0' took 0.72 ms  (cached)
+Module _update_constraint_init_qfrc_constraint_sparse__locals__kernel_41cad2cd 41cad2c load on device 'cuda:0' took 0.64 ms  (cached)
+Module _update_gradient_zero_grad_dot__locals__kernel_dc20e701 dc20e70 load on device 'cuda:0' took 0.63 ms  (cached)
+Module _update_gradient_grad__locals__kernel_75e45f77 75e45f7 load on device 'cuda:0' took 0.65 ms  (cached)
+Module _update_gradient_init_h_sparse__locals__kernel_36dd1e5a 36dd1e5 load on device 'cuda:0' took 0.67 ms  (cached)
+Module _JTDAJ_sparse__locals__kernel_342243de 342243d load on device 'cuda:0' took 0.71 ms  (cached)
+Module _JTDAJ_sparse__locals__kernel_342243de e314b13 load on device 'cuda:0' took 0.54 ms  (cached)
+Module _update_gradient_cholesky_blocked__locals__kernel_fb90cc46 53fec0b load on device 'cuda:0' took 117.42 ms  (cached)
+Module _linesearch_jv_fused_kernel__locals__kernel_c15033af c15033a load on device 'cuda:0' took 1.08 ms  (cached)
+Module _linesearch_iterative_kernel__locals__kernel_d5499a80 da1f31a load on device 'cuda:0' took 0.88 ms  (cached)
+Module _update_constraint_efc__locals__kernel_c5c7ee21 c5c7ee2 load on device 'cuda:0' took 0.71 ms  (cached)
+Module _update_gradient_zero_grad_dot__locals__kernel_c8324c35 c8324c3 load on device 'cuda:0' took 0.52 ms  (cached)
+Module _update_gradient_grad__locals__kernel_5d6ef3e8 5d6ef3e load on device 'cuda:0' took 0.56 ms  (cached)
+Module _update_gradient_h_incremental_sparse__locals__kernel_da279b83 da279b8 load on device 'cuda:0' took 0.57 ms  (cached)
+Module _update_gradient_cholesky_blocked_skip_unchanged__locals__kernel_d953dcb2 5d835d8 load on device 'cuda:0' took 106.78 ms  (cached)
+Module mujoco_warp._src.sensor de892d8 load on device 'cuda:0' took 2.97 ms  (cached)
+Module mujoco_warp._src.derivative 833f5d0 load on device 'cuda:0' took 1.25 ms  (cached)
+Module _next_time_builder__locals___next_time_b0eef204 b0eef20 load on device 'cuda:0' took 0.60 ms  (cached)
+Module reset_data__locals__reset_xfrc_applied_fb15556a fb15556 load on device 'cuda:0' took 0.64 ms  (cached)
+Module reset_data__locals__reset_M_7fe3caab 7fe3caa load on device 'cuda:0' took 0.58 ms  (cached)
+Module reset_data__locals__reset_mocap_72adcc80 72adcc8 load on device 'cuda:0' took 0.56 ms  (cached)
+Module reset_data__locals__reset_contact_d045dbe7 d045dbe load on device 'cuda:0' took 0.53 ms  (cached)
+Module reset_data__locals__reset_sleep_a443f67b a443f67 load on device 'cuda:0' took 0.53 ms  (cached)
+Module reset_data__locals__reset_nworld_afd827a5 afd827a load on device 'cuda:0' took 0.61 ms  (cached)
+Module repeat_array_kernel_f3ffbc3f f56645b load on device 'cuda:0' took 0.62 ms  (cached)
+--eprobe: 1489 probe worlds (tiles of 300 frames)
+--collect_graph: captured one collection step in 0.1 s
+W1122 06:49:21.366000 2900 .venv/lib/python3.13/site-packages/torch/_inductor/utils.py:1558] [5/0] Not enough SMs to use max_autotune_gemm mode
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+cuda_graph: captured wm_update in 0.1 s, 5.3 GB reserved
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+cuda_graph: captured policy_update in 0.6 s, 9.0 GB reserved
+it 50 | 0.213 h | wm 2.4951 e8 6.1803 | pi -0.975 v 0.0208 imag_r 0.276 surv 0.321 | sim_r 0.395 ep_len 33.1 ep_ret 0.333 term 0.94 | 0.07 it/s
+it 100 | 0.239 h | wm 0.7489 e8 1.5282 | pi -1.593 v 0.0461 imag_r 0.309 surv 0.521 | sim_r 0.369 ep_len 49.0 ep_ret 0.320 term 0.94 | 0.52 it/s
+it 150 | 0.266 h | wm 0.5426 e8 1.0392 | pi -2.835 v 0.0888 imag_r 0.298 surv 0.782 | sim_r 0.273 ep_len 80.5 ep_ret 0.109 term 0.88 | 0.52 it/s
+it 200 | 0.293 h | wm 0.4396 e8 0.8140 | pi -4.290 v 0.0828 imag_r 0.380 surv 0.883 | sim_r 0.423 ep_len 168.8 ep_ret 0.205 term 0.91 | 0.52 it/s
+it 250 | 0.319 h | wm 0.3805 e8 0.6960 | pi -5.364 v 0.0651 imag_r 0.459 surv 0.925 | sim_r 0.539 ep_len 284.1 ep_ret 0.351 term 0.70 | 0.52 it/s
+it 300 | 0.346 h | wm 0.3396 e8 0.6197 | pi -5.975 v 0.0567 imag_r 0.503 surv 0.951 | sim_r 0.571 ep_len 444.0 ep_ret 0.455 term 0.12 | 0.52 it/s
+it 350 | 0.373 h | wm 0.3134 e8 0.5698 | pi -6.352 v 0.0455 imag_r 0.549 surv 0.958 | sim_r 0.601 ep_len 438.9 ep_ret 0.452 term 0.08 | 0.52 it/s
+it 400 | 0.399 h | wm 0.3042 e8 0.5467 | pi -6.666 v 0.0420 imag_r 0.581 surv 0.967 | sim_r 0.627 ep_len 430.1 ep_ret 0.522 term 0.14 | 0.52 it/s
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/backends/__init__.py:46: UserWarning: Please use the new API settings to control TF32 behavior, such as torch.backends.cudnn.conv.fp32_precision = 'tf32' or torch.backends.cuda.matmul.fp32_precision = 'ieee'. Old settings, e.g, torch.backends.cuda.matmul.allow_tf32 = True, torch.backends.cudnn.allow_tf32 = True, allowTF32CuDNN() and allowTF32CuBLAS() will be deprecated after Pytorch 2.9. Please see https://pytorch.org/docs/main/notes/cuda.html#tensorfloat-32-tf32-on-ampere-and-later-devices (Triggered internally at /pytorch/aten/src/ATen/Context.cpp:80.)
+  self.setter(val)
+Warp 1.16.0 initialized:
+   CUDA Toolkit 12.9, Driver 13.0
+   Devices:
+     "cpu"      : "x86_64"
+     "cuda:0"   : "Tesla T4" (15 GiB, sm_75, mempool enabled)
+   Kernel cache:
+     /root/.cache/warp/1.16.0
+Module mujoco_warp._src.smooth c4020f1 load on device 'cuda:0' took 3.94 ms  (cached)
+Module _nxn_broadphase__locals__kernel_af72a12e af72a12 load on device 'cuda:0' took 0.59 ms  (cached)
+Module _primitive_narrowphase__locals__primitive_narrowphase_3ed1124a 3ed1124 load on device 'cuda:0' took 1.08 ms  (cached)
+Module mujoco_warp._src.constraint 36c8060 load on device 'cuda:0' took 0.54 ms  (cached)
+Module _friction_dof__locals__kernel_ddb8a6ec ddb8a6e load on device 'cuda:0' took 0.64 ms  (cached)
+Module _limit_slide_hinge__locals__kernel_a75b7345 a75b734 load on device 'cuda:0' took 0.60 ms  (cached)
+Module _efc_contact_init__locals__kernel_cccfaa76 cccfaa7 load on device 'cuda:0' took 0.61 ms  (cached)
+Module _efc_contact_jac_sparse__locals__kernel_2144a1f6 2144a1f load on device 'cuda:0' took 0.57 ms  (cached)
+Module _efc_contact_update__locals__kernel_d8fb6a36 d8fb6a3 load on device 'cuda:0' took 0.64 ms  (cached)
+Module mujoco_warp._src.forward bfd9fb5 load on device 'cuda:0' took 1.48 ms  (cached)
+Module mujoco_warp._src.passive d8c18c6 load on device 'cuda:0' took 1.79 ms  (cached)
+Module mujoco_warp._src.forward b068ad6 load on device 'cuda:0' took 1.72 ms  (cached)
+Module _qfrc_smooth__locals__kernel_4658f88b 4658f88 load on device 'cuda:0' took 0.55 ms  (cached)
+Module mujoco_warp._src.support ca784c5 load on device 'cuda:0' took 0.61 ms  (cached)
+Module _tile_cholesky_factorize_solve_block__locals__kernel_d59a856e 173a666 load on device 'cuda:0' took 40.05 ms  (cached)
+Module _solve_init_dof__locals__kernel_e05b1ce4 e05b1ce load on device 'cuda:0' took 0.56 ms  (cached)
+Module mujoco_warp._src.solver 3a105a0 load on device 'cuda:0' took 2.34 ms  (cached)
+Module _solve_init_jaref_kernel__locals__kernel_9aff3158 9aff315 load on device 'cuda:0' took 0.64 ms  (cached)
+Module mul_m_kernel__locals___mul_m_4f80c25f 4f80c25 load on device 'cuda:0' took 0.63 ms  (cached)
+Module _update_constraint_efc__locals__kernel_2874152a 2874152 load on device 'cuda:0' took 0.60 ms  (cached)
+Module _update_constraint_init_qfrc_constraint_sparse__locals__kernel_41cad2cd 41cad2c load on device 'cuda:0' took 0.57 ms  (cached)
+Module _update_gradient_zero_grad_dot__locals__kernel_dc20e701 dc20e70 load on device 'cuda:0' took 0.54 ms  (cached)
+Module _update_gradient_grad__locals__kernel_75e45f77 75e45f7 load on device 'cuda:0' took 0.54 ms  (cached)
+Module _update_gradient_init_h_sparse__locals__kernel_36dd1e5a 36dd1e5 load on device 'cuda:0' took 0.59 ms  (cached)
+Module _JTDAJ_sparse__locals__kernel_342243de 342243d load on device 'cuda:0' took 0.58 ms  (cached)
+Module _JTDAJ_sparse__locals__kernel_342243de e314b13 load on device 'cuda:0' took 0.61 ms  (cached)
+Module _update_gradient_cholesky_blocked__locals__kernel_fb90cc46 53fec0b load on device 'cuda:0' took 84.60 ms  (cached)
+Module _linesearch_jv_fused_kernel__locals__kernel_c15033af c15033a load on device 'cuda:0' took 0.72 ms  (cached)
+Module _linesearch_iterative_kernel__locals__kernel_d5499a80 da1f31a load on device 'cuda:0' took 1.04 ms  (cached)
+Module _update_constraint_efc__locals__kernel_c5c7ee21 c5c7ee2 load on device 'cuda:0' took 0.62 ms  (cached)
+Module _update_gradient_zero_grad_dot__locals__kernel_c8324c35 c8324c3 load on device 'cuda:0' took 0.69 ms  (cached)
+Module _update_gradient_grad__locals__kernel_5d6ef3e8 5d6ef3e load on device 'cuda:0' took 0.55 ms  (cached)
+Module _update_gradient_h_incremental_sparse__locals__kernel_da279b83 da279b8 load on device 'cuda:0' took 0.56 ms  (cached)
+Module _update_gradient_cholesky_blocked_skip_unchanged__locals__kernel_d953dcb2 5d835d8 load on device 'cuda:0' took 118.81 ms  (cached)
+Module mujoco_warp._src.sensor de892d8 load on device 'cuda:0' took 2.91 ms  (cached)
+Module mujoco_warp._src.derivative 833f5d0 load on device 'cuda:0' took 1.22 ms  (cached)
+Module _next_time_builder__locals___next_time_b0eef204 b0eef20 load on device 'cuda:0' took 0.62 ms  (cached)
+Module reset_data__locals__reset_xfrc_applied_fb15556a fb15556 load on device 'cuda:0' took 0.51 ms  (cached)
+Module reset_data__locals__reset_M_7fe3caab 7fe3caa load on device 'cuda:0' took 0.49 ms  (cached)
+Module reset_data__locals__reset_mocap_72adcc80 72adcc8 load on device 'cuda:0' took 0.56 ms  (cached)
+Module reset_data__locals__reset_contact_d045dbe7 d045dbe load on device 'cuda:0' took 0.58 ms  (cached)
+Module reset_data__locals__reset_sleep_a443f67b a443f67 load on device 'cuda:0' took 0.51 ms  (cached)
+Module reset_data__locals__reset_nworld_afd827a5 afd827a load on device 'cuda:0' took 0.64 ms  (cached)
+Module repeat_array_kernel_f3ffbc3f f56645b load on device 'cuda:0' took 0.70 ms  (cached)
+--eprobe: 1489 probe worlds (tiles of 300 frames)
+--collect_graph: captured one collection step in 0.1 s
+--resume: LR trigger at None, focus set
+W1122 07:35:38.356000 2096 .venv/lib/python3.13/site-packages/torch/_inductor/utils.py:1558] [5/0] Not enough SMs to use max_autotune_gemm mode
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+cuda_graph: captured wm_update in 0.1 s, 5.3 GB reserved
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+/content/blinkmimic/.venv/lib/python3.13/site-packages/torch/_inductor/compile_fx.py:2772: UserWarning: Tesla T4 does not support bfloat16 compilation natively, skipping
+  warnings.warn(
+cuda_graph: captured policy_update in 0.5 s, 8.9 GB reserved
+it 450 | 0.606 h | wm 0.2492 e8 0.4149 | pi -7.602 v 0.0300 imag_r 0.759 surv 0.993 | sim_r 0.663 ep_len 90.1 ep_ret 0.338 term 0.68 | 0.07 it/s
+it 500 | 0.634 h | wm 0.2132 e8 0.3547 | pi -7.902 v 0.0247 imag_r 0.774 surv 0.993 | sim_r 0.691 ep_len 244.1 ep_ret 0.498 term 0.77 | 0.49 it/s
+it 550 | 0.662 h | wm 0.1994 e8 0.3374 | pi -7.971 v 0.0239 imag_r 0.779 surv 0.995 | sim_r 0.696 ep_len 353.3 ep_ret 0.535 term 0.71 | 0.49 it/s
+it 600 | 0.691 h | wm 0.1897 e8 0.3171 | pi -8.045 v 0.0198 imag_r 0.787 surv 0.996 | sim_r 0.677 ep_len 293.2 ep_ret 0.395 term 0.03 | 0.49 it/s
+it 650 | 0.719 h | wm 0.2034 e8 0.3449 | pi -8.108 v 0.0200 imag_r 0.786 surv 0.995 | sim_r 0.695 ep_len 343.2 ep_ret 0.545 term 0.34 | 0.49 it/s
+it 700 | 0.747 h | wm 0.2046 e8 0.3451 | pi -8.092 v 0.0188 imag_r 0.789 surv 0.995 | sim_r 0.707 ep_len 377.7 ep_ret 0.589 term 0.28 | 0.49 it/s
+it 750 | 0.775 h | wm 0.1948 e8 0.3217 | pi -8.116 v 0.0178 imag_r 0.793 surv 0.995 | sim_r 0.710 ep_len 416.9 ep_ret 0.613 term 0.24 | 0.49 it/s
+it 800 | 0.804 h | wm 0.1977 e8 0.3422 | pi -8.179 v 0.0168 imag_r 0.795 surv 0.996 | sim_r 0.689 ep_len 420.6 ep_ret 0.605 term 0.02 | 0.49 it/s
+it 850 | 0.832 h | wm 0.1979 e8 0.3399 | pi -8.158 v 0.0156 imag_r 0.798 surv 0.996 | sim_r 0.721 ep_len 394.1 ep_ret 0.638 term 0.18 | 0.49 it/s
+it 900 | 0.860 h | wm 0.1887 e8 0.3216 | pi -8.214 v 0.0146 imag_r 0.804 surv 0.996 | sim_r 0.724 ep_len 424.4 ep_ret 0.689 term 0.10 | 0.49 it/s
+it 950 | 0.889 h | wm 0.1959 e8 0.3376 | pi -8.159 v 0.0154 imag_r 0.805 surv 0.995 | sim_r 0.720 ep_len 457.6 ep_ret 0.683 term 0.15 | 0.49 it/s
+it 1000 | 0.917 h | wm 0.2019 e8 0.3390 | pi -8.226 v 0.0152 imag_r 0.804 surv 0.996 | sim_r 0.697 ep_len 377.9 ep_ret 0.496 term 0.01 | 0.49 it/s
+--eprobe_graph: captured one sweep step in 0.1 s
+--eprobe it 1000: lead 326 | 23/1489 failures [('dance1_s1', 5349), ('dance1_s1', 5787), ('dance2_s4', 2976), ('dance2_s4', 3001), ('fallAndGetUp1_s1', 474), ('fallAndGetUp1_s1', 3949), ('fallAndGetUp1_s1', 6475), ('fallAndGetUp1_s4', 877)] | 148.5 s | applied at it 1032
+it 1050 | 0.970 h | wm 0.1983 e8 0.3471 | pi -8.237 v 0.0147 imag_r 0.809 surv 0.996 | sim_r 0.726 ep_len 368.3 ep_ret 0.540 term 0.11 | 0.27 it/s
+it 1100 | 0.998 h | wm 0.1906 e8 0.3237 | pi -8.325 v 0.0130 imag_r 0.814 surv 0.996 | sim_r 0.735 ep_len 384.3 ep_ret 0.518 term 0.09 | 0.49 it/s
+it 1150 | 1.031 h | wm 0.1822 e8 0.3143 | pi -8.385 v 0.0132 imag_r 0.817 surv 0.996 | sim_r 0.733 ep_len 446.9 ep_ret 0.685 term 0.11 | 0.42 it/s
+--eprobe it 1125: lead 304 | 14/1489 failures [('dance1_s1', 5350), ('dance1_s1', 5788), ('dance2_s4', 2984), ('dance2_s4', 2988), ('fallAndGetUp2_s3', 2089), ('fallAndGetUp2_s3', 2095), ('fallAndGetUp2_s3', 3138), ('fallAndGetUp2_s3', 4234)] | 80.2 s | applied at it 1156
+it 1200 | 1.060 h | wm 0.1749 e8 0.3042 | pi -8.317 v 0.0120 imag_r 0.819 surv 0.996 | sim_r 0.704 ep_len 382.3 ep_ret 0.534 term 0.02 | 0.47 it/s
+it 1250 | 1.090 h | wm 0.1815 e8 0.3162 | pi -8.308 v 0.0124 imag_r 0.819 surv 0.996 | sim_r 0.723 ep_len 371.4 ep_ret 0.578 term 0.21 | 0.46 it/s
+--eprobe it 1250: lead 390 | 13/1489 failures [('dance1_s1', 5353), ('dance1_s1', 5358), ('dance1_s1', 5795), ('dance2_s4', 2988), ('fallAndGetUp1_s5', 1297), ('fallAndGetUp2_s3', 2083), ('fallAndGetUp2_s3', 4272), ('fallAndGetUp2_s3', 4287)] | 88.9 s | applied at it 1285
+it 1300 | 1.125 h | wm 0.1791 e8 0.3123 | pi -8.310 v 0.0112 imag_r 0.820 surv 0.996 | sim_r 0.729 ep_len 391.2 ep_ret 0.637 term 0.18 | 0.40 it/s
+it 1350 | 1.153 h | wm 0.1882 e8 0.3273 | pi -8.281 v 0.0116 imag_r 0.820 surv 0.995 | sim_r 0.724 ep_len 400.5 ep_ret 0.568 term 0.17 | 0.49 it/s
+--lr_decay_ret: deadline --lr_decay_by 1400 at it 1400: policy LR x4.0 -> x1 over 300 its
+it 1400 | 1.185 h | wm 0.1914 e8 0.3341 | pi -8.277 v 0.0119 imag_r 0.818 surv 0.995 | sim_r 0.705 ep_len 350.5 ep_ret 0.474 term 0.04 | 0.43 it/s
+--eprobe it 1375: lead 372 | 8/1489 failures [('dance1_s1', 5363), ('dance1_s1', 5800), ('dance2_s4', 2988), ('fallAndGetUp2_s3', 2680), ('fallAndGetUp2_s3', 4274), ('fightAndSports1_s4', 2644)] | 92.0 s | applied at it 1409
+it 1450 | 1.218 h | wm 0.1983 e8 0.3482 | pi -8.296 v 0.0113 imag_r 0.820 surv 0.995 | sim_r 0.733 ep_len 375.0 ep_ret 0.597 term 0.18 | 0.42 it/s
+it 1500 | 1.261 h | wm 0.2021 e8 0.3425 | pi -8.314 v 0.0113 imag_r 0.824 surv 0.995 | sim_r 0.741 ep_len 339.5 ep_ret 0.484 term 0.15 | 0.33 it/s
+--eprobe it 1500: lead 428 | 5/1489 failures [('dance2_s4', 2988), ('fight1_s3', 10906), ('fight1_s3', 10915)] | 133.2 s | applied at it 1537
+it 1550 | 1.310 h | wm 0.2043 e8 0.3540 | pi -8.427 v 0.0115 imag_r 0.826 surv 0.995 | sim_r 0.742 ep_len 432.3 ep_ret 0.672 term 0.19 | 0.28 it/s
+it 1600 | 1.351 h | wm 0.2133 e8 0.3673 | pi -8.508 v 0.0101 imag_r 0.830 surv 0.996 | sim_r 0.727 ep_len 375.9 ep_ret 0.529 term 0.03 | 0.33 it/s
+it 1650 | 1.393 h | wm 0.2001 e8 0.3397 | pi -8.523 v 0.0092 imag_r 0.835 surv 0.997 | sim_r 0.753 ep_len 364.5 ep_ret 0.511 term 0.05 | 0.33 it/s
+--eprobe it 1625: lead 339 | 6/1489 failures [('dance2_s4', 2989), ('dance2_s4', 2992), ('fallAndGetUp1_s4', 7745), ('fallAndGetUp1_s4', 7770), ('fightAndSports1_s4', 1479)] | 92.1 s | applied at it 1657
+it 1700 | 1.423 h | wm 0.2017 e8 0.3497 | pi -8.598 v 0.0087 imag_r 0.840 surv 0.997 | sim_r 0.762 ep_len 338.1 ep_ret 0.423 term 0.04 | 0.47 it/s
