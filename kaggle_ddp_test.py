@@ -84,8 +84,11 @@ def sh(cmd, timeout=900, cwd=None, logfile=None, env=None, stream=False):
     def heartbeat():  # once a minute: elapsed time, GPU utilisation / memory, last output line
         while not stop.wait(60):
             g = subprocess.run("nvidia-smi --query-gpu=utilization.gpu,memory.used --format=csv,noheader", shell=True, capture_output=True, text=True).stdout.strip().replace("\n", " | ")
-            last = (buf[-1].strip()[:120] if buf else "-")
-            print(f"[hb {time.time() - t0:5.0f}s] gpu util,mem: {g} | last: {last}", flush=True)
+            last = (buf[-1].strip()[:100] if buf else "-")
+            prog = next((l.strip() for l in reversed(buf) if re.match(r"it \d+ \|", l)), None)  # latest training progress line
+            prog = re.sub(r"\s+", " ", re.sub(r"\| wm .*?\| sim_r", "| sim_r", prog))[:140] if prog else "no training iteration logged yet (compiling)"
+            n_alive = sum(1 for c in children if c.poll() is None)
+            print(f"[hb {time.time() - t0:5.0f}s | session {(time.time() - T0) / 60:4.1f} min | {n_alive} proc] gpu util,mem: {g} | progress: {prog} | last: {last}", flush=True)
 
     if stream: threading.Thread(target=heartbeat, daemon=True).start()
     try:
@@ -100,14 +103,15 @@ def sh(cmd, timeout=900, cwd=None, logfile=None, env=None, stream=False):
 
 
 def step(name, fn):
-    log(f"\n=== {name} ===")
+    log(f"\n=== {name} === (session {(time.time() - T0) / 60:.1f} min)")
     t0 = time.time()
     try:
         res = fn()
         report["steps"][name] = {"ok": True, "seconds": round(time.time() - t0, 1), "result": res}
+        log(f"--- {name}: ok in {time.time() - t0:.0f} s")
     except Exception as e:
         report["steps"][name] = {"ok": False, "seconds": round(time.time() - t0, 1), "error": f"{type(e).__name__}: {e}"}
-        log(f"FAILED: {type(e).__name__}: {e}"); save()
+        import traceback; log(f"FAILED: {type(e).__name__}: {e}\n{traceback.format_exc()}"); save()
         finish(1, f"step '{name}' failed")
     save()
 
