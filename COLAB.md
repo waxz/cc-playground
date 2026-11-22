@@ -53,3 +53,8 @@ Colab reclaims idle VMs, so rebuild with `colab_supermimic_bootstrap.sh` (needs 
 (`replay_ratio = 65536 / num_envs`), horizon 16 (critic makes it match H=32) and a T4-sized policy batch:
 `train.py SuperMimic-GenCoord-G1 --motion-file ... --num-envs 2048 --runner.replay-ratio 32 --runner.policy.batch-size 2048 --runner.policy.horizon 16`.
 `supermimic_play_local.py` now re-reads `actor.pt`/`world_model.pt` every 60 s, so the viewer follows training.
+
+### Running the viewer locally (CPU)
+Verified in a no-GPU container: clone `supermimic` and `mjlab_research` as siblings, `uv sync --python 3.13` in `supermimic`, then
+`MUJOCO_GL=glfw python supermimic_play_local.py CKPT_DIR --motion-file lafan_run1_subject5.npz` (viser on :8080). Use `MUJOCO_GL=glfw`
+(or unset on a machine with a display/EGL): `egl` fails to import where libEGL is missing. Checkpoints (`actor.pt`, `world_model.pt`) are ~75 MB; keep them out of git (`checkpoints/` is ignored).
