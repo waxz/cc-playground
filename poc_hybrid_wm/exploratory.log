@@ -1,0 +1,6 @@
+seed 0 N  2000 B1_mlp    loss 0.0918  18.2s | ID r50 0.0314 OOD r1 0.0052 r50 0.0585 p95 0.1487 div 0.00
+seed 0 N  2000 H_hybrid  loss 0.4525  34.5s | ID r50 0.0520 OOD r1 0.0078 r50 0.1326 p95 0.2462 div 0.00
+seed 1 N  2000 B1_mlp    loss 0.0645  23.3s | ID r50 0.0292 OOD r1 0.0097 r50 0.1621 p95 0.3327 div 0.00
+seed 1 N  2000 H_hybrid  loss 0.3812  34.1s | ID r50 0.0614 OOD r1 0.0060 r50 0.1745 p95 0.3135 div 0.00
+seed 2 N  2000 B1_mlp    loss 0.0936  19.3s | ID r50 0.0377 OOD r1 0.0049 r50 0.0764 p95 0.1399 div 0.00
+seed 2 N  2000 H_hybrid  loss 0.4327  34.6s | ID r50 0.0581 OOD r1 0.0096 r50 0.1666 p95 0.3173 div 0.00
