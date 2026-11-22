@@ -72,7 +72,8 @@ hash; torch version. Deviation Log below.
 ## Deviation Log
 | # | Time | What changed | Why | Confirmatory effect |
 |---|---|---|---|---|
-| - | - | (none yet) | - | - |
+| 1 | after smoke run, before any real run | Plant + shared physics: added leg joint hard-stops (q in [0.25,0.65]) and a 30% floor on the speed-dependent force limit | Smoke run showed the body falling through the leg (z = -6 m) for *every* method incl. nominal: a plant bug, not a candidate result | none on hypothesis; plant now bounded |
+| 2 | after smoke run, before any real run | Divergence flag = NaN or |z|,|q| > 5 m (positions only); separate `vel_spike` flag = |v| > 20 m/s reported | Charter's 'any state > 10' fired on 100% of nominal rollouts because impact velocities legitimately spike (truth reaches 6 m/s); the counter-metric would not discriminate. **The nominal baseline's numbers had been seen when this was decided**; B1/H results had not | divergence counter-metric now position-based |
 
 ## Stage 6/8 tags
 Code is **experimental/poc**. Cannot enter BlinkMimic without a promotion and debt review.
