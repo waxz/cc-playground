@@ -61,21 +61,42 @@ threading.Timer(MAX_MIN * 60, watchdog).start()
 atexit.register(kill_children)
 
 
-def sh(cmd, timeout=900, cwd=None, logfile=None, env=None):
-    """Run a shell command in its own process group; returns (rc, last output lines, seconds)."""
+def sh(cmd, timeout=900, cwd=None, logfile=None, env=None, stream=False):
+    """Run a shell command in its own process group; returns (rc, last output lines, seconds).
+    logfile: output goes to that file; stream=True also echoes every line to the console live (training / evaluation)."""
     t0 = time.time()
-    f = open(logfile, "w") if logfile else subprocess.PIPE
-    p = subprocess.Popen(cmd, shell=True, executable="/bin/bash", cwd=cwd, stdout=f, stderr=subprocess.STDOUT, text=True,
-                         start_new_session=True, env=dict(os.environ, **(env or {})))
+    p = subprocess.Popen(cmd, shell=True, executable="/bin/bash", cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+                         bufsize=1, start_new_session=True, env=dict(os.environ, **(env or {})))
     children.append(p)
+    buf = []
+
+    def pump():
+        f = open(logfile, "w") if logfile else None
+        for line in p.stdout:
+            buf.append(line)
+            if f: f.write(line); f.flush()
+            if stream: print(line.rstrip()[:300], flush=True)
+        if f: f.close()
+
+    th = threading.Thread(target=pump, daemon=True); th.start()
+    stop = threading.Event()
+
+    def heartbeat():  # once a minute: elapsed time, GPU utilisation / memory, last output line
+        while not stop.wait(60):
+            g = subprocess.run("nvidia-smi --query-gpu=utilization.gpu,memory.used --format=csv,noheader", shell=True, capture_output=True, text=True).stdout.strip().replace("\n", " | ")
+            last = (buf[-1].strip()[:120] if buf else "-")
+            print(f"[hb {time.time() - t0:5.0f}s] gpu util,mem: {g} | last: {last}", flush=True)
+
+    if stream: threading.Thread(target=heartbeat, daemon=True).start()
     try:
-        out, _ = p.communicate(timeout=timeout)
+        p.wait(timeout=timeout)
         rc = p.returncode
     except subprocess.TimeoutExpired:
-        os.killpg(p.pid, signal.SIGKILL); p.wait(); out, rc = "", 124
-    if logfile:
-        f.close(); out = "".join(open(logfile).readlines()[-40:])
-    return rc, (out or "").strip()[-3000:], time.time() - t0
+        os.killpg(p.pid, signal.SIGKILL); p.wait(); rc = 124
+    finally:
+        stop.set()
+    th.join(timeout=10)
+    return rc, "".join(buf[-40:]).strip()[-3000:], time.time() - t0
 
 
 def step(name, fn):
@@ -126,7 +147,7 @@ def train():
     over = f"--iterations {ITERS} --ckpt_every 50 --log_every 10 --eprobe_start 40 --eprobe_every 50 --max_hours 0.8 --log_dir {RUN}"
     cmd = (f"source scripts/presets.sh && export OMP_NUM_THREADS=1 && "
            f"uv run python tools/launch_ddp.py --nproc 2 --done_file {RUN}/train_done.txt -- ${{PRESET[main]}} {over}")
-    rc, out, dt = sh(cmd, cwd=REPO, timeout=TRAIN_TIMEOUT, logfile=os.path.join(OUT, "stdout.log"))
+    rc, out, dt = sh(cmd, cwd=REPO, timeout=TRAIN_TIMEOUT, logfile=os.path.join(OUT, "stdout.log"), stream=True)
     log(out[-1500:])
     rows = re.findall(r"it (\d+) \| .*?\| ([\d.]+) it/s \| ddp x2 max_param_diff ([\d.eE+-]+)", open(os.path.join(OUT, "stdout.log")).read())
     res = {"rc": rc, "seconds": round(dt), "log_rows": len(rows)}
@@ -149,7 +170,7 @@ def evaluate():
     if not ck: raise RuntimeError("no checkpoint to evaluate")
     ck = ck[-1]
     cmd = f"CUDA_VISIBLE_DEVICES=0 PYTHONPATH=src uv run python -m blinkmimic.evaluate --run_dir {RUN} --ckpt {ck}"
-    rc, out, dt = sh(cmd, cwd=REPO, timeout=EVAL_TIMEOUT, logfile=os.path.join(OUT, "eval.log"))
+    rc, out, dt = sh(cmd, cwd=REPO, timeout=EVAL_TIMEOUT, logfile=os.path.join(OUT, "eval.log"), stream=True)
     log(out[-1500:])
     for f in glob.glob(ck.replace(".pt", "_eval*.json")): shutil.copy(f, OUT)
     if rc: raise RuntimeError(f"evaluation failed (rc={rc})")
