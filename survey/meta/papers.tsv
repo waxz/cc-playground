@@ -1,0 +1,66 @@
+key	era	year	openalex_citations	title	text_file	pdf_file
+rumelhart1986	dl	1986	41635	Learning representations by back-propagating errors	text/rumelhart1986.txt	pdf/rumelhart1986.pdf
+lstm1997	dl	1997	134075	Long Short-Term Memory	text/lstm1997.txt	pdf/lstm1997.pdf
+lenet1998	dl	1998	73756	Gradient-based learning applied to document recognition	text/lenet1998.txt	pdf/lenet1998.pdf
+alexnet2012	dl	2012	55831	ImageNet classification with deep convolutional neural networks	text/alexnet2012.txt	pdf/alexnet2012.pdf
+dqn2013	rl	2013	17421	Playing Atari with Deep Reinforcement Learning	text/dqn2013.txt	pdf/dqn2013.pdf
+vae2013	dl	2013	45017	Auto-Encoding Variational Bayes	text/vae2013.txt	pdf/vae2013.pdf
+word2vec2013	dl	2013	44594	Efficient Estimation of Word Representations in Vector Space	text/word2vec2013.txt	pdf/word2vec2013.pdf
+adam2014	dl	2014	123922	Adam: A Method for Stochastic Optimization	text/adam2014.txt	pdf/adam2014.pdf
+bahdanau2014	dl	2014	32237	Neural Machine Translation by Jointly Learning to Align and Translate	text/bahdanau2014.txt	pdf/bahdanau2014.pdf
+dropout2014	dl	2014	51959	Dropout: a simple way to prevent neural networks from overfitting	text/dropout2014.txt	pdf/dropout2014.pdf
+gan2014	dl	2014	12148	Generative Adversarial Networks	text/gan2014.txt	pdf/gan2014.pdf
+seq2seq2014	dl	2014	21928	Sequence to Sequence Learning with Neural Networks	text/seq2seq2014.txt	pdf/seq2seq2014.pdf
+vgg2014	dl	2014	124836	Very Deep Convolutional Networks for Large-Scale Image Recognition	text/vgg2014.txt	pdf/vgg2014.pdf
+batchnorm2015	dl	2015	43312	Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift	text/batchnorm2015.txt	pdf/batchnorm2015.pdf
+ddpg2015	rl	2015	18036	Continuous control with deep reinforcement learning	text/ddpg2015.txt	pdf/ddpg2015.pdf
+resnet2015	dl	2015	18331	Deep Residual Learning for Image Recognition	text/resnet2015.txt	pdf/resnet2015.pdf
+trpo2015	rl	2015	7620	Trust Region Policy Optimization	text/trpo2015.txt	pdf/trpo2015.pdf
+a3c2016	rl	2016	10950	Asynchronous Methods for Deep Reinforcement Learning	text/a3c2016.txt	pdf/a3c2016.pdf
+alphago2016	rl	2016	22779	Mastering the game of Go with deep neural networks and tree search	text/alphago2016.txt	pdf/alphago2016.pdf
+layernorm2016	dl	2016	15007	Layer Normalization	text/layernorm2016.txt	pdf/layernorm2016.pdf
+ppo2017	rl	2017	40403	Proximal Policy Optimization Algorithms	text/ppo2017.txt	pdf/ppo2017.pdf
+transformer2017	tf	2017	152843	Attention Is All You Need	text/transformer2017.txt	pdf/transformer2017.pdf
+alphazero2017	rl	2018	7644	A general reinforcement learning algorithm that masters chess, shogi, and Go through self-play	text/alphazero2017.txt	pdf/alphazero2017.pdf
+bert2018	tf	2018	83883	BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding	text/bert2018.txt	pdf/bert2018.pdf
+planet2018	wm	2018	1330	Learning Latent Dynamics for Planning from Pixels	text/planet2018.txt	pdf/planet2018.pdf
+sac2018	rl	2018	13864	Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor	text/sac2018.txt	pdf/sac2018.pdf
+worldmodels2018	wm	2018	2452	World Models	text/worldmodels2018.txt	pdf/worldmodels2018.pdf
+dreamer2019	wm	2019	2013	Dream to Control: Learning Behaviors by Latent Imagination	text/dreamer2019.txt	pdf/dreamer2019.pdf
+mbpo2019	wm	2019	772	When to Trust Your Model: Model-Based Policy Optimization	text/mbpo2019.txt	pdf/mbpo2019.pdf
+simple2019	wm	2019	905	Model-Based Reinforcement Learning for Atari	text/simple2019.txt	pdf/simple2019.pdf
+ddpm2020	df	2020	21097	Denoising Diffusion Probabilistic Models	text/ddpm2020.txt	pdf/ddpm2020.pdf
+dreamerv2_2020	wm	2020	1090	Mastering Atari with Discrete World Models	text/dreamerv2_2020.txt	pdf/dreamerv2_2020.pdf
+gpt3_2020	tf	2020	63280	Language Models are Few-Shot Learners	text/gpt3_2020.txt	pdf/gpt3_2020.pdf
+muzero2019	wm	2020	3401	Mastering Atari, Go, chess and shogi by planning with a learned model	text/muzero2019.txt	pdf/muzero2019.pdf
+scaling2020	tf	2020	12622	Scaling Laws for Neural Language Models	text/scaling2020.txt	pdf/scaling2020.pdf
+scoresde2020	df	2020	8253	Score-Based Generative Modeling through Stochastic Differential Equations	text/scoresde2020.txt	pdf/scoresde2020.pdf
+vit2020	tf	2020	72389	An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale	text/vit2020.txt	pdf/vit2020.pdf
+clip2021	tf	2021	62735	Learning Transferable Visual Models From Natural Language Supervision	text/clip2021.txt	pdf/clip2021.pdf
+cfg2022	df	2022	7474	Classifier-Free Diffusion Guidance	text/cfg2022.txt	pdf/cfg2022.pdf
+chinchilla2022	tf	2022	6801	Training Compute-Optimal Large Language Models	text/chinchilla2022.txt	pdf/chinchilla2022.pdf
+cot2022	tf	2022	39078	Chain-Of-Thought Prompting Elicits Reasoning in Large Language Models	text/cot2022.txt	pdf/cot2022.pdf
+flamingo2022	tf	2022	2837	Flamingo: a Visual Language Model for Few-Shot Learning	text/flamingo2022.txt	pdf/flamingo2022.pdf
+flashattn2022	tf	2022	6029	FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness	text/flashattn2022.txt	pdf/flashattn2022.pdf
+flowmatching2022	df	2022	5278	Flow Matching for Generative Modeling	text/flowmatching2022.txt	pdf/flowmatching2022.pdf
+instructgpt2022	tf	2022	11081	Training language models to follow instructions with human feedback	text/instructgpt2022.txt	pdf/instructgpt2022.pdf
+ldm2021	df	2022	37803	High-Resolution Image Synthesis with Latent Diffusion Models	text/ldm2021.txt	pdf/ldm2021.pdf
+rectflow2022	df	2022	2716	Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow	text/rectflow2022.txt	pdf/rectflow2022.pdf
+diffpolicy2023	df	2023	2416	Diffusion Policy: Visuomotor Policy Learning via Action Diffusion	text/diffpolicy2023.txt	pdf/diffpolicy2023.pdf
+dit2022	df	2023	9650	Scalable Diffusion Models with Transformers	text/dit2022.txt	pdf/dit2022.pdf
+dpo2023	tf	2023	11144	Direct Preference Optimization: Your Language Model is Secretly a Reward Model	text/dpo2023.txt	pdf/dpo2023.pdf
+ijepa2023	wm	2023	2029	Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture	text/ijepa2023.txt	pdf/ijepa2023.pdf
+llama2023	tf	2023	29912	LLaMA: Open and Efficient Foundation Language Models	text/llama2023.txt	pdf/llama2023.pdf
+llava2023	tf	2023	4377	Visual Instruction Tuning	text/llava2023.txt	pdf/llava2023.pdf
+mamba2023	tf	2023	12101	Mamba: Linear-Time Sequence Modeling with Selective State Spaces	text/mamba2023.txt	pdf/mamba2023.pdf
+rope2021	tf	2023	7633	RoFormer: Enhanced transformer with Rotary Position Embedding	text/rope2021.txt	pdf/rope2021.pdf
+rt2_2023	vla	2023	3628	RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control	text/rt2_2023.txt	pdf/rt2_2023.pdf
+diamond2024	wm	2024	474	Diffusion for World Modeling: Visual Details Matter in Atari	text/diamond2024.txt	pdf/diamond2024.pdf
+genie2024	wm	2024	1056	Genie: Generative Interactive Environments	text/genie2024.txt	pdf/genie2024.pdf
+sd3_2024	df	2024	5813	Scaling Rectified Flow Transformers for High-Resolution Image Synthesis	text/sd3_2024.txt	pdf/sd3_2024.pdf
+cosmos2025	wm	2025	1149	Cosmos World Foundation Model Platform for Physical AI	text/cosmos2025.txt	pdf/cosmos2025.pdf
+dreamerv3_2023	wm	2025	2582	Mastering diverse control tasks through world models	text/dreamerv3_2023.txt	pdf/dreamerv3_2023.pdf
+openvla2024	vla	2025	4340	OpenVLA: An Open-Source Vision-Language-Action Model	text/openvla2024.txt	pdf/openvla2024.pdf
+pi0_2024	vla	2025	3826	π₀: A Vision-Language-Action Flow Model for General Robot Control	text/pi0_2024.txt	pdf/pi0_2024.pdf
+r1_2025	tf	2025	19306	DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning	text/r1_2025.txt	pdf/r1_2025.pdf
+vjepa2_2025	wm	2025	1360	V-JEPA 2: Self-Supervised Video Models Enable Understanding, Prediction and Planning	text/vjepa2_2025.txt	pdf/vjepa2_2025.pdf

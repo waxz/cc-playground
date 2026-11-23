@@ -1,1 +1,5 @@
 checkpoints/
+survey/pdf/
+survey/text/
+survey/build/
+survey/__pycache__/

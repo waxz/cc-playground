@@ -1,0 +1,1243 @@
+{
+ "rumelhart1986": {
+  "authors": [
+   "David E. Rumelhart",
+   "Geoffrey E. Hinton",
+   "Ronald J. Williams"
+  ],
+  "venue": "Nature",
+  "doi": "https://doi.org/10.1038/323533a0"
+ },
+ "lstm1997": {
+  "authors": [
+   "Sepp Hochreiter",
+   "J\u00fcrgen Schmidhuber"
+  ],
+  "venue": "Neural Computation",
+  "doi": "https://doi.org/10.1162/neco.1997.9.8.1735"
+ },
+ "lenet1998": {
+  "authors": [
+   "Yann LeCun",
+   "L\u00e9on Bottou",
+   "Yoshua Bengio",
+   "Patrick Haffner"
+  ],
+  "venue": "Proceedings of the IEEE",
+  "doi": "https://doi.org/10.1109/5.726791"
+ },
+ "alexnet2012": {
+  "authors": [
+   "Krizhevsky"
+  ],
+  "venue": null,
+  "doi": null
+ },
+ "word2vec2013": {
+  "authors": [
+   "Tom\u00e1\u0161 Mikolov",
+   "Kai Chen",
+   "Greg S. Corrado",
+   "Dean, Jeffrey"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.1301.3781"
+ },
+ "vae2013": {
+  "authors": [
+   "Diederik P. Kingma",
+   "Max Welling"
+  ],
+  "venue": "UvA-DARE (University of Amsterdam)",
+  "doi": "https://doi.org/10.48550/arxiv.1312.6114"
+ },
+ "gan2014": {
+  "authors": [
+   "Ian Goodfellow",
+   "Jean Pouget-Abadie",
+   "Mehdi Mirza",
+   "Bing Xu",
+   "David Warde-Farley",
+   "Sherjil Ozair",
+   "Aaron C. Courville",
+   "Yoshua Bengio"
+  ],
+  "venue": "neural information processing systems",
+  "doi": "https://doi.org/10.48550/arxiv.1406.2661"
+ },
+ "seq2seq2014": {
+  "authors": [
+   "Ilya Sutskever",
+   "Oriol Vinyals",
+   "Quoc Viet Le"
+  ],
+  "venue": "neural information processing systems",
+  "doi": "https://doi.org/10.48550/arxiv.1409.3215"
+ },
+ "bahdanau2014": {
+  "authors": [
+   "Dzmitry Bahdanau",
+   "Kyunghyun Cho",
+   "Yoshua Bengio"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.1409.0473"
+ },
+ "vgg2014": {
+  "authors": [
+   "Karen Simonyan",
+   "Andrew Zisserman"
+  ],
+  "venue": "Oxford University Research Archive (ORA) (University of Oxford)",
+  "doi": "https://doi.org/10.48550/arxiv.1409.1556"
+ },
+ "adam2014": {
+  "authors": [
+   "Diederik P. Kingma",
+   "Jimmy Lei Ba"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.1412.6980"
+ },
+ "dropout2014": {
+  "authors": [
+   "Nitish Srivastava",
+   "Geoffrey E. Hinton",
+   "Alex Krizhevsky",
+   "Ilya Sutskever",
+   "Ruslan Salakhutdinov"
+  ],
+  "venue": "Journal of Machine Learning Research",
+  "doi": null
+ },
+ "batchnorm2015": {
+  "authors": [
+   "Sergey Ioffe",
+   "Christian Szegedy"
+  ],
+  "venue": "International Conference on Machine Learning",
+  "doi": "https://doi.org/10.48550/arxiv.1502.03167"
+ },
+ "resnet2015": {
+  "authors": [
+   "Kaiming He",
+   "Xiangyu Zhang",
+   "Shaoqing Ren",
+   "Jian Sun"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.1512.03385"
+ },
+ "layernorm2016": {
+  "authors": [
+   "Jimmy Lei Ba",
+   "Jamie Kiros",
+   "Geoffrey E. Hinton"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.1607.06450"
+ },
+ "dqn2013": {
+  "authors": [
+   "Volodymyr Mnih",
+   "Koray Kavukcuoglu",
+   "David Silver",
+   "Alex Graves",
+   "Ioannis Antonoglou",
+   "Daan Wierstra",
+   "Martin Riedmiller"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.1312.5602"
+ },
+ "trpo2015": {
+  "authors": [
+   "John Schulman",
+   "Sergey Levine",
+   "Philipp Moritz",
+   "Michael I. Jordan",
+   "Pieter Abbeel"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.1502.05477"
+ },
+ "ddpg2015": {
+  "authors": [
+   "Timothy Lillicrap",
+   "Jonathan J. Hunt",
+   "Alexander Pritzel",
+   "Nicolas Heess",
+   "Tom Erez",
+   "Yuval Tassa",
+   "David Silver",
+   "Daan Wierstra"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.1509.02971"
+ },
+ "a3c2016": {
+  "authors": [
+   "Volodymyr Mnih",
+   "Adri\u00e0 Puigdom\u00e8nech Badia",
+   "Mehdi Mirza",
+   "Alex Graves",
+   "Timothy Lillicrap",
+   "Tim Harley",
+   "David Silver",
+   "Koray Kavukcuoglu"
+  ],
+  "venue": "International Conference on Machine Learning",
+  "doi": "https://doi.org/10.48550/arxiv.1602.01783"
+ },
+ "alphago2016": {
+  "authors": [
+   "David Silver",
+   "Aja Huang",
+   "Chris J. Maddison",
+   "Arthur Guez",
+   "Laurent Sifre",
+   "George van den Driessche",
+   "Julian Schrittwieser",
+   "Ioannis Antonoglou",
+   "Vedavyas Panneershelvam",
+   "Marc Lanctot",
+   "Sander Dieleman",
+   "Dominik Grewe",
+   "John Nham",
+   "Nal Kalchbrenner",
+   "Ilya Sutskever",
+   "Timothy Lillicrap",
+   "Madeleine Leach",
+   "Koray Kavukcuoglu",
+   "Thore Graepel",
+   "Demis Hassabis"
+  ],
+  "venue": "Nature",
+  "doi": "https://doi.org/10.1038/nature16961"
+ },
+ "ppo2017": {
+  "authors": [
+   "John Schulman",
+   "Filip Wolski",
+   "Prafulla Dhariwal",
+   "Alec Radford",
+   "Oleg Klimov"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.1707.06347"
+ },
+ "alphazero2017": {
+  "authors": [
+   "David Silver",
+   "Thomas Hubert",
+   "Julian Schrittwieser",
+   "Ioannis Antonoglou",
+   "Matthew Lai",
+   "Arthur Guez",
+   "Marc Lanctot",
+   "Laurent Sifre",
+   "Dharshan Kumaran",
+   "Thore Graepel",
+   "Timothy Lillicrap",
+   "Karen Simonyan",
+   "Demis Hassabis"
+  ],
+  "venue": "Science",
+  "doi": "https://doi.org/10.1126/science.aar6404"
+ },
+ "sac2018": {
+  "authors": [
+   "Tuomas Haarnoja",
+   "Aurick Zhou",
+   "Pieter Abbeel",
+   "Sergey Levine"
+  ],
+  "venue": "International Conference on Machine Learning",
+  "doi": "https://doi.org/10.48550/arxiv.1801.01290"
+ },
+ "transformer2017": {
+  "authors": [
+   "Ashish Vaswani",
+   "Noam Shazeer",
+   "Niki Parmar",
+   "Jakob Uszkoreit",
+   "Llion Jones",
+   "Aidan N. Gomez",
+   "\u0141ukasz Kaiser",
+   "Illia Polosukhin"
+  ],
+  "venue": "neural information processing systems",
+  "doi": "https://doi.org/10.48550/arxiv.1706.03762"
+ },
+ "bert2018": {
+  "authors": [
+   "Jacob Devlin",
+   "Ming-Wei Chang",
+   "Kenton Lee",
+   "Kristina Toutanova"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.1810.04805"
+ },
+ "gpt3_2020": {
+  "authors": [
+   "Brown, Tom B.",
+   "Benjamin Mann",
+   "Nick Ryder",
+   "Melanie Subbiah",
+   "Jared Kaplan",
+   "Prafulla Dhariwal",
+   "Arvind Neelakantan",
+   "Pranav Shyam",
+   "Girish Sastry",
+   "Amanda Askell",
+   "Sandhini Agarwal",
+   "Ariel Herbert-Voss",
+   "Gretchen Marie Krueger",
+   "Tom Henighan",
+   "Rewon Child",
+   "Ramesh, Aditya",
+   "Ziegler, Daniel M.",
+   "Jeffrey Wu",
+   "Clemens Winter",
+   "Christopher Hesse",
+   "Mark I-Cheng Chen",
+   "Sigler, Eric",
+   "Mateusz Litwin",
+   "Scott Gray",
+   "Benjamin Chess",
+   "Jack Clark",
+   "Christopher Berner",
+   "Sam McCandlish",
+   "Alec Radford",
+   "Ilya Sutskever",
+   "Dario Amodei"
+  ],
+  "venue": "neural information processing systems",
+  "doi": "https://doi.org/10.48550/arxiv.2005.14165"
+ },
+ "scaling2020": {
+  "authors": [
+   "Jared Kaplan",
+   "Sam McCandlish",
+   "Tom Henighan",
+   "Brown, Tom B.",
+   "Benjamin Chess",
+   "Rewon Child",
+   "Scott Gray",
+   "Alec Radford",
+   "Jeffrey Wu",
+   "Dario Amodei"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.2001.08361"
+ },
+ "vit2020": {
+  "authors": [
+   "Alexey Dosovitskiy",
+   "Lucas Beyer",
+   "Alexander Kolesnikov",
+   "Dirk Weissenborn",
+   "Xiaohua Zhai",
+   "Thomas Unterthiner",
+   "Mostafa Dehghani",
+   "Matthias Minderer",
+   "Georg Heigold",
+   "Sylvain Gelly",
+   "Jakob Uszkoreit",
+   "Neil Houlsby"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.2010.11929"
+ },
+ "clip2021": {
+  "authors": [
+   "Alec Radford",
+   "Jong Wook Kim",
+   "Chris Hallacy",
+   "Ramesh, Aditya",
+   "Gabriel Goh",
+   "Sandhini Agarwal",
+   "Girish Sastry",
+   "Amanda Askell",
+   "Pamela Mishkin",
+   "Jack Clark",
+   "Gretchen Marie Krueger",
+   "Ilya Sutskever"
+  ],
+  "venue": "International Conference on Machine Learning",
+  "doi": "https://doi.org/10.48550/arxiv.2103.00020"
+ },
+ "rope2021": {
+  "authors": [
+   "Jianlin Su",
+   "Murtadha Ahmed",
+   "Yu Lu",
+   "Shengfeng Pan",
+   "Bo Wen",
+   "Yunfeng Liu"
+  ],
+  "venue": "Neurocomputing",
+  "doi": "https://doi.org/10.1016/j.neucom.2023.127063"
+ },
+ "flashattn2022": {
+  "authors": [
+   "Tri Dao",
+   "Daniel Y. Fu",
+   "Stefano Ermon",
+   "Atri Rudra",
+   "Christopher R\u00e9"
+  ],
+  "venue": "neural information processing systems",
+  "doi": "https://doi.org/10.52202/068431-1189"
+ },
+ "cot2022": {
+  "authors": [
+   "Jason Wei",
+   "Xuezhi Wang",
+   "Dale Schuurmans",
+   "Maarten Bosma",
+   "Brian Ichter",
+   "Fei Xia",
+   "Ed Chi",
+   "Quoc Viet Le",
+   "Denny Zhou"
+  ],
+  "venue": "neural information processing systems",
+  "doi": "https://doi.org/10.52202/068431-1800"
+ },
+ "instructgpt2022": {
+  "authors": [
+   "Long Ouyang",
+   "Jeff Wu",
+   "Xu Jiang",
+   "Diogo Almeida",
+   "Carroll L. Wainwright",
+   "Pamela Mishkin",
+   "Chong Zhang",
+   "Sandhini Agarwal",
+   "Katarina Slama",
+   "Alex Ray",
+   "John Schulman",
+   "Jacob K. Hilton",
+   "Fraser Kelton",
+   "Miller, Luke",
+   "Maddie Simens",
+   "Amanda Askell",
+   "Peter Welinder",
+   "Christiano, Paul",
+   "Jan Leike",
+   "Lowe, Ryan"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.2203.02155"
+ },
+ "chinchilla2022": {
+  "authors": [
+   "Jordan Hoffmann",
+   "Sebastian Borgeaud",
+   "Arthur Mensch",
+   "Elena Buchatskaya",
+   "Trevor Cai",
+   "Eliza Rutherford",
+   "Diego de Las Casas",
+   "Lisa Anne Hendricks",
+   "Johannes Welbl",
+   "Aidan Clark",
+   "Thomas Anthony Hennigan",
+   "Eric Noland",
+   "Katherine Millican",
+   "George van den Driessche",
+   "Bogdan Damoc",
+   "Aurelia Guy",
+   "Simon Osindero",
+   "Karen Simonyan",
+   "Erich Elsen",
+   "Oriol Vinyals",
+   "Jack W. Rae",
+   "Laurent Sifre"
+  ],
+  "venue": "neural information processing systems",
+  "doi": "https://doi.org/10.52202/068431-2176"
+ },
+ "flamingo2022": {
+  "authors": [
+   "Jean-Baptiste Alayrac",
+   "Jeff Donahue",
+   "Pauline Luc",
+   "Antoine Miech",
+   "Barr, Iain",
+   "Yana Hasson",
+   "Karel Lenc",
+   "Arthur Mensch",
+   "Katie Millican",
+   "Malcolm Reynolds",
+   "Roman Ring",
+   "Eliza Rutherford",
+   "Serkan Cabi",
+   "Tengda Han",
+   "Gong, Zhitao",
+   "Sina Samangooei",
+   "Marianne Monteiro",
+   "Jacob Menick",
+   "Sebastian Borgeaud",
+   "Brock, Andrew",
+   "Aida Nematzadeh",
+   "Sahand Sharifzadeh",
+   "Miko\u0142aj Bi\u0144kowski",
+   "Ricardo Barreira",
+   "Oriol Vinyals",
+   "Andrew Zisserman",
+   "Karen Simonyan"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.2204.14198"
+ },
+ "llama2023": {
+  "authors": [
+   "Hugo Touvron",
+   "Thibaut Lavril",
+   "Gautier Izacard",
+   "Xavier Martinet",
+   "Marie-Anne Lachaux",
+   "Timoth\u00e9e Lacroix",
+   "Baptiste Rozi\u00e8re",
+   "Naman Goyal",
+   "Eric Hambro",
+   "Azhar, Faisal",
+   "Aurelien Rodriguez",
+   "Armand Joulin",
+   "\u00c9douard Grave",
+   "Guillaume Lample"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.2302.13971"
+ },
+ "llava2023": {
+  "authors": [
+   "Haotian Liu",
+   "Chunyuan Li",
+   "Qingyang Wu",
+   "Yong Jae Lee"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.2304.08485"
+ },
+ "dpo2023": {
+  "authors": [
+   "Rafael Rafailov",
+   "Archit Sharma",
+   "Eric Mitchell",
+   "Christopher D. Manning",
+   "Stefano Ermon",
+   "Chelsea Finn"
+  ],
+  "venue": "neural information processing systems",
+  "doi": "https://doi.org/10.52202/075280-2338"
+ },
+ "mamba2023": {
+  "authors": [
+   "Albert Gu",
+   "Tri Dao"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.2312.00752"
+ },
+ "r1_2025": {
+  "authors": [
+   "Daya Guo",
+   "Dejian Yang",
+   "Haowei Zhang",
+   "Junxiao Song",
+   "Peiyi Wang",
+   "Qihao Zhu",
+   "Runxin Xu",
+   "Ruoyu Zhang",
+   "Shirong Ma",
+   "Xiao Bi",
+   "Xiaokang Zhang",
+   "Xingkai Yu",
+   "Yu Wu",
+   "Z. F. Wu",
+   "Zhibin Gou",
+   "Zhihong Shao",
+   "Zhuoshu Li",
+   "Ziyi Gao",
+   "Aixin Liu",
+   "Bing Xue",
+   "Bingxuan Wang",
+   "Bowen Wu",
+   "Bei Feng",
+   "Chengda Lu",
+   "Chenggang Zhao",
+   "Chengqi Deng",
+   "Chong Ruan",
+   "Damai Dai",
+   "Deli Chen",
+   "Dongjie Ji",
+   "Erhang Li",
+   "Fangyun Lin",
+   "Fucong Dai",
+   "Fuli Luo",
+   "Guangbo Hao",
+   "Guan-Ting Chen",
+   "Guowei Li",
+   "H. Zhang",
+   "Hanwei Xu",
+   "Honghui Ding",
+   "Huazuo Gao",
+   "Hui Qu",
+   "Hui Li",
+   "Jianzhong Guo",
+   "Jiashi Li",
+   "Jingchang Chen",
+   "Jingyang Yuan",
+   "Jinhao Tu",
+   "Junjie Qiu",
+   "Junlong Li",
+   "J. L. Cai",
+   "Jiaqi Ni",
+   "Jian Liang",
+   "Jing Chen",
+   "Kai Dong",
+   "Kai Cheng Hu",
+   "Kaichao You",
+   "Kaige Gao",
+   "Kang Guan",
+   "Kexin Huang",
+   "Kuai Yu",
+   "Lean Wang",
+   "Lecong Zhang",
+   "Liang Zhao",
+   "Litong Wang",
+   "Liyue Zhang",
+   "Lei Xu",
+   "L. Xia",
+   "Mingchuan Zhang",
+   "Minghua Zhang",
+   "Minghui Tang",
+   "Mingxu Zhou",
+   "Meng Li",
+   "Miaojun Wang",
+   "Mingming Li",
+   "Ning Tian",
+   "Panpan Huang",
+   "Peng Zhang",
+   "Qiancheng Wang",
+   "Qinyu Chen",
+   "Qiushi Du",
+   "Ruiqi Ge",
+   "Ruisong Zhang",
+   "Ruizhe Pan",
+   "Runji Wang",
+   "R. J. Chen",
+   "Rong Jin",
+   "Ruyi Chen",
+   "Shanghao Lu",
+   "Shangyan Zhou",
+   "Shanhuang Chen",
+   "Shengfeng Ye",
+   "Shiyu Wang",
+   "Shuiping Yu",
+   "Shunfeng Zhou",
+   "Shuting Pan",
+   "Sansan Li",
+   "Shuang Zhou",
+   "Shaoqing Wu",
+   "Tao Yun",
+   "Tian Pei",
+   "Tianyu Sun",
+   "T. Wang",
+   "Wangding Zeng",
+   "Wen Liu",
+   "Wenfeng Liang",
+   "Wenjun Gao",
+   "Wenqin Yu",
+   "Wentao Zhang",
+   "W. L. Xiao",
+   "Wei An",
+   "Xiaodong Liu",
+   "Xiaohan Wang",
+   "Xiaokang Chen",
+   "Xiaotao Nie",
+   "Xin Cheng",
+   "Xin Liu",
+   "Xin Nan Xie",
+   "Xingchao Liu",
+   "Xinyu Yang",
+   "Xinyuan Li",
+   "X.-J Su",
+   "Xuheng Lin",
+   "X. Q. Li",
+   "Xiangyue Jin",
+   "Xiaojin Shen",
+   "Xiaosha Chen",
+   "Xiaowen Sun",
+   "Xiaoxiang Wang",
+   "Xinnan Song",
+   "Xinyi Zhou",
+   "X.G. Wang",
+   "Xinxia Shan",
+   "Y. K. Li",
+   "Yufei Wang",
+   "Y. X. Wei",
+   "Yang Zhang",
+   "Yanhong Xu",
+   "Yao Li",
+   "Yao Zhao",
+   "Yaofeng Sun",
+   "Yaohui Wang",
+   "Yi Yu",
+   "Yichao Zhang",
+   "Yifan Shi",
+   "Yiliang Xiong",
+   "Ying He",
+   "Yishi Piao",
+   "Yisong Wang",
+   "Yixuan Tan",
+   "Yiyang Ma",
+   "Yiyuan Liu",
+   "Yongqiang Guo",
+   "Yangjie Ou",
+   "Yuduan Wang",
+   "Yue Gong",
+   "Yuheng Zou",
+   "Yujia He",
+   "Yunfan Xiong",
+   "Yuxiang Luo",
+   "Yuxiang You",
+   "Yuxuan Liu",
+   "Yuyang Zhou",
+   "Yuxin Zhu",
+   "Yanping Huang",
+   "Yaohui Li",
+   "Yi Zheng",
+   "Yuchen Zhu",
+   "Yunxian Ma",
+   "Ying Tang",
+   "Yukun Zha",
+   "Yuting Yan",
+   "Z. Z. Ren",
+   "Zehui Ren",
+   "Zhangli Sha",
+   "Zhe Fu",
+   "Zhean Xu",
+   "Zhenda Xie",
+   "Zhengyan Zhang",
+   "Zhewen Hao",
+   "Zhicheng Ma",
+   "Zhigang Yan",
+   "Zhiyu Wu",
+   "Zihui Gu",
+   "Zijia Zhu",
+   "Zijun Liu",
+   "Zilin Li",
+   "Ziwei Xie",
+   "Ziyang Song",
+   "Zizheng Pan",
+   "Zhen Huang",
+   "Zhipeng Xu",
+   "Zhongyu Zhang",
+   "Zhen Zhang"
+  ],
+  "venue": "Nature",
+  "doi": "https://doi.org/10.1038/s41586-025-09422-z"
+ },
+ "ddpm2020": {
+  "authors": [
+   "Jonathan Ho",
+   "Ajay Jain",
+   "Pieter Abbeel"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.2006.11239"
+ },
+ "scoresde2020": {
+  "authors": [
+   "Yang Sup Song",
+   "Jascha Sohl\u2010Dickstein",
+   "Diederik P. Kingma",
+   "Kumar, Abhishek",
+   "Stefano Ermon",
+   "Ben Poole"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.2011.13456"
+ },
+ "ldm2021": {
+  "authors": [
+   "Robin Rombach",
+   "Andreas Blattmann",
+   "Dominik Lorenz",
+   "Patrick Esser",
+   "Bj\u00f6rn Ommer"
+  ],
+  "venue": "IEEE Computer Society Conference on Computer Vision and Pattern Recognition/Proceedings - IEEE Computer Society Conference on Computer Vision and Pattern Recognition/Proceedings",
+  "doi": "https://doi.org/10.1109/cvpr52688.2022.01042"
+ },
+ "cfg2022": {
+  "authors": [
+   "Jonathan Ho",
+   "Tim Salimans"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.2207.12598"
+ },
+ "flowmatching2022": {
+  "authors": [
+   "Yaron Lipman",
+   "Ricky T. Q. Chen",
+   "Heli Ben-Hamu",
+   "Maximilian Nickel",
+   "Matthew Le"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.2210.02747"
+ },
+ "rectflow2022": {
+  "authors": [
+   "Xingchao Liu",
+   "Chengyue Gong",
+   "Qiang Liu"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.2209.03003"
+ },
+ "dit2022": {
+  "authors": [
+   "William Peebles",
+   "Saining Xie"
+  ],
+  "venue": "IEEE/CVF International Conference on Computer Vision (ICCV)",
+  "doi": "https://doi.org/10.1109/iccv51070.2023.00387"
+ },
+ "diffpolicy2023": {
+  "authors": [
+   "Cheng Chi",
+   "Siyuan Feng",
+   "Yilun Du",
+   "Zhenjia Xu",
+   "Eric A. Cousineau",
+   "Benjamin Burchfiel",
+   "Shuran Song"
+  ],
+  "venue": "Robotics: Science and Systems",
+  "doi": "https://doi.org/10.15607/rss.2023.xix.026"
+ },
+ "sd3_2024": {
+  "authors": [
+   "Esser, Patrick",
+   "Sumith Kulal",
+   "Andreas Blattmann",
+   "Rahim Entezari",
+   "Jonas M\u00fcller",
+   "Harry Saini",
+   "Yam Levi",
+   "Dominik Lorenz",
+   "Axel Sauer",
+   "Frederic Boesel",
+   "Dustin Podell",
+   "Tim Dockhorn",
+   "Zion English",
+   "Kyle Lacey",
+   "Alex Goodwin",
+   "Yannik Marek",
+   "Robin Rombach"
+  ],
+  "venue": "International Conference on Machine Learning",
+  "doi": "https://doi.org/10.48550/arxiv.2403.03206"
+ },
+ "rt2_2023": {
+  "authors": [
+   "Anthony Brohan",
+   "Noah Brown",
+   "Justice Carbajal",
+   "Yevgen Chebotar",
+   "Chen, Xi",
+   "Krzysztof Choroma\u0144ski",
+   "Tianli Ding",
+   "Danny Driess",
+   "Avinava Dubey",
+   "Chelsea Finn",
+   "Pete Florence",
+   "Chuyuan Fu",
+   "Montse Gonzalez Arenas",
+   "Keerthana Gopalakrishnan",
+   "Kehang Han",
+   "Karol Hausman",
+   "Alexander Herzog",
+   "Jasmine Hsu",
+   "Brian Ichter",
+   "Alex Irpan",
+   "Joshi, Nikhil",
+   "Ryan Julian",
+   "Kalashnikov, Dmitry",
+   "Yuheng Kuang",
+   "Isabel Maria Pereira Leal",
+   "Lisa Lee",
+   "Tsang-Wei Edward Lee",
+   "Sergey Levine",
+   "Yao Lu",
+   "Henryk Michalewski",
+   "Igor Mordatch",
+   "Karl Pertsch",
+   "Kanishka Rao",
+   "Krista Reymann",
+   "Michael S. Ryoo",
+   "Grecia Salazar",
+   "Pannag Sanketi",
+   "Pierre Sermanet",
+   "Jaspiar Singh",
+   "Anikait Singh",
+   "Radu Soricut",
+   "Huong Tran",
+   "Vincent Vanhoucke",
+   "Quan Vuong",
+   "Ayzaan Wahid",
+   "Stefan Welker",
+   "Paul Wohlhart",
+   "Jialin Wu",
+   "Fei Xia",
+   "Ted G. Xiao",
+   "Peng Xu",
+   "Sichun Xu",
+   "Tianhe Yu",
+   "Brianna Zitkovich"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.2307.15818"
+ },
+ "openvla2024": {
+  "authors": [
+   "Moo Jin Kim",
+   "Karl Pertsch",
+   "Siddharth Karamcheti",
+   "Ted G. Xiao",
+   "Ashwin Balakrishna",
+   "Suraj Nair",
+   "Rafael Rafailov",
+   "Ethan Foster",
+   "Lam, Grace",
+   "Pannag Sanketi",
+   "Quan Vuong",
+   "Thomas Kollar",
+   "Benjamin Burchfiel",
+   "Russ Tedrake",
+   "Dorsa Sadigh",
+   "Sergey Levine",
+   "Percy Liang",
+   "Chelsea Finn"
+  ],
+  "venue": "Conference on Robot Learning",
+  "doi": "https://doi.org/10.48550/arxiv.2406.09246"
+ },
+ "pi0_2024": {
+  "authors": [
+   "Kevin Black",
+   "Noah Brown",
+   "Danny Driess",
+   "Adnan Esmail",
+   "Michael Equi",
+   "Chelsea Finn",
+   "Niccolo Fusai",
+   "Lachy Groom",
+   "Karol Hausman",
+   "Brian Ichter",
+   "Szymon Jakubczak",
+   "Tim Jones",
+   "Liyiming Ke",
+   "Sergey Levine",
+   "Adrian Li",
+   "Mohith Mothukuri",
+   "Suraj Nair",
+   "Karl Pertsch",
+   "Lucy Shi",
+   "Laura Smith",
+   "James Tanner",
+   "Quan Vuong",
+   "Anna Walling",
+   "Haohuan Wang",
+   "Ury Zhilinsky"
+  ],
+  "venue": "Robotics: Science and Systems",
+  "doi": "https://doi.org/10.15607/rss.2025.xxi.010"
+ },
+ "worldmodels2018": {
+  "authors": [
+   "David Ha",
+   "J\u00fcrgen Schmidhuber"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.5281/zenodo.1207631"
+ },
+ "planet2018": {
+  "authors": [
+   "Danijar Hafner",
+   "Timothy Lillicrap",
+   "Ian Fischer",
+   "Ruben Villegas",
+   "David Ha",
+   "Honglak Lee",
+   "James Davidson"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.1811.04551"
+ },
+ "simple2019": {
+  "authors": [
+   "\u0141ukasz Kaiser",
+   "Mohammad Babaeizadeh",
+   "Piotr Mi\u0142o\u015b",
+   "B\u0142a\u017cej Osi\u0144ski",
+   "Roy H. Campbell",
+   "Czechowski, Konrad",
+   "Dumitru Erhan",
+   "Chelsea Finn",
+   "Kozakowski, Piotr",
+   "Sergey Levine",
+   "Afroz Mohiuddin",
+   "Ryan Sepassi",
+   "George Tucker",
+   "Henryk Michalewski"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.1903.00374"
+ },
+ "mbpo2019": {
+  "authors": [
+   "Janner, Michael",
+   "Justin Fu",
+   "Marvin Zhang",
+   "Sergey Levine"
+  ],
+  "venue": "neural information processing systems",
+  "doi": "https://doi.org/10.48550/arxiv.1906.08253"
+ },
+ "dreamer2019": {
+  "authors": [
+   "Danijar Hafner",
+   "Timothy Lillicrap",
+   "Jimmy Lei Ba",
+   "Mohammad Norouzi"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.1912.01603"
+ },
+ "muzero2019": {
+  "authors": [
+   "Julian Schrittwieser",
+   "Ioannis Antonoglou",
+   "Thomas Hubert",
+   "Karen Simonyan",
+   "Laurent Sifre",
+   "Simon Schmitt",
+   "Arthur Guez",
+   "Edward Lockhart",
+   "Demis Hassabis",
+   "Thore Graepel",
+   "Timothy Lillicrap",
+   "David Silver"
+  ],
+  "venue": "Nature",
+  "doi": "https://doi.org/10.1038/s41586-020-03051-4"
+ },
+ "dreamerv2_2020": {
+  "authors": [
+   "Danijar Hafner",
+   "Timothy Lillicrap",
+   "Mohammad Norouzi",
+   "Jimmy Lei Ba"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.2010.02193"
+ },
+ "dreamerv3_2023": {
+  "authors": [
+   "Danijar Hafner",
+   "Jurgis Pa\u0161ukonis",
+   "Jimmy Lei Ba",
+   "Timothy Lillicrap"
+  ],
+  "venue": "Nature",
+  "doi": "https://doi.org/10.1038/s41586-025-08744-2"
+ },
+ "ijepa2023": {
+  "authors": [
+   "Mahmoud Assran",
+   "Quentin Duval",
+   "Ishan Misra",
+   "Piotr Bojanowski",
+   "Pascal Vincent",
+   "Michael Rabbat",
+   "Yann LeCun",
+   "Nicolas Ballas"
+  ],
+  "venue": "IEEE Computer Society Conference on Computer Vision and Pattern Recognition/Proceedings - IEEE Computer Society Conference on Computer Vision and Pattern Recognition/Proceedings",
+  "doi": "https://doi.org/10.1109/cvpr52729.2023.01499"
+ },
+ "genie2024": {
+  "authors": [
+   "Jake Bruce",
+   "Dennis, Michael",
+   "Edwards, Ashley",
+   "Jack Parker-Holder",
+   "Yuge Shi",
+   "Edward Hughes",
+   "Matthew Lai",
+   "Aditi Mavalankar",
+   "Richie Steigerwald",
+   "Chris Apps",
+   "Yusuf Aytar",
+   "Sarah Bechtle",
+   "Feryal Behbahani",
+   "Stephanie Chan",
+   "Nicolas Heess",
+   "Lucy Gonz\u00e1lez",
+   "Simon Osindero",
+   "Sherjil Ozair",
+   "Scott Reed",
+   "Jingwei Zhang",
+   "Konrad \u017bo\u0142na",
+   "Jeff Clune",
+   "Nando de Freitas",
+   "Satinder Pal Singh",
+   "Tim Rockt\u00e4schel"
+  ],
+  "venue": "International Conference on Machine Learning",
+  "doi": "https://doi.org/10.48550/arxiv.2402.15391"
+ },
+ "diamond2024": {
+  "authors": [
+   "Eloi Alonso",
+   "Adam Jelley",
+   "Vincent Micheli",
+   "Anssi Kanervisto",
+   "Amos Storkey",
+   "Tim Pearce",
+   "Fran\u00e7ois Fleuret"
+  ],
+  "venue": "neural information processing systems",
+  "doi": "https://doi.org/10.52202/079017-1873"
+ },
+ "cosmos2025": {
+  "authors": [
+   "NVIDIA",
+   ":",
+   "Niket Agarwal",
+   "Arslan Ali",
+   "Bala, Maciej",
+   "Yogesh Balaji",
+   "Barker, Erik",
+   "Tiffany Cai",
+   "Prithvijit Chattopadhyay",
+   "Yongxin Chen",
+   "Cui, Yin",
+   "Yifan Ding",
+   "Daniel Dworakowski",
+   "Jiaojiao Fan",
+   "Michele Fenzi",
+   "Francesco Ferroni",
+   "Sanja Fidler",
+   "Dieter Fox",
+   "Songwei Ge",
+   "Yunhao Ge",
+   "Jinwei Gu",
+   "Siddharth Gururani",
+   "Ethan He",
+   "Jiahui Huang",
+   "Huffman, Jacob",
+   "Pooya Jannaty",
+   "Jin, Jingyi",
+   "Seung Wook Kim",
+   "Gergely Kl\u00e1r",
+   "Lam, Grace",
+   "Shiyi Lan",
+   "Laura Leal-Taix\u00e9",
+   "Anqi Li",
+   "Zhaoshuo Li",
+   "Chen-Hsuan Lin",
+   "Tsung\u2010Yi Lin",
+   "Ling, Huan",
+   "Mingyu Liu",
+   "Xian Liu",
+   "Luo, Alice",
+   "Qianli Ma",
+   "Hanzi Mao",
+   "Kaichun Mo",
+   "Arsalan Mousavian",
+   "Seungjun Nah",
+   "Sriharsha Niverty",
+   "Page, David",
+   "Despoina Paschalidou",
+   "Patel, Zeeshan",
+   "Lindsey Pavao",
+   "Morteza Ramezanali",
+   "Fitsum A. Reda",
+   "Ren, Xiaowei",
+   "Vasanth Rao Naik Sabavat",
+   "Edward Schmerling",
+   "Stella Shi",
+   "Bartosz Stefaniak",
+   "Shitao Tang",
+   "Lyne P. Tchapmi",
+   "Przemek Tredak",
+   "Tseng, Wei-Cheng",
+   "Jibin Varghese",
+   "Hao Wang",
+   "Haoxiang Wang",
+   "Heng Wang",
+   "Ting-Chun Wang",
+   "Fangyin Wei",
+   "Wei, Xinyue",
+   "Jay Zhangjie Wu",
+   "Jiashu Xu",
+   "Yang, Wei",
+   "Yen-Chen Lin",
+   "Xiaohui Zeng",
+   "Yu Zeng",
+   "Jing Zhang",
+   "Qinsheng Zhang",
+   "Yuxuan Zhang",
+   "Qingqing Zhao",
+   "Artur Zolkowski"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.2501.03575"
+ },
+ "vjepa2_2025": {
+  "authors": [
+   "Assran, Mido",
+   "Adrien Bardes",
+   "Fan, David",
+   "Quentin Garrido",
+   "Russell Howes",
+   "Mojtaba",
+   "Komeili",
+   "Matthew J. Muckley",
+   "Ammar Rizvi",
+   "Roberts, Claire",
+   "Koustuv Sinha",
+   "Artem Zholus",
+   "Sergio Arnaud",
+   "Abha Gejji",
+   "Ada Martin",
+   "Fran\u00e7ois Robert Hogan",
+   "Daniel Dugas",
+   "Piotr Bojanowski",
+   "Vasil Khalidov",
+   "Patrick Labatut",
+   "Francisco Massa",
+   "Marc Szafraniec",
+   "Kapil Krishnakumar",
+   "Yong Li",
+   "Ma, Xiaodong",
+   "Sarath Chandar",
+   "Franziska Meier",
+   "Yann LeCun",
+   "Michael Rabbat",
+   "Nicolas Ballas"
+  ],
+  "venue": "arXiv (Cornell University)",
+  "doi": "https://doi.org/10.48550/arxiv.2506.09985"
+ }
+}

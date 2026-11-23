@@ -1,0 +1,2346 @@
+[
+ {
+  "id": "rumelhart1986",
+  "type": "article-journal",
+  "title": "Learning representations by back-propagating errors",
+  "author": [
+   {
+    "family": "Rumelhart",
+    "given": "David E."
+   },
+   {
+    "family": "Hinton",
+    "given": "Geoffrey E."
+   },
+   {
+    "family": "Williams",
+    "given": "Ronald J."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     1986
+    ]
+   ]
+  },
+  "container-title": "Nature",
+  "DOI": "10.1038/323533a0"
+ },
+ {
+  "id": "lstm1997",
+  "type": "article-journal",
+  "title": "Long Short-Term Memory",
+  "author": [
+   {
+    "family": "Hochreiter",
+    "given": "Sepp"
+   },
+   {
+    "family": "Schmidhuber",
+    "given": "Jürgen"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     1997
+    ]
+   ]
+  },
+  "container-title": "Neural Computation",
+  "DOI": "10.1162/neco.1997.9.8.1735"
+ },
+ {
+  "id": "lenet1998",
+  "type": "article-journal",
+  "title": "Gradient-based learning applied to document recognition",
+  "author": [
+   {
+    "family": "LeCun",
+    "given": "Yann"
+   },
+   {
+    "family": "Bottou",
+    "given": "Léon"
+   },
+   {
+    "family": "Bengio",
+    "given": "Yoshua"
+   },
+   {
+    "family": "Haffner",
+    "given": "Patrick"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     1998
+    ]
+   ]
+  },
+  "container-title": "Proceedings of the IEEE",
+  "DOI": "10.1109/5.726791"
+ },
+ {
+  "id": "alexnet2012",
+  "type": "article-journal",
+  "title": "ImageNet classification with deep convolutional neural networks",
+  "author": [
+   {
+    "literal": "Krizhevsky"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2012
+    ]
+   ]
+  },
+  "container-title": "Advances in Neural Information Processing Systems"
+ },
+ {
+  "id": "word2vec2013",
+  "type": "article",
+  "title": "Efficient Estimation of Word Representations in Vector Space",
+  "author": [
+   {
+    "family": "Mikolov",
+    "given": "Tomáš"
+   },
+   {
+    "family": "Chen",
+    "given": "Kai"
+   },
+   {
+    "family": "Corrado",
+    "given": "Greg S."
+   },
+   {
+    "family": "Dean",
+    "given": "Jeffrey"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2013
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1301.3781",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "vae2013",
+  "type": "article",
+  "title": "Auto-Encoding Variational Bayes",
+  "author": [
+   {
+    "family": "Kingma",
+    "given": "Diederik P."
+   },
+   {
+    "family": "Welling",
+    "given": "Max"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2013
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1312.6114",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "gan2014",
+  "type": "article",
+  "title": "Generative Adversarial Networks",
+  "author": [
+   {
+    "family": "Goodfellow",
+    "given": "Ian"
+   },
+   {
+    "family": "Pouget-Abadie",
+    "given": "Jean"
+   },
+   {
+    "family": "Mirza",
+    "given": "Mehdi"
+   },
+   {
+    "family": "Xu",
+    "given": "Bing"
+   },
+   {
+    "family": "Warde-Farley",
+    "given": "David"
+   },
+   {
+    "family": "Ozair",
+    "given": "Sherjil"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2014
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1406.2661",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "seq2seq2014",
+  "type": "article",
+  "title": "Sequence to Sequence Learning with Neural Networks",
+  "author": [
+   {
+    "family": "Sutskever",
+    "given": "Ilya"
+   },
+   {
+    "family": "Vinyals",
+    "given": "Oriol"
+   },
+   {
+    "family": "Le",
+    "given": "Quoc Viet"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2014
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1409.3215",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "bahdanau2014",
+  "type": "article",
+  "title": "Neural Machine Translation by Jointly Learning to Align and Translate",
+  "author": [
+   {
+    "family": "Bahdanau",
+    "given": "Dzmitry"
+   },
+   {
+    "family": "Cho",
+    "given": "Kyunghyun"
+   },
+   {
+    "family": "Bengio",
+    "given": "Yoshua"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2014
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1409.0473",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "vgg2014",
+  "type": "article",
+  "title": "Very Deep Convolutional Networks for Large-Scale Image Recognition",
+  "author": [
+   {
+    "family": "Simonyan",
+    "given": "Karen"
+   },
+   {
+    "family": "Zisserman",
+    "given": "Andrew"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2014
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1409.1556",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "adam2014",
+  "type": "article",
+  "title": "Adam: A Method for Stochastic Optimization",
+  "author": [
+   {
+    "family": "Kingma",
+    "given": "Diederik P."
+   },
+   {
+    "family": "Ba",
+    "given": "Jimmy Lei"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2014
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1412.6980",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "dropout2014",
+  "type": "article-journal",
+  "title": "Dropout: a simple way to prevent neural networks from overfitting",
+  "author": [
+   {
+    "family": "Srivastava",
+    "given": "Nitish"
+   },
+   {
+    "family": "Hinton",
+    "given": "Geoffrey E."
+   },
+   {
+    "family": "Krizhevsky",
+    "given": "Alex"
+   },
+   {
+    "family": "Sutskever",
+    "given": "Ilya"
+   },
+   {
+    "family": "Salakhutdinov",
+    "given": "Ruslan"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2014
+    ]
+   ]
+  },
+  "container-title": "Journal of Machine Learning Research"
+ },
+ {
+  "id": "batchnorm2015",
+  "type": "article",
+  "title": "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift",
+  "author": [
+   {
+    "family": "Ioffe",
+    "given": "Sergey"
+   },
+   {
+    "family": "Szegedy",
+    "given": "Christian"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2015
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1502.03167",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "resnet2015",
+  "type": "article",
+  "title": "Deep Residual Learning for Image Recognition",
+  "author": [
+   {
+    "family": "He",
+    "given": "Kaiming"
+   },
+   {
+    "family": "Zhang",
+    "given": "Xiangyu"
+   },
+   {
+    "family": "Ren",
+    "given": "Shaoqing"
+   },
+   {
+    "family": "Sun",
+    "given": "Jian"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2015
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1512.03385",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "layernorm2016",
+  "type": "article",
+  "title": "Layer Normalization",
+  "author": [
+   {
+    "family": "Ba",
+    "given": "Jimmy Lei"
+   },
+   {
+    "family": "Kiros",
+    "given": "Jamie"
+   },
+   {
+    "family": "Hinton",
+    "given": "Geoffrey E."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2016
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1607.06450",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "dqn2013",
+  "type": "article",
+  "title": "Playing Atari with Deep Reinforcement Learning",
+  "author": [
+   {
+    "family": "Mnih",
+    "given": "Volodymyr"
+   },
+   {
+    "family": "Kavukcuoglu",
+    "given": "Koray"
+   },
+   {
+    "family": "Silver",
+    "given": "David"
+   },
+   {
+    "family": "Graves",
+    "given": "Alex"
+   },
+   {
+    "family": "Antonoglou",
+    "given": "Ioannis"
+   },
+   {
+    "family": "Wierstra",
+    "given": "Daan"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2013
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1312.5602",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "trpo2015",
+  "type": "article",
+  "title": "Trust Region Policy Optimization",
+  "author": [
+   {
+    "family": "Schulman",
+    "given": "John"
+   },
+   {
+    "family": "Levine",
+    "given": "Sergey"
+   },
+   {
+    "family": "Moritz",
+    "given": "Philipp"
+   },
+   {
+    "family": "Jordan",
+    "given": "Michael I."
+   },
+   {
+    "family": "Abbeel",
+    "given": "Pieter"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2015
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1502.05477",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "ddpg2015",
+  "type": "article",
+  "title": "Continuous control with deep reinforcement learning",
+  "author": [
+   {
+    "family": "Lillicrap",
+    "given": "Timothy"
+   },
+   {
+    "family": "Hunt",
+    "given": "Jonathan J."
+   },
+   {
+    "family": "Pritzel",
+    "given": "Alexander"
+   },
+   {
+    "family": "Heess",
+    "given": "Nicolas"
+   },
+   {
+    "family": "Erez",
+    "given": "Tom"
+   },
+   {
+    "family": "Tassa",
+    "given": "Yuval"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2015
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1509.02971",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "a3c2016",
+  "type": "article",
+  "title": "Asynchronous Methods for Deep Reinforcement Learning",
+  "author": [
+   {
+    "family": "Mnih",
+    "given": "Volodymyr"
+   },
+   {
+    "family": "Badia",
+    "given": "Adrià Puigdomènech"
+   },
+   {
+    "family": "Mirza",
+    "given": "Mehdi"
+   },
+   {
+    "family": "Graves",
+    "given": "Alex"
+   },
+   {
+    "family": "Lillicrap",
+    "given": "Timothy"
+   },
+   {
+    "family": "Harley",
+    "given": "Tim"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2016
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1602.01783",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "alphago2016",
+  "type": "article-journal",
+  "title": "Mastering the game of Go with deep neural networks and tree search",
+  "author": [
+   {
+    "family": "Silver",
+    "given": "David"
+   },
+   {
+    "family": "Huang",
+    "given": "Aja"
+   },
+   {
+    "family": "Maddison",
+    "given": "Chris J."
+   },
+   {
+    "family": "Guez",
+    "given": "Arthur"
+   },
+   {
+    "family": "Sifre",
+    "given": "Laurent"
+   },
+   {
+    "family": "Driessche",
+    "given": "George van den"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2016
+    ]
+   ]
+  },
+  "container-title": "Nature",
+  "DOI": "10.1038/nature16961"
+ },
+ {
+  "id": "ppo2017",
+  "type": "article",
+  "title": "Proximal Policy Optimization Algorithms",
+  "author": [
+   {
+    "family": "Schulman",
+    "given": "John"
+   },
+   {
+    "family": "Wolski",
+    "given": "Filip"
+   },
+   {
+    "family": "Dhariwal",
+    "given": "Prafulla"
+   },
+   {
+    "family": "Radford",
+    "given": "Alec"
+   },
+   {
+    "family": "Klimov",
+    "given": "Oleg"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2017
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1707.06347",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "alphazero2017",
+  "type": "article",
+  "title": "A general reinforcement learning algorithm that masters chess, shogi, and Go through self-play",
+  "author": [
+   {
+    "family": "Silver",
+    "given": "David"
+   },
+   {
+    "family": "Hubert",
+    "given": "Thomas"
+   },
+   {
+    "family": "Schrittwieser",
+    "given": "Julian"
+   },
+   {
+    "family": "Antonoglou",
+    "given": "Ioannis"
+   },
+   {
+    "family": "Lai",
+    "given": "Matthew"
+   },
+   {
+    "family": "Guez",
+    "given": "Arthur"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2017
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1712.01815",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "sac2018",
+  "type": "article",
+  "title": "Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor",
+  "author": [
+   {
+    "family": "Haarnoja",
+    "given": "Tuomas"
+   },
+   {
+    "family": "Zhou",
+    "given": "Aurick"
+   },
+   {
+    "family": "Abbeel",
+    "given": "Pieter"
+   },
+   {
+    "family": "Levine",
+    "given": "Sergey"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2018
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1801.01290",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "transformer2017",
+  "type": "article",
+  "title": "Attention Is All You Need",
+  "author": [
+   {
+    "family": "Vaswani",
+    "given": "Ashish"
+   },
+   {
+    "family": "Shazeer",
+    "given": "Noam"
+   },
+   {
+    "family": "Parmar",
+    "given": "Niki"
+   },
+   {
+    "family": "Uszkoreit",
+    "given": "Jakob"
+   },
+   {
+    "family": "Jones",
+    "given": "Llion"
+   },
+   {
+    "family": "Gomez",
+    "given": "Aidan N."
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2017
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1706.03762",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "bert2018",
+  "type": "article",
+  "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+  "author": [
+   {
+    "family": "Devlin",
+    "given": "Jacob"
+   },
+   {
+    "family": "Chang",
+    "given": "Ming-Wei"
+   },
+   {
+    "family": "Lee",
+    "given": "Kenton"
+   },
+   {
+    "family": "Toutanova",
+    "given": "Kristina"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2018
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1810.04805",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "gpt3_2020",
+  "type": "article",
+  "title": "Language Models are Few-Shot Learners",
+  "author": [
+   {
+    "family": "Brown",
+    "given": "Tom B."
+   },
+   {
+    "family": "Mann",
+    "given": "Benjamin"
+   },
+   {
+    "family": "Ryder",
+    "given": "Nick"
+   },
+   {
+    "family": "Subbiah",
+    "given": "Melanie"
+   },
+   {
+    "family": "Kaplan",
+    "given": "Jared"
+   },
+   {
+    "family": "Dhariwal",
+    "given": "Prafulla"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2020
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2005.14165",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "scaling2020",
+  "type": "article",
+  "title": "Scaling Laws for Neural Language Models",
+  "author": [
+   {
+    "family": "Kaplan",
+    "given": "Jared"
+   },
+   {
+    "family": "McCandlish",
+    "given": "Sam"
+   },
+   {
+    "family": "Henighan",
+    "given": "Tom"
+   },
+   {
+    "family": "Brown",
+    "given": "Tom B."
+   },
+   {
+    "family": "Chess",
+    "given": "Benjamin"
+   },
+   {
+    "family": "Child",
+    "given": "Rewon"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2020
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2001.08361",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "vit2020",
+  "type": "article",
+  "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+  "author": [
+   {
+    "family": "Dosovitskiy",
+    "given": "Alexey"
+   },
+   {
+    "family": "Beyer",
+    "given": "Lucas"
+   },
+   {
+    "family": "Kolesnikov",
+    "given": "Alexander"
+   },
+   {
+    "family": "Weissenborn",
+    "given": "Dirk"
+   },
+   {
+    "family": "Zhai",
+    "given": "Xiaohua"
+   },
+   {
+    "family": "Unterthiner",
+    "given": "Thomas"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2020
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2010.11929",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "clip2021",
+  "type": "article",
+  "title": "Learning Transferable Visual Models From Natural Language Supervision",
+  "author": [
+   {
+    "family": "Radford",
+    "given": "Alec"
+   },
+   {
+    "family": "Kim",
+    "given": "Jong Wook"
+   },
+   {
+    "family": "Hallacy",
+    "given": "Chris"
+   },
+   {
+    "family": "Ramesh",
+    "given": "Aditya"
+   },
+   {
+    "family": "Goh",
+    "given": "Gabriel"
+   },
+   {
+    "family": "Agarwal",
+    "given": "Sandhini"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2021
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2103.00020",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "rope2021",
+  "type": "article",
+  "title": "RoFormer: Enhanced transformer with Rotary Position Embedding",
+  "author": [
+   {
+    "family": "Su",
+    "given": "Jianlin"
+   },
+   {
+    "family": "Ahmed",
+    "given": "Murtadha"
+   },
+   {
+    "family": "Lu",
+    "given": "Yu"
+   },
+   {
+    "family": "Pan",
+    "given": "Shengfeng"
+   },
+   {
+    "family": "Wen",
+    "given": "Bo"
+   },
+   {
+    "family": "Liu",
+    "given": "Yunfeng"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2021
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2104.09864",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "flashattn2022",
+  "type": "article",
+  "title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness",
+  "author": [
+   {
+    "family": "Dao",
+    "given": "Tri"
+   },
+   {
+    "family": "Fu",
+    "given": "Daniel Y."
+   },
+   {
+    "family": "Ermon",
+    "given": "Stefano"
+   },
+   {
+    "family": "Rudra",
+    "given": "Atri"
+   },
+   {
+    "family": "Ré",
+    "given": "Christopher"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2022
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2205.14135",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "cot2022",
+  "type": "article",
+  "title": "Chain-Of-Thought Prompting Elicits Reasoning in Large Language Models",
+  "author": [
+   {
+    "family": "Wei",
+    "given": "Jason"
+   },
+   {
+    "family": "Wang",
+    "given": "Xuezhi"
+   },
+   {
+    "family": "Schuurmans",
+    "given": "Dale"
+   },
+   {
+    "family": "Bosma",
+    "given": "Maarten"
+   },
+   {
+    "family": "Ichter",
+    "given": "Brian"
+   },
+   {
+    "family": "Xia",
+    "given": "Fei"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2022
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2201.11903",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "instructgpt2022",
+  "type": "article",
+  "title": "Training language models to follow instructions with human feedback",
+  "author": [
+   {
+    "family": "Ouyang",
+    "given": "Long"
+   },
+   {
+    "family": "Wu",
+    "given": "Jeff"
+   },
+   {
+    "family": "Jiang",
+    "given": "Xu"
+   },
+   {
+    "family": "Almeida",
+    "given": "Diogo"
+   },
+   {
+    "family": "Wainwright",
+    "given": "Carroll L."
+   },
+   {
+    "family": "Mishkin",
+    "given": "Pamela"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2022
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2203.02155",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "chinchilla2022",
+  "type": "article",
+  "title": "Training Compute-Optimal Large Language Models",
+  "author": [
+   {
+    "family": "Hoffmann",
+    "given": "Jordan"
+   },
+   {
+    "family": "Borgeaud",
+    "given": "Sebastian"
+   },
+   {
+    "family": "Mensch",
+    "given": "Arthur"
+   },
+   {
+    "family": "Buchatskaya",
+    "given": "Elena"
+   },
+   {
+    "family": "Cai",
+    "given": "Trevor"
+   },
+   {
+    "family": "Rutherford",
+    "given": "Eliza"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2022
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2203.15556",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "flamingo2022",
+  "type": "article",
+  "title": "Flamingo: a Visual Language Model for Few-Shot Learning",
+  "author": [
+   {
+    "family": "Alayrac",
+    "given": "Jean-Baptiste"
+   },
+   {
+    "family": "Donahue",
+    "given": "Jeff"
+   },
+   {
+    "family": "Luc",
+    "given": "Pauline"
+   },
+   {
+    "family": "Miech",
+    "given": "Antoine"
+   },
+   {
+    "family": "Barr",
+    "given": "Iain"
+   },
+   {
+    "family": "Hasson",
+    "given": "Yana"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2022
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2204.14198",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "llama2023",
+  "type": "article",
+  "title": "LLaMA: Open and Efficient Foundation Language Models",
+  "author": [
+   {
+    "family": "Touvron",
+    "given": "Hugo"
+   },
+   {
+    "family": "Lavril",
+    "given": "Thibaut"
+   },
+   {
+    "family": "Izacard",
+    "given": "Gautier"
+   },
+   {
+    "family": "Martinet",
+    "given": "Xavier"
+   },
+   {
+    "family": "Lachaux",
+    "given": "Marie-Anne"
+   },
+   {
+    "family": "Lacroix",
+    "given": "Timothée"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2023
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2302.13971",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "llava2023",
+  "type": "article",
+  "title": "Visual Instruction Tuning",
+  "author": [
+   {
+    "family": "Liu",
+    "given": "Haotian"
+   },
+   {
+    "family": "Li",
+    "given": "Chunyuan"
+   },
+   {
+    "family": "Wu",
+    "given": "Qingyang"
+   },
+   {
+    "family": "Lee",
+    "given": "Yong Jae"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2023
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2304.08485",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "dpo2023",
+  "type": "article",
+  "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+  "author": [
+   {
+    "family": "Rafailov",
+    "given": "Rafael"
+   },
+   {
+    "family": "Sharma",
+    "given": "Archit"
+   },
+   {
+    "family": "Mitchell",
+    "given": "Eric"
+   },
+   {
+    "family": "Manning",
+    "given": "Christopher D."
+   },
+   {
+    "family": "Ermon",
+    "given": "Stefano"
+   },
+   {
+    "family": "Finn",
+    "given": "Chelsea"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2023
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2305.18290",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "mamba2023",
+  "type": "article",
+  "title": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
+  "author": [
+   {
+    "family": "Gu",
+    "given": "Albert"
+   },
+   {
+    "family": "Dao",
+    "given": "Tri"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2023
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2312.00752",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "r1_2025",
+  "type": "article",
+  "title": "DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning",
+  "author": [
+   {
+    "family": "Guo",
+    "given": "Daya"
+   },
+   {
+    "family": "Yang",
+    "given": "Dejian"
+   },
+   {
+    "family": "Zhang",
+    "given": "Haowei"
+   },
+   {
+    "family": "Song",
+    "given": "Junxiao"
+   },
+   {
+    "family": "Wang",
+    "given": "Peiyi"
+   },
+   {
+    "family": "Zhu",
+    "given": "Qihao"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2025
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2501.12948",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "ddpm2020",
+  "type": "article",
+  "title": "Denoising Diffusion Probabilistic Models",
+  "author": [
+   {
+    "family": "Ho",
+    "given": "Jonathan"
+   },
+   {
+    "family": "Jain",
+    "given": "Ajay"
+   },
+   {
+    "family": "Abbeel",
+    "given": "Pieter"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2020
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2006.11239",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "scoresde2020",
+  "type": "article",
+  "title": "Score-Based Generative Modeling through Stochastic Differential Equations",
+  "author": [
+   {
+    "family": "Song",
+    "given": "Yang Sup"
+   },
+   {
+    "family": "Sohl‐Dickstein",
+    "given": "Jascha"
+   },
+   {
+    "family": "Kingma",
+    "given": "Diederik P."
+   },
+   {
+    "family": "Kumar",
+    "given": "Abhishek"
+   },
+   {
+    "family": "Ermon",
+    "given": "Stefano"
+   },
+   {
+    "family": "Poole",
+    "given": "Ben"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2020
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2011.13456",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "ldm2021",
+  "type": "article",
+  "title": "High-Resolution Image Synthesis with Latent Diffusion Models",
+  "author": [
+   {
+    "family": "Rombach",
+    "given": "Robin"
+   },
+   {
+    "family": "Blattmann",
+    "given": "Andreas"
+   },
+   {
+    "family": "Lorenz",
+    "given": "Dominik"
+   },
+   {
+    "family": "Esser",
+    "given": "Patrick"
+   },
+   {
+    "family": "Ommer",
+    "given": "Björn"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2021
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2112.10752",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "cfg2022",
+  "type": "article",
+  "title": "Classifier-Free Diffusion Guidance",
+  "author": [
+   {
+    "family": "Ho",
+    "given": "Jonathan"
+   },
+   {
+    "family": "Salimans",
+    "given": "Tim"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2022
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2207.12598",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "flowmatching2022",
+  "type": "article",
+  "title": "Flow Matching for Generative Modeling",
+  "author": [
+   {
+    "family": "Lipman",
+    "given": "Yaron"
+   },
+   {
+    "family": "Chen",
+    "given": "Ricky T. Q."
+   },
+   {
+    "family": "Ben-Hamu",
+    "given": "Heli"
+   },
+   {
+    "family": "Nickel",
+    "given": "Maximilian"
+   },
+   {
+    "family": "Le",
+    "given": "Matthew"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2022
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2210.02747",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "rectflow2022",
+  "type": "article",
+  "title": "Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow",
+  "author": [
+   {
+    "family": "Liu",
+    "given": "Xingchao"
+   },
+   {
+    "family": "Gong",
+    "given": "Chengyue"
+   },
+   {
+    "family": "Liu",
+    "given": "Qiang"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2022
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2209.03003",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "dit2022",
+  "type": "article",
+  "title": "Scalable Diffusion Models with Transformers",
+  "author": [
+   {
+    "family": "Peebles",
+    "given": "William"
+   },
+   {
+    "family": "Xie",
+    "given": "Saining"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2022
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2212.09748",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "diffpolicy2023",
+  "type": "article",
+  "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion",
+  "author": [
+   {
+    "family": "Chi",
+    "given": "Cheng"
+   },
+   {
+    "family": "Feng",
+    "given": "Siyuan"
+   },
+   {
+    "family": "Du",
+    "given": "Yilun"
+   },
+   {
+    "family": "Xu",
+    "given": "Zhenjia"
+   },
+   {
+    "family": "Cousineau",
+    "given": "Eric A."
+   },
+   {
+    "family": "Burchfiel",
+    "given": "Benjamin"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2023
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2303.04137",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "sd3_2024",
+  "type": "article",
+  "title": "Scaling Rectified Flow Transformers for High-Resolution Image Synthesis",
+  "author": [
+   {
+    "family": "Esser",
+    "given": "Patrick"
+   },
+   {
+    "family": "Kulal",
+    "given": "Sumith"
+   },
+   {
+    "family": "Blattmann",
+    "given": "Andreas"
+   },
+   {
+    "family": "Entezari",
+    "given": "Rahim"
+   },
+   {
+    "family": "Müller",
+    "given": "Jonas"
+   },
+   {
+    "family": "Saini",
+    "given": "Harry"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2024
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2403.03206",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "rt2_2023",
+  "type": "article",
+  "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
+  "author": [
+   {
+    "family": "Brohan",
+    "given": "Anthony"
+   },
+   {
+    "family": "Brown",
+    "given": "Noah"
+   },
+   {
+    "family": "Carbajal",
+    "given": "Justice"
+   },
+   {
+    "family": "Chebotar",
+    "given": "Yevgen"
+   },
+   {
+    "family": "Chen",
+    "given": "Xi"
+   },
+   {
+    "family": "Choromański",
+    "given": "Krzysztof"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2023
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2307.15818",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "openvla2024",
+  "type": "article",
+  "title": "OpenVLA: An Open-Source Vision-Language-Action Model",
+  "author": [
+   {
+    "family": "Kim",
+    "given": "Moo Jin"
+   },
+   {
+    "family": "Pertsch",
+    "given": "Karl"
+   },
+   {
+    "family": "Karamcheti",
+    "given": "Siddharth"
+   },
+   {
+    "family": "Xiao",
+    "given": "Ted G."
+   },
+   {
+    "family": "Balakrishna",
+    "given": "Ashwin"
+   },
+   {
+    "family": "Nair",
+    "given": "Suraj"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2024
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2406.09246",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "pi0_2024",
+  "type": "article",
+  "title": "π₀: A Vision-Language-Action Flow Model for General Robot Control",
+  "author": [
+   {
+    "family": "Black",
+    "given": "Kevin"
+   },
+   {
+    "family": "Brown",
+    "given": "Noah"
+   },
+   {
+    "family": "Driess",
+    "given": "Danny"
+   },
+   {
+    "family": "Esmail",
+    "given": "Adnan"
+   },
+   {
+    "family": "Equi",
+    "given": "Michael"
+   },
+   {
+    "family": "Finn",
+    "given": "Chelsea"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2024
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2410.24164",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "worldmodels2018",
+  "type": "article",
+  "title": "World Models",
+  "author": [
+   {
+    "family": "Ha",
+    "given": "David"
+   },
+   {
+    "family": "Schmidhuber",
+    "given": "Jürgen"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2018
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1803.10122",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "planet2018",
+  "type": "article",
+  "title": "Learning Latent Dynamics for Planning from Pixels",
+  "author": [
+   {
+    "family": "Hafner",
+    "given": "Danijar"
+   },
+   {
+    "family": "Lillicrap",
+    "given": "Timothy"
+   },
+   {
+    "family": "Fischer",
+    "given": "Ian"
+   },
+   {
+    "family": "Villegas",
+    "given": "Ruben"
+   },
+   {
+    "family": "Ha",
+    "given": "David"
+   },
+   {
+    "family": "Lee",
+    "given": "Honglak"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2018
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1811.04551",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "simple2019",
+  "type": "article",
+  "title": "Model-Based Reinforcement Learning for Atari",
+  "author": [
+   {
+    "family": "Kaiser",
+    "given": "Łukasz"
+   },
+   {
+    "family": "Babaeizadeh",
+    "given": "Mohammad"
+   },
+   {
+    "family": "Miłoś",
+    "given": "Piotr"
+   },
+   {
+    "family": "Osiński",
+    "given": "Błażej"
+   },
+   {
+    "family": "Campbell",
+    "given": "Roy H."
+   },
+   {
+    "family": "Czechowski",
+    "given": "Konrad"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2019
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1903.00374",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "mbpo2019",
+  "type": "article",
+  "title": "When to Trust Your Model: Model-Based Policy Optimization",
+  "author": [
+   {
+    "family": "Janner",
+    "given": "Michael"
+   },
+   {
+    "family": "Fu",
+    "given": "Justin"
+   },
+   {
+    "family": "Zhang",
+    "given": "Marvin"
+   },
+   {
+    "family": "Levine",
+    "given": "Sergey"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2019
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1906.08253",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "dreamer2019",
+  "type": "article",
+  "title": "Dream to Control: Learning Behaviors by Latent Imagination",
+  "author": [
+   {
+    "family": "Hafner",
+    "given": "Danijar"
+   },
+   {
+    "family": "Lillicrap",
+    "given": "Timothy"
+   },
+   {
+    "family": "Ba",
+    "given": "Jimmy Lei"
+   },
+   {
+    "family": "Norouzi",
+    "given": "Mohammad"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2019
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1912.01603",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "muzero2019",
+  "type": "article",
+  "title": "Mastering Atari, Go, chess and shogi by planning with a learned model",
+  "author": [
+   {
+    "family": "Schrittwieser",
+    "given": "Julian"
+   },
+   {
+    "family": "Antonoglou",
+    "given": "Ioannis"
+   },
+   {
+    "family": "Hubert",
+    "given": "Thomas"
+   },
+   {
+    "family": "Simonyan",
+    "given": "Karen"
+   },
+   {
+    "family": "Sifre",
+    "given": "Laurent"
+   },
+   {
+    "family": "Schmitt",
+    "given": "Simon"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2019
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/1911.08265",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "dreamerv2_2020",
+  "type": "article",
+  "title": "Mastering Atari with Discrete World Models",
+  "author": [
+   {
+    "family": "Hafner",
+    "given": "Danijar"
+   },
+   {
+    "family": "Lillicrap",
+    "given": "Timothy"
+   },
+   {
+    "family": "Norouzi",
+    "given": "Mohammad"
+   },
+   {
+    "family": "Ba",
+    "given": "Jimmy Lei"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2020
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2010.02193",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "dreamerv3_2023",
+  "type": "article",
+  "title": "Mastering diverse control tasks through world models",
+  "author": [
+   {
+    "family": "Hafner",
+    "given": "Danijar"
+   },
+   {
+    "family": "Pašukonis",
+    "given": "Jurgis"
+   },
+   {
+    "family": "Ba",
+    "given": "Jimmy Lei"
+   },
+   {
+    "family": "Lillicrap",
+    "given": "Timothy"
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2023
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2301.04104",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "ijepa2023",
+  "type": "article",
+  "title": "Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture",
+  "author": [
+   {
+    "family": "Assran",
+    "given": "Mahmoud"
+   },
+   {
+    "family": "Duval",
+    "given": "Quentin"
+   },
+   {
+    "family": "Misra",
+    "given": "Ishan"
+   },
+   {
+    "family": "Bojanowski",
+    "given": "Piotr"
+   },
+   {
+    "family": "Vincent",
+    "given": "Pascal"
+   },
+   {
+    "family": "Rabbat",
+    "given": "Michael"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2023
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2301.08243",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "genie2024",
+  "type": "article",
+  "title": "Genie: Generative Interactive Environments",
+  "author": [
+   {
+    "family": "Bruce",
+    "given": "Jake"
+   },
+   {
+    "family": "Dennis",
+    "given": "Michael"
+   },
+   {
+    "family": "Edwards",
+    "given": "Ashley"
+   },
+   {
+    "family": "Parker-Holder",
+    "given": "Jack"
+   },
+   {
+    "family": "Shi",
+    "given": "Yuge"
+   },
+   {
+    "family": "Hughes",
+    "given": "Edward"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2024
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2402.15391",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "diamond2024",
+  "type": "article",
+  "title": "Diffusion for World Modeling: Visual Details Matter in Atari",
+  "author": [
+   {
+    "family": "Alonso",
+    "given": "Eloi"
+   },
+   {
+    "family": "Jelley",
+    "given": "Adam"
+   },
+   {
+    "family": "Micheli",
+    "given": "Vincent"
+   },
+   {
+    "family": "Kanervisto",
+    "given": "Anssi"
+   },
+   {
+    "family": "Storkey",
+    "given": "Amos"
+   },
+   {
+    "family": "Pearce",
+    "given": "Tim"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2024
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2405.12399",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "cosmos2025",
+  "type": "article",
+  "title": "Cosmos World Foundation Model Platform for Physical AI",
+  "author": [
+   {
+    "literal": "NVIDIA"
+   },
+   {
+    "literal": ":"
+   },
+   {
+    "family": "Agarwal",
+    "given": "Niket"
+   },
+   {
+    "family": "Ali",
+    "given": "Arslan"
+   },
+   {
+    "family": "Bala",
+    "given": "Maciej"
+   },
+   {
+    "family": "Balaji",
+    "given": "Yogesh"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2025
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2501.03575",
+  "publisher": "arXiv"
+ },
+ {
+  "id": "vjepa2_2025",
+  "type": "article",
+  "title": "V-JEPA 2: Self-Supervised Video Models Enable Understanding, Prediction and Planning",
+  "author": [
+   {
+    "family": "Assran",
+    "given": "Mido"
+   },
+   {
+    "family": "Bardes",
+    "given": "Adrien"
+   },
+   {
+    "family": "Fan",
+    "given": "David"
+   },
+   {
+    "family": "Garrido",
+    "given": "Quentin"
+   },
+   {
+    "family": "Howes",
+    "given": "Russell"
+   },
+   {
+    "literal": "Mojtaba"
+   },
+   {
+    "literal": "et al."
+   }
+  ],
+  "issued": {
+   "date-parts": [
+    [
+     2025
+    ]
+   ]
+  },
+  "URL": "https://arxiv.org/abs/2506.09985",
+  "publisher": "arXiv"
+ }
+]

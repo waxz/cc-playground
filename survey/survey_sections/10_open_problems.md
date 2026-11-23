@@ -1,0 +1,15 @@
+## Open problems
+
+The following problems are drawn from the limitations sections of the reading notes (stated by authors) and from hindsight remarks in them. They are not a complete research agenda.
+
+1. **Physical fidelity of learned simulators.** Large video world models can produce plausible video without respecting physics [@cosmos2025]. Whether a model is accurate enough to plan with is a different question from whether it looks right, and no paper in the set gives a settled test for it.
+2. **Action-conditioned data.** Internet video is plentiful, but data in which the actions are known is scarce. [@vjepa2_2025] learns its action-conditioned predictor from about 62 hours of robot video, and [@genie2024] infers a latent action space without action labels. Closing this gap is a central problem.
+3. **Model error and long horizons.** [@mbpo2019] argues from theory that full-length model rollouts compound error and uses short branched rollouts instead. The DreamerV3 configuration lists an imagination horizon of 15 steps [@dreamerv3_2023]. How far a learned model can be rolled out before it misleads a planner is still decided case by case.
+4. **Sample efficiency and evaluation in RL.** Model-free agents in the set needed very large numbers of environment steps; model-based Atari results reach competitive play with 100K real steps [@simple2019; @diamond2024], but the notes record that a re-tuned model-free baseline was found to be on par in [@simple2019]. Benchmark choice and tuning effort can change the conclusion.
+5. **Reasoning and agency.** Outcome-reward reinforcement learning elicited long reasoning chains [@r1_2025], and chain-of-thought prompting predated it [@cot2022]. Extending verifiable rewards beyond maths and code to open-ended and physical tasks is open.
+6. **Efficiency.** Exact attention costs grow quadratically with sequence length. [@flashattn2022] reduces memory traffic without changing the maths, and [@mamba2023] changes the layer. Whether such layers match Transformers at the largest scales was not settled by the papers in the set.
+7. **Unified objectives.** Likelihood, denoising, flow matching, contrastive and prediction-in-latent-space objectives all appear above. Which of them (or what combination) is best for a model that must perceive, predict and act is open; [@pi0_2024] combines a vision-language backbone with a flow-matching action head, which is one answer.
+
+### A small data point from this repository
+
+A preliminary toy experiment in this repository (`poc_hybrid_wm/MEMO.md`) tested a world model with a physics skeleton and a learned actuator term against a plain network that sees the last few actions, on a synthetic hopping plant. The plain history model was better at every data size (for example 0.079 m against 0.203 m one-second open-loop error at 2000 training steps). This is a single-author, synthetic-plant result and is **not** evidence about real robots; it is mentioned only because it bears on problem 7, where adding structure helps only if the structure matches the system.

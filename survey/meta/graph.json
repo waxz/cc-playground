@@ -1,0 +1,2376 @@
+{
+ "nodes": [
+  {
+   "id": "rumelhart1986",
+   "label": "Backprop",
+   "year": 1986,
+   "era": "dl",
+   "cites": 41635,
+   "title": "Learning representations by back-propagating errors",
+   "one": "Backpropagation: chain-rule gradients through hidden layers let multi-layer nets learn internal representations by gradient descent.",
+   "indeg": 6
+  },
+  {
+   "id": "lstm1997",
+   "label": "LSTM",
+   "year": 1997,
+   "era": "dl",
+   "cites": 134075,
+   "title": "Long Short-Term Memory",
+   "one": "Gated memory cell with unit self-connection gives constant error flow, letting RNNs learn lags beyond 1000 steps.",
+   "indeg": 12
+  },
+  {
+   "id": "lenet1998",
+   "label": "LeNet",
+   "year": 1998,
+   "era": "dl",
+   "cites": 73756,
+   "title": "Gradient-based learning applied to document recognition",
+   "one": "Convolutional network LeNet-5 trained end to end by backprop reaches 0.8-0.95% MNIST error",
+   "indeg": 6
+  },
+  {
+   "id": "alexnet2012",
+   "label": "AlexNet",
+   "year": 2012,
+   "era": "dl",
+   "cites": 55831,
+   "title": "ImageNet classification with deep convolutional neural networks",
+   "one": "Deep ReLU CNN trained on GPUs with dropout and augmentation wins ImageNet 2012 by a large margin.",
+   "indeg": 12
+  },
+  {
+   "id": "word2vec2013",
+   "label": "word2vec",
+   "year": 2013,
+   "era": "dl",
+   "cites": 44594,
+   "title": "Efficient Estimation of Word Representations in Vector Space",
+   "one": "Cheap CBOW and Skip-gram models learn word vectors from billions of words, exposing linear analogy structure.",
+   "indeg": 5
+  },
+  {
+   "id": "vae2013",
+   "label": "VAE",
+   "year": 2013,
+   "era": "dl",
+   "cites": 45017,
+   "title": "Auto-Encoding Variational Bayes",
+   "one": "Reparameterised variational lower bound lets an encoder and decoder be trained jointly by backprop: the variational autoencoder.",
+   "indeg": 13
+  },
+  {
+   "id": "gan2014",
+   "label": "GAN",
+   "year": 2014,
+   "era": "dl",
+   "cites": 12148,
+   "title": "Generative Adversarial Networks",
+   "one": "Generator and discriminator trained adversarially in a minimax game",
+   "indeg": 2
+  },
+  {
+   "id": "seq2seq2014",
+   "label": "Seq2Seq",
+   "year": 2014,
+   "era": "dl",
+   "cites": 21928,
+   "title": "Sequence to Sequence Learning with Neural Networks",
+   "one": "End-to-end encoder-decoder LSTM translating sequences via a fixed vector, with reversed source input easing training.",
+   "indeg": 4
+  },
+  {
+   "id": "bahdanau2014",
+   "label": "Bahdanau attn",
+   "year": 2014,
+   "era": "dl",
+   "cites": 32237,
+   "title": "Neural Machine Translation by Jointly Learning to Align and Translate",
+   "one": "Introduces soft attention: decoder learns to align to source annotations while translating, removing the fixed-vector bottleneck.",
+   "indeg": 3
+  },
+  {
+   "id": "vgg2014",
+   "label": "VGG",
+   "year": 2014,
+   "era": "dl",
+   "cites": 124836,
+   "title": "Very Deep Convolutional Networks for Large-Scale Image Recognition",
+   "one": "Stacking uniform 3x3 convolutions to 16-19 layers shows depth drives accuracy",
+   "indeg": 4
+  },
+  {
+   "id": "adam2014",
+   "label": "Adam",
+   "year": 2014,
+   "era": "dl",
+   "cites": 123922,
+   "title": "Adam: A Method for Stochastic Optimization",
+   "one": "Adam: per-parameter adaptive steps from bias-corrected running means of gradient and squared gradient",
+   "indeg": 14
+  },
+  {
+   "id": "dropout2014",
+   "label": "Dropout",
+   "year": 2014,
+   "era": "dl",
+   "cites": 51959,
+   "title": "Dropout: a simple way to prevent neural networks from overfitting",
+   "one": "Randomly dropping units in training approximates averaging exponentially many thinned networks and sharply reduces overfitting.",
+   "indeg": 6
+  },
+  {
+   "id": "batchnorm2015",
+   "label": "BatchNorm",
+   "year": 2015,
+   "era": "dl",
+   "cites": 43312,
+   "title": "Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift",
+   "one": "Normalise each activation with minibatch statistics inside the network, with learned scale and shift, enabling much faster training.",
+   "indeg": 6
+  },
+  {
+   "id": "resnet2015",
+   "label": "ResNet",
+   "year": 2015,
+   "era": "dl",
+   "cites": 18331,
+   "title": "Deep Residual Learning for Image Recognition",
+   "one": "Identity skip connections make layers learn residuals, enabling training of 100+ layer networks and winning ILSVRC 2015.",
+   "indeg": 7
+  },
+  {
+   "id": "layernorm2016",
+   "label": "LayerNorm",
+   "year": 2016,
+   "era": "dl",
+   "cites": 15007,
+   "title": "Layer Normalization",
+   "one": "Normalise across a layer's units within each example, independent of batch size, identical at train and test",
+   "indeg": 5
+  },
+  {
+   "id": "dqn2013",
+   "label": "DQN",
+   "year": 2013,
+   "era": "rl",
+   "cites": 17421,
+   "title": "Playing Atari with Deep Reinforcement Learning",
+   "one": "First deep RL agent learning Atari control from raw pixels via Q-learning, convnet and experience replay.",
+   "indeg": 9
+  },
+  {
+   "id": "trpo2015",
+   "label": "TRPO",
+   "year": 2015,
+   "era": "rl",
+   "cites": 7620,
+   "title": "Trust Region Policy Optimization",
+   "one": "Trust-region policy updates with KL constraint, natural gradient and line search give stable monotonic-ish improvement for neural policies.",
+   "indeg": 6
+  },
+  {
+   "id": "ddpg2015",
+   "label": "DDPG",
+   "year": 2015,
+   "era": "rl",
+   "cites": 18036,
+   "title": "Continuous control with deep reinforcement learning",
+   "one": "Deterministic actor-critic with replay, soft target networks and batch norm for continuous-action deep RL.",
+   "indeg": 5
+  },
+  {
+   "id": "a3c2016",
+   "label": "A3C",
+   "year": 2016,
+   "era": "rl",
+   "cites": 10950,
+   "title": "Asynchronous Methods for Deep Reinforcement Learning",
+   "one": "Asynchronous parallel actor-learners replace replay",
+   "indeg": 7
+  },
+  {
+   "id": "alphago2016",
+   "label": "AlphaGo",
+   "year": 2016,
+   "era": "rl",
+   "cites": 22779,
+   "title": "Mastering the game of Go with deep neural networks and tree search",
+   "one": "Policy and value convolutional networks, trained by supervised learning then self-play, guide Monte Carlo tree search to beat a professional Go player.",
+   "indeg": 5
+  },
+  {
+   "id": "ppo2017",
+   "label": "PPO",
+   "year": 2017,
+   "era": "rl",
+   "cites": 40403,
+   "title": "Proximal Policy Optimization Algorithms",
+   "one": "Clipped probability-ratio surrogate enables multiple SGD epochs per batch, giving TRPO-like stability with simple first-order code.",
+   "indeg": 9
+  },
+  {
+   "id": "alphazero2017",
+   "label": "AlphaZero",
+   "year": 2017,
+   "era": "rl",
+   "cites": 7644,
+   "title": "A general reinforcement learning algorithm that masters chess, shogi, and Go through self-play",
+   "one": "Single tabula-rasa self-play algorithm using MCTS-improved policy targets masters chess, shogi and Go from only the rules.",
+   "indeg": 3
+  },
+  {
+   "id": "sac2018",
+   "label": "SAC",
+   "year": 2018,
+   "era": "rl",
+   "cites": 13864,
+   "title": "Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor",
+   "one": "Off-policy actor-critic maximizing reward plus policy entropy with a reparameterized stochastic actor",
+   "indeg": 3
+  },
+  {
+   "id": "transformer2017",
+   "label": "Transformer",
+   "year": 2017,
+   "era": "tf",
+   "cites": 152843,
+   "title": "Attention Is All You Need",
+   "one": "Replaces recurrence with stacked multi-head self-attention, enabling parallel training and constant path length between positions.",
+   "indeg": 23
+  },
+  {
+   "id": "bert2018",
+   "label": "BERT",
+   "year": 2018,
+   "era": "tf",
+   "cites": 83883,
+   "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+   "one": "Deep bidirectional Transformer pre-training with masked-token prediction, fine-tuned with one output layer to set SOTA on eleven tasks.",
+   "indeg": 9
+  },
+  {
+   "id": "gpt3_2020",
+   "label": "GPT-3",
+   "year": 2020,
+   "era": "tf",
+   "cites": 63280,
+   "title": "Language Models are Few-Shot Learners",
+   "one": "A 175B autoregressive language model performs many tasks from prompts alone, via in-context few-shot learning without fine-tuning.",
+   "indeg": 13
+  },
+  {
+   "id": "scaling2020",
+   "label": "Scaling laws",
+   "year": 2020,
+   "era": "tf",
+   "cites": 12622,
+   "title": "Scaling Laws for Neural Language Models",
+   "one": "Language-model loss follows smooth power laws in parameters, data and compute, giving a recipe to allocate training budgets.",
+   "indeg": 10
+  },
+  {
+   "id": "vit2020",
+   "label": "ViT",
+   "year": 2020,
+   "era": "tf",
+   "cites": 72389,
+   "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+   "one": "Treat an image as a sequence of 16x16 patch tokens and apply a plain Transformer, which wins at large scale.",
+   "indeg": 11
+  },
+  {
+   "id": "clip2021",
+   "label": "CLIP",
+   "year": 2021,
+   "era": "tf",
+   "cites": 62735,
+   "title": "Learning Transferable Visual Models From Natural Language Supervision",
+   "one": "Contrastive image-text pre-training on 400M web pairs yields zero-shot, robust image classifiers specified by natural-language prompts.",
+   "indeg": 9
+  },
+  {
+   "id": "rope2021",
+   "label": "RoPE",
+   "year": 2021,
+   "era": "tf",
+   "cites": 7633,
+   "title": "RoFormer: Enhanced transformer with Rotary Position Embedding",
+   "one": "Rotary position embedding: rotate query/key pairs by position-proportional angles so attention depends on relative offset.",
+   "indeg": 5
+  },
+  {
+   "id": "flashattn2022",
+   "label": "FlashAttention",
+   "year": 2022,
+   "era": "tf",
+   "cites": 6029,
+   "title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness",
+   "one": "IO-aware tiled exact attention that avoids materializing the N x N matrix, giving memory-linear, much faster attention.",
+   "indeg": 2
+  },
+  {
+   "id": "cot2022",
+   "label": "Chain of thought",
+   "year": 2022,
+   "era": "tf",
+   "cites": 39078,
+   "title": "Chain-Of-Thought Prompting Elicits Reasoning in Large Language Models",
+   "one": "Few-shot exemplars containing intermediate reasoning steps make large frozen LMs solve multi-step reasoning tasks",
+   "indeg": 2
+  },
+  {
+   "id": "instructgpt2022",
+   "label": "InstructGPT",
+   "year": 2022,
+   "era": "tf",
+   "cites": 11081,
+   "title": "Training language models to follow instructions with human feedback",
+   "one": "SFT, reward model from human rankings, then PPO with KL penalty aligns GPT-3 to follow instructions",
+   "indeg": 5
+  },
+  {
+   "id": "chinchilla2022",
+   "label": "Chinchilla",
+   "year": 2022,
+   "era": "tf",
+   "cites": 6801,
+   "title": "Training Compute-Optimal Large Language Models",
+   "one": "Compute-optimal training scales model size and tokens equally",
+   "indeg": 3
+  },
+  {
+   "id": "flamingo2022",
+   "label": "Flamingo",
+   "year": 2022,
+   "era": "tf",
+   "cites": 2837,
+   "title": "Flamingo: a Visual Language Model for Few-Shot Learning",
+   "one": "Frozen LM and vision encoder bridged by a Perceiver Resampler and zero-initialised gated cross-attention give few-shot multimodal in-context learning.",
+   "indeg": 2
+  },
+  {
+   "id": "llama2023",
+   "label": "LLaMA",
+   "year": 2023,
+   "era": "tf",
+   "cites": 29912,
+   "title": "LLaMA: Open and Efficient Foundation Language Models",
+   "one": "Open-data LLMs (7B-65B) trained on 1-1.4T tokens for inference efficiency",
+   "indeg": 4
+  },
+  {
+   "id": "llava2023",
+   "label": "LLaVA",
+   "year": 2023,
+   "era": "tf",
+   "cites": 4377,
+   "title": "Visual Instruction Tuning",
+   "one": "GPT-4-generated visual instruction data plus a CLIP-to-LLM linear projector yields an open multimodal assistant.",
+   "indeg": 2
+  },
+  {
+   "id": "dpo2023",
+   "label": "DPO",
+   "year": 2023,
+   "era": "tf",
+   "cites": 11144,
+   "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+   "one": "Rewrites KL-regularised RLHF as a binary cross-entropy loss on policy/reference log-ratios, removing reward model and RL.",
+   "indeg": 2
+  },
+  {
+   "id": "mamba2023",
+   "label": "Mamba",
+   "year": 2023,
+   "era": "tf",
+   "cites": 12101,
+   "title": "Mamba: Linear-Time Sequence Modeling with Selective State Spaces",
+   "one": "Input-dependent (selective) state space layer plus hardware-aware scan gives linear-time sequence modeling matching Transformers on language.",
+   "indeg": 0
+  },
+  {
+   "id": "r1_2025",
+   "label": "DeepSeek-R1",
+   "year": 2025,
+   "era": "tf",
+   "cites": 19306,
+   "title": "DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning",
+   "one": "Outcome-reward RL with GRPO on a strong base elicits long self-verifying reasoning without human traces",
+   "indeg": 0
+  },
+  {
+   "id": "ddpm2020",
+   "label": "DDPM",
+   "year": 2020,
+   "era": "df",
+   "cites": 21097,
+   "title": "Denoising Diffusion Probabilistic Models",
+   "one": "Noise-prediction parameterization with a simple MSE loss makes diffusion models high-quality and equivalent to denoising score matching.",
+   "indeg": 9
+  },
+  {
+   "id": "scoresde2020",
+   "label": "Score SDE",
+   "year": 2020,
+   "era": "df",
+   "cites": 8253,
+   "title": "Score-Based Generative Modeling through Stochastic Differential Equations",
+   "one": "Unifies SMLD and DDPM as continuous SDEs with a score-driven reverse SDE, adding PC samplers, probability-flow ODE and conditioning.",
+   "indeg": 9
+  },
+  {
+   "id": "ldm2021",
+   "label": "Latent diffusion",
+   "year": 2021,
+   "era": "df",
+   "cites": 37803,
+   "title": "High-Resolution Image Synthesis with Latent Diffusion Models",
+   "one": "Diffusion in the latent space of a perceptual autoencoder with cross-attention conditioning makes high-resolution synthesis cheap and flexible.",
+   "indeg": 8
+  },
+  {
+   "id": "cfg2022",
+   "label": "CFG",
+   "year": 2022,
+   "era": "df",
+   "cites": 7474,
+   "title": "Classifier-Free Diffusion Guidance",
+   "one": "Jointly train conditional and unconditional diffusion by dropping the label, then extrapolate their scores to trade diversity for fidelity without a classifier.",
+   "indeg": 3
+  },
+  {
+   "id": "flowmatching2022",
+   "label": "Flow matching",
+   "year": 2022,
+   "era": "df",
+   "cites": 5278,
+   "title": "Flow Matching for Generative Modeling",
+   "one": "Simulation-free regression of conditional vector fields trains continuous normalizing flows",
+   "indeg": 4
+  },
+  {
+   "id": "rectflow2022",
+   "label": "Rectified flow",
+   "year": 2022,
+   "era": "df",
+   "cites": 2716,
+   "title": "Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow",
+   "one": "Straight-line velocity regression between noise and data, with reflow to straighten paths and enable one-step generation.",
+   "indeg": 3
+  },
+  {
+   "id": "dit2022",
+   "label": "DiT",
+   "year": 2022,
+   "era": "df",
+   "cites": 9650,
+   "title": "Scalable Diffusion Models with Transformers",
+   "one": "Replaces the diffusion U-Net with a latent-patch Vision Transformer using adaLN-Zero, showing FID improves predictably with forward-pass Gflops.",
+   "indeg": 4
+  },
+  {
+   "id": "diffpolicy2023",
+   "label": "Diffusion Policy",
+   "year": 2023,
+   "era": "df",
+   "cites": 2416,
+   "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion",
+   "one": "Conditional denoising diffusion over receding-horizon action sequences gives stable, multimodal visuomotor imitation policies far above prior baselines.",
+   "indeg": 3
+  },
+  {
+   "id": "sd3_2024",
+   "label": "SD3",
+   "year": 2024,
+   "era": "df",
+   "cites": 5813,
+   "title": "Scaling Rectified Flow Transformers for High-Resolution Image Synthesis",
+   "one": "Logit-normal timestep sampling for rectified flow plus two-stream MM-DiT, scaled to 8B parameters for text-to-image.",
+   "indeg": 2
+  },
+  {
+   "id": "rt2_2023",
+   "label": "RT-2",
+   "year": 2023,
+   "era": "vla",
+   "cites": 3628,
+   "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
+   "one": "Encode robot actions as text tokens and co-fine-tune a web-pretrained VLM, giving a single model that reasons and acts.",
+   "indeg": 3
+  },
+  {
+   "id": "openvla2024",
+   "label": "OpenVLA",
+   "year": 2024,
+   "era": "vla",
+   "cites": 4340,
+   "title": "OpenVLA: An Open-Source Vision-Language-Action Model",
+   "one": "Open-source 7B Prismatic/Llama-2 VLA trained on 970k robot episodes, beating RT-2-X, with LoRA and 4-bit adaptation.",
+   "indeg": 3
+  },
+  {
+   "id": "pi0_2024",
+   "label": "\u03c00",
+   "year": 2024,
+   "era": "vla",
+   "cites": 3826,
+   "title": "\u03c0\u2080: A Vision-Language-Action Flow Model for General Robot Control",
+   "one": "A PaliGemma VLM plus a flow-matching action expert emits 50-step continuous action chunks, pre-trained on 10k+ hours of robot data.",
+   "indeg": 1
+  },
+  {
+   "id": "worldmodels2018",
+   "label": "World Models",
+   "year": 2018,
+   "era": "wm",
+   "cites": 2452,
+   "title": "World Models",
+   "one": "Train a VAE+MDN-RNN world model without reward, then train a tiny linear controller (even inside its dream) with evolution strategies.",
+   "indeg": 9
+  },
+  {
+   "id": "planet2018",
+   "label": "PlaNet",
+   "year": 2018,
+   "era": "wm",
+   "cites": 1330,
+   "title": "Learning Latent Dynamics for Planning from Pixels",
+   "one": "RSSM with deterministic and stochastic latent state, trained variationally from pixels, enabling CEM planning entirely in latent space.",
+   "indeg": 5
+  },
+  {
+   "id": "simple2019",
+   "label": "SimPLe",
+   "year": 2019,
+   "era": "wm",
+   "cites": 905,
+   "title": "Model-Based Reinforcement Learning for Atari",
+   "one": "Iterated stochastic video-prediction world model plus PPO trained in imagination reaches competitive Atari play with 100K real steps.",
+   "indeg": 6
+  },
+  {
+   "id": "mbpo2019",
+   "label": "MBPO",
+   "year": 2019,
+   "era": "wm",
+   "cites": 772,
+   "title": "When to Trust Your Model: Model-Based Policy Optimization",
+   "one": "Short model rollouts branched from real replay states feed SAC, with theory justifying small nonzero rollout length.",
+   "indeg": 1
+  },
+  {
+   "id": "dreamer2019",
+   "label": "Dreamer",
+   "year": 2019,
+   "era": "wm",
+   "cites": 2013,
+   "title": "Dream to Control: Learning Behaviors by Latent Imagination",
+   "one": "Learn actor and critic purely in latent imagination, backpropagating value gradients through an RSSM world model learned from pixels.",
+   "indeg": 4
+  },
+  {
+   "id": "muzero2019",
+   "label": "MuZero",
+   "year": 2019,
+   "era": "wm",
+   "cites": 3401,
+   "title": "Mastering Atari, Go, chess and shogi by planning with a learned model",
+   "one": "MCTS planning inside a learned latent model trained only to predict reward, value and policy",
+   "indeg": 5
+  },
+  {
+   "id": "dreamerv2_2020",
+   "label": "DreamerV2",
+   "year": 2020,
+   "era": "wm",
+   "cites": 1090,
+   "title": "Mastering Atari with Discrete World Models",
+   "one": "Categorical RSSM latents with KL balancing and REINFORCE actor yield the first human-level Atari agent trained inside a world model.",
+   "indeg": 1
+  },
+  {
+   "id": "dreamerv3_2023",
+   "label": "DreamerV3",
+   "year": 2023,
+   "era": "wm",
+   "cites": 2582,
+   "title": "Mastering diverse control tasks through world models",
+   "one": "Symlog, twohot, free-bits KL and percentile return normalisation make one Dreamer configuration work across 150+ tasks, including Minecraft diamonds.",
+   "indeg": 3
+  },
+  {
+   "id": "ijepa2023",
+   "label": "I-JEPA",
+   "year": 2023,
+   "era": "wm",
+   "cites": 2029,
+   "title": "Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture",
+   "one": "Predict embeddings of masked image blocks from a context block with an EMA target encoder, no augmentations or pixels.",
+   "indeg": 1
+  },
+  {
+   "id": "genie2024",
+   "label": "Genie",
+   "year": 2024,
+   "era": "wm",
+   "cites": 1056,
+   "title": "Genie: Generative Interactive Environments",
+   "one": "Unsupervised latent action model plus ST-transformer video tokenizer and MaskGIT dynamics yield playable worlds from unlabelled Internet video.",
+   "indeg": 2
+  },
+  {
+   "id": "diamond2024",
+   "label": "DIAMOND",
+   "year": 2024,
+   "era": "wm",
+   "cites": 474,
+   "title": "Diffusion for World Modeling: Visual Details Matter in Atari",
+   "one": "Action-conditioned EDM diffusion world model in pixel space for imagination RL, state of the art among world-model agents on Atari 100k.",
+   "indeg": 1
+  },
+  {
+   "id": "cosmos2025",
+   "label": "Cosmos",
+   "year": 2025,
+   "era": "wm",
+   "cites": 1149,
+   "title": "Cosmos World Foundation Model Platform for Physical AI",
+   "one": "Open pretrain-then-post-train platform: curated video data, causal tokenizers, diffusion and autoregressive video models as world foundation models.",
+   "indeg": 0
+  },
+  {
+   "id": "vjepa2_2025",
+   "label": "V-JEPA 2",
+   "year": 2025,
+   "era": "wm",
+   "cites": 1360,
+   "title": "V-JEPA 2: Self-Supervised Video Models Enable Understanding, Prediction and Planning",
+   "one": "Scaled JEPA video pretraining plus a 62-hour action-conditioned latent predictor enabling zero-shot robot planning by goal-feature matching.",
+   "indeg": 0
+  }
+ ],
+ "edges": [
+  {
+   "s": "word2vec2013",
+   "t": "rumelhart1986",
+   "src": "openalex"
+  },
+  {
+   "s": "gan2014",
+   "t": "lenet1998",
+   "src": "openalex"
+  },
+  {
+   "s": "gan2014",
+   "t": "alexnet2012",
+   "src": "openalex"
+  },
+  {
+   "s": "seq2seq2014",
+   "t": "rumelhart1986",
+   "src": "openalex"
+  },
+  {
+   "s": "seq2seq2014",
+   "t": "word2vec2013",
+   "src": "openalex"
+  },
+  {
+   "s": "seq2seq2014",
+   "t": "lstm1997",
+   "src": "openalex"
+  },
+  {
+   "s": "seq2seq2014",
+   "t": "lenet1998",
+   "src": "openalex"
+  },
+  {
+   "s": "seq2seq2014",
+   "t": "bahdanau2014",
+   "src": "openalex"
+  },
+  {
+   "s": "seq2seq2014",
+   "t": "alexnet2012",
+   "src": "openalex"
+  },
+  {
+   "s": "bahdanau2014",
+   "t": "lstm1997",
+   "src": "openalex"
+  },
+  {
+   "s": "bahdanau2014",
+   "t": "seq2seq2014",
+   "src": "openalex"
+  },
+  {
+   "s": "adam2014",
+   "t": "alexnet2012",
+   "src": "openalex"
+  },
+  {
+   "s": "batchnorm2015",
+   "t": "dropout2014",
+   "src": "openalex"
+  },
+  {
+   "s": "batchnorm2015",
+   "t": "lenet1998",
+   "src": "openalex"
+  },
+  {
+   "s": "resnet2015",
+   "t": "vgg2014",
+   "src": "openalex"
+  },
+  {
+   "s": "resnet2015",
+   "t": "batchnorm2015",
+   "src": "openalex"
+  },
+  {
+   "s": "resnet2015",
+   "t": "lstm1997",
+   "src": "openalex"
+  },
+  {
+   "s": "resnet2015",
+   "t": "alexnet2012",
+   "src": "openalex"
+  },
+  {
+   "s": "layernorm2016",
+   "t": "word2vec2013",
+   "src": "openalex"
+  },
+  {
+   "s": "layernorm2016",
+   "t": "vgg2014",
+   "src": "openalex"
+  },
+  {
+   "s": "layernorm2016",
+   "t": "batchnorm2015",
+   "src": "openalex"
+  },
+  {
+   "s": "layernorm2016",
+   "t": "seq2seq2014",
+   "src": "openalex"
+  },
+  {
+   "s": "trpo2015",
+   "t": "dqn2013",
+   "src": "openalex"
+  },
+  {
+   "s": "ddpg2015",
+   "t": "adam2014",
+   "src": "openalex"
+  },
+  {
+   "s": "ddpg2015",
+   "t": "dqn2013",
+   "src": "openalex"
+  },
+  {
+   "s": "ddpg2015",
+   "t": "trpo2015",
+   "src": "openalex"
+  },
+  {
+   "s": "ddpg2015",
+   "t": "batchnorm2015",
+   "src": "openalex"
+  },
+  {
+   "s": "ddpg2015",
+   "t": "alexnet2012",
+   "src": "openalex"
+  },
+  {
+   "s": "a3c2016",
+   "t": "adam2014",
+   "src": "openalex"
+  },
+  {
+   "s": "a3c2016",
+   "t": "dqn2013",
+   "src": "openalex"
+  },
+  {
+   "s": "a3c2016",
+   "t": "trpo2015",
+   "src": "openalex"
+  },
+  {
+   "s": "a3c2016",
+   "t": "lstm1997",
+   "src": "openalex"
+  },
+  {
+   "s": "a3c2016",
+   "t": "ddpg2015",
+   "src": "openalex"
+  },
+  {
+   "s": "ppo2017",
+   "t": "adam2014",
+   "src": "openalex"
+  },
+  {
+   "s": "ppo2017",
+   "t": "trpo2015",
+   "src": "openalex"
+  },
+  {
+   "s": "ppo2017",
+   "t": "a3c2016",
+   "src": "openalex"
+  },
+  {
+   "s": "alphazero2017",
+   "t": "alphago2016",
+   "src": "openalex"
+  },
+  {
+   "s": "sac2018",
+   "t": "dqn2013",
+   "src": "openalex"
+  },
+  {
+   "s": "sac2018",
+   "t": "trpo2015",
+   "src": "openalex"
+  },
+  {
+   "s": "sac2018",
+   "t": "ddpg2015",
+   "src": "openalex"
+  },
+  {
+   "s": "sac2018",
+   "t": "alphago2016",
+   "src": "openalex"
+  },
+  {
+   "s": "sac2018",
+   "t": "a3c2016",
+   "src": "openalex"
+  },
+  {
+   "s": "sac2018",
+   "t": "ppo2017",
+   "src": "openalex"
+  },
+  {
+   "s": "transformer2017",
+   "t": "lstm1997",
+   "src": "openalex"
+  },
+  {
+   "s": "transformer2017",
+   "t": "dropout2014",
+   "src": "openalex"
+  },
+  {
+   "s": "transformer2017",
+   "t": "bahdanau2014",
+   "src": "openalex"
+  },
+  {
+   "s": "transformer2017",
+   "t": "layernorm2016",
+   "src": "openalex"
+  },
+  {
+   "s": "bert2018",
+   "t": "transformer2017",
+   "src": "openalex"
+  },
+  {
+   "s": "gpt3_2020",
+   "t": "word2vec2013",
+   "src": "openalex"
+  },
+  {
+   "s": "gpt3_2020",
+   "t": "transformer2017",
+   "src": "openalex"
+  },
+  {
+   "s": "gpt3_2020",
+   "t": "bert2018",
+   "src": "openalex"
+  },
+  {
+   "s": "gpt3_2020",
+   "t": "scaling2020",
+   "src": "openalex"
+  },
+  {
+   "s": "scaling2020",
+   "t": "adam2014",
+   "src": "openalex"
+  },
+  {
+   "s": "scaling2020",
+   "t": "transformer2017",
+   "src": "openalex"
+  },
+  {
+   "s": "scaling2020",
+   "t": "bert2018",
+   "src": "openalex"
+  },
+  {
+   "s": "scaling2020",
+   "t": "alexnet2012",
+   "src": "openalex"
+  },
+  {
+   "s": "vit2020",
+   "t": "batchnorm2015",
+   "src": "openalex"
+  },
+  {
+   "s": "vit2020",
+   "t": "transformer2017",
+   "src": "openalex"
+  },
+  {
+   "s": "vit2020",
+   "t": "gpt3_2020",
+   "src": "openalex"
+  },
+  {
+   "s": "clip2021",
+   "t": "adam2014",
+   "src": "openalex"
+  },
+  {
+   "s": "clip2021",
+   "t": "batchnorm2015",
+   "src": "openalex"
+  },
+  {
+   "s": "clip2021",
+   "t": "transformer2017",
+   "src": "openalex"
+  },
+  {
+   "s": "clip2021",
+   "t": "bert2018",
+   "src": "openalex"
+  },
+  {
+   "s": "clip2021",
+   "t": "scaling2020",
+   "src": "openalex"
+  },
+  {
+   "s": "clip2021",
+   "t": "gpt3_2020",
+   "src": "openalex"
+  },
+  {
+   "s": "clip2021",
+   "t": "vit2020",
+   "src": "openalex"
+  },
+  {
+   "s": "clip2021",
+   "t": "alexnet2012",
+   "src": "openalex"
+  },
+  {
+   "s": "rope2021",
+   "t": "transformer2017",
+   "src": "openalex"
+  },
+  {
+   "s": "rope2021",
+   "t": "gpt3_2020",
+   "src": "openalex"
+  },
+  {
+   "s": "cot2022",
+   "t": "lstm1997",
+   "src": "openalex"
+  },
+  {
+   "s": "cot2022",
+   "t": "transformer2017",
+   "src": "openalex"
+  },
+  {
+   "s": "cot2022",
+   "t": "scaling2020",
+   "src": "openalex"
+  },
+  {
+   "s": "cot2022",
+   "t": "gpt3_2020",
+   "src": "openalex"
+  },
+  {
+   "s": "cot2022",
+   "t": "instructgpt2022",
+   "src": "openalex"
+  },
+  {
+   "s": "instructgpt2022",
+   "t": "ppo2017",
+   "src": "openalex"
+  },
+  {
+   "s": "instructgpt2022",
+   "t": "alphazero2017",
+   "src": "openalex"
+  },
+  {
+   "s": "instructgpt2022",
+   "t": "gpt3_2020",
+   "src": "openalex"
+  },
+  {
+   "s": "chinchilla2022",
+   "t": "scaling2020",
+   "src": "openalex"
+  },
+  {
+   "s": "chinchilla2022",
+   "t": "gpt3_2020",
+   "src": "openalex"
+  },
+  {
+   "s": "flamingo2022",
+   "t": "lstm1997",
+   "src": "openalex"
+  },
+  {
+   "s": "flamingo2022",
+   "t": "bert2018",
+   "src": "openalex"
+  },
+  {
+   "s": "flamingo2022",
+   "t": "scaling2020",
+   "src": "openalex"
+  },
+  {
+   "s": "flamingo2022",
+   "t": "clip2021",
+   "src": "openalex"
+  },
+  {
+   "s": "flamingo2022",
+   "t": "chinchilla2022",
+   "src": "openalex"
+  },
+  {
+   "s": "llama2023",
+   "t": "scaling2020",
+   "src": "openalex"
+  },
+  {
+   "s": "llama2023",
+   "t": "rope2021",
+   "src": "openalex"
+  },
+  {
+   "s": "llava2023",
+   "t": "clip2021",
+   "src": "openalex"
+  },
+  {
+   "s": "llava2023",
+   "t": "flamingo2022",
+   "src": "openalex"
+  },
+  {
+   "s": "llava2023",
+   "t": "ldm2021",
+   "src": "openalex"
+  },
+  {
+   "s": "llava2023",
+   "t": "llama2023",
+   "src": "openalex"
+  },
+  {
+   "s": "dpo2023",
+   "t": "ppo2017",
+   "src": "openalex"
+  },
+  {
+   "s": "dpo2023",
+   "t": "gpt3_2020",
+   "src": "openalex"
+  },
+  {
+   "s": "dpo2023",
+   "t": "llama2023",
+   "src": "openalex"
+  },
+  {
+   "s": "mamba2023",
+   "t": "lstm1997",
+   "src": "openalex"
+  },
+  {
+   "s": "mamba2023",
+   "t": "seq2seq2014",
+   "src": "openalex"
+  },
+  {
+   "s": "mamba2023",
+   "t": "layernorm2016",
+   "src": "openalex"
+  },
+  {
+   "s": "mamba2023",
+   "t": "llama2023",
+   "src": "openalex"
+  },
+  {
+   "s": "mamba2023",
+   "t": "rope2021",
+   "src": "openalex"
+  },
+  {
+   "s": "mamba2023",
+   "t": "chinchilla2022",
+   "src": "openalex"
+  },
+  {
+   "s": "mamba2023",
+   "t": "flashattn2022",
+   "src": "openalex"
+  },
+  {
+   "s": "r1_2025",
+   "t": "ppo2017",
+   "src": "openalex"
+  },
+  {
+   "s": "r1_2025",
+   "t": "alphazero2017",
+   "src": "openalex"
+  },
+  {
+   "s": "r1_2025",
+   "t": "scaling2020",
+   "src": "openalex"
+  },
+  {
+   "s": "r1_2025",
+   "t": "dpo2023",
+   "src": "openalex"
+  },
+  {
+   "s": "r1_2025",
+   "t": "cot2022",
+   "src": "openalex"
+  },
+  {
+   "s": "ddpm2020",
+   "t": "vae2013",
+   "src": "openalex"
+  },
+  {
+   "s": "ddpm2020",
+   "t": "transformer2017",
+   "src": "openalex"
+  },
+  {
+   "s": "ldm2021",
+   "t": "vgg2014",
+   "src": "openalex"
+  },
+  {
+   "s": "ldm2021",
+   "t": "vae2013",
+   "src": "openalex"
+  },
+  {
+   "s": "ldm2021",
+   "t": "transformer2017",
+   "src": "openalex"
+  },
+  {
+   "s": "ldm2021",
+   "t": "bert2018",
+   "src": "openalex"
+  },
+  {
+   "s": "ldm2021",
+   "t": "ddpm2020",
+   "src": "openalex"
+  },
+  {
+   "s": "ldm2021",
+   "t": "scoresde2020",
+   "src": "openalex"
+  },
+  {
+   "s": "ldm2021",
+   "t": "gan2014",
+   "src": "openalex"
+  },
+  {
+   "s": "flowmatching2022",
+   "t": "scoresde2020",
+   "src": "openalex"
+  },
+  {
+   "s": "flowmatching2022",
+   "t": "rectflow2022",
+   "src": "openalex"
+  },
+  {
+   "s": "flowmatching2022",
+   "t": "ldm2021",
+   "src": "openalex"
+  },
+  {
+   "s": "rectflow2022",
+   "t": "vae2013",
+   "src": "openalex"
+  },
+  {
+   "s": "dit2022",
+   "t": "adam2014",
+   "src": "openalex"
+  },
+  {
+   "s": "dit2022",
+   "t": "vae2013",
+   "src": "openalex"
+  },
+  {
+   "s": "dit2022",
+   "t": "transformer2017",
+   "src": "openalex"
+  },
+  {
+   "s": "dit2022",
+   "t": "scaling2020",
+   "src": "openalex"
+  },
+  {
+   "s": "dit2022",
+   "t": "gpt3_2020",
+   "src": "openalex"
+  },
+  {
+   "s": "dit2022",
+   "t": "ddpm2020",
+   "src": "openalex"
+  },
+  {
+   "s": "dit2022",
+   "t": "vit2020",
+   "src": "openalex"
+  },
+  {
+   "s": "dit2022",
+   "t": "clip2021",
+   "src": "openalex"
+  },
+  {
+   "s": "dit2022",
+   "t": "cfg2022",
+   "src": "openalex"
+  },
+  {
+   "s": "dit2022",
+   "t": "ldm2021",
+   "src": "openalex"
+  },
+  {
+   "s": "diffpolicy2023",
+   "t": "transformer2017",
+   "src": "openalex"
+  },
+  {
+   "s": "diffpolicy2023",
+   "t": "ddpm2020",
+   "src": "openalex"
+  },
+  {
+   "s": "diffpolicy2023",
+   "t": "vit2020",
+   "src": "openalex"
+  },
+  {
+   "s": "diffpolicy2023",
+   "t": "clip2021",
+   "src": "openalex"
+  },
+  {
+   "s": "sd3_2024",
+   "t": "transformer2017",
+   "src": "openalex"
+  },
+  {
+   "s": "sd3_2024",
+   "t": "scaling2020",
+   "src": "openalex"
+  },
+  {
+   "s": "sd3_2024",
+   "t": "scoresde2020",
+   "src": "openalex"
+  },
+  {
+   "s": "sd3_2024",
+   "t": "clip2021",
+   "src": "openalex"
+  },
+  {
+   "s": "sd3_2024",
+   "t": "cfg2022",
+   "src": "openalex"
+  },
+  {
+   "s": "sd3_2024",
+   "t": "ldm2021",
+   "src": "openalex"
+  },
+  {
+   "s": "sd3_2024",
+   "t": "dit2022",
+   "src": "openalex"
+  },
+  {
+   "s": "sd3_2024",
+   "t": "dpo2023",
+   "src": "openalex"
+  },
+  {
+   "s": "rt2_2023",
+   "t": "gpt3_2020",
+   "src": "openalex"
+  },
+  {
+   "s": "rt2_2023",
+   "t": "clip2021",
+   "src": "openalex"
+  },
+  {
+   "s": "rt2_2023",
+   "t": "flamingo2022",
+   "src": "openalex"
+  },
+  {
+   "s": "rt2_2023",
+   "t": "cot2022",
+   "src": "openalex"
+  },
+  {
+   "s": "openvla2024",
+   "t": "clip2021",
+   "src": "openalex"
+  },
+  {
+   "s": "openvla2024",
+   "t": "llama2023",
+   "src": "openalex"
+  },
+  {
+   "s": "openvla2024",
+   "t": "diffpolicy2023",
+   "src": "openalex"
+  },
+  {
+   "s": "openvla2024",
+   "t": "rt2_2023",
+   "src": "openalex"
+  },
+  {
+   "s": "pi0_2024",
+   "t": "clip2021",
+   "src": "openalex"
+  },
+  {
+   "s": "pi0_2024",
+   "t": "flowmatching2022",
+   "src": "openalex"
+  },
+  {
+   "s": "pi0_2024",
+   "t": "ldm2021",
+   "src": "openalex"
+  },
+  {
+   "s": "pi0_2024",
+   "t": "rt2_2023",
+   "src": "openalex"
+  },
+  {
+   "s": "pi0_2024",
+   "t": "dit2022",
+   "src": "openalex"
+  },
+  {
+   "s": "pi0_2024",
+   "t": "sd3_2024",
+   "src": "openalex"
+  },
+  {
+   "s": "pi0_2024",
+   "t": "openvla2024",
+   "src": "openalex"
+  },
+  {
+   "s": "worldmodels2018",
+   "t": "dqn2013",
+   "src": "openalex"
+  },
+  {
+   "s": "worldmodels2018",
+   "t": "vae2013",
+   "src": "openalex"
+  },
+  {
+   "s": "worldmodels2018",
+   "t": "transformer2017",
+   "src": "openalex"
+  },
+  {
+   "s": "planet2018",
+   "t": "adam2014",
+   "src": "openalex"
+  },
+  {
+   "s": "planet2018",
+   "t": "vae2013",
+   "src": "openalex"
+  },
+  {
+   "s": "planet2018",
+   "t": "a3c2016",
+   "src": "openalex"
+  },
+  {
+   "s": "planet2018",
+   "t": "worldmodels2018",
+   "src": "openalex"
+  },
+  {
+   "s": "simple2019",
+   "t": "dqn2013",
+   "src": "openalex"
+  },
+  {
+   "s": "simple2019",
+   "t": "vae2013",
+   "src": "openalex"
+  },
+  {
+   "s": "simple2019",
+   "t": "lstm1997",
+   "src": "openalex"
+  },
+  {
+   "s": "simple2019",
+   "t": "dropout2014",
+   "src": "openalex"
+  },
+  {
+   "s": "simple2019",
+   "t": "a3c2016",
+   "src": "openalex"
+  },
+  {
+   "s": "simple2019",
+   "t": "ppo2017",
+   "src": "openalex"
+  },
+  {
+   "s": "simple2019",
+   "t": "planet2018",
+   "src": "openalex"
+  },
+  {
+   "s": "mbpo2019",
+   "t": "trpo2015",
+   "src": "openalex"
+  },
+  {
+   "s": "mbpo2019",
+   "t": "ddpg2015",
+   "src": "openalex"
+  },
+  {
+   "s": "mbpo2019",
+   "t": "ppo2017",
+   "src": "openalex"
+  },
+  {
+   "s": "mbpo2019",
+   "t": "sac2018",
+   "src": "openalex"
+  },
+  {
+   "s": "mbpo2019",
+   "t": "simple2019",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamer2019",
+   "t": "adam2014",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamer2019",
+   "t": "vae2013",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamer2019",
+   "t": "ddpg2015",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamer2019",
+   "t": "a3c2016",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamer2019",
+   "t": "ppo2017",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamer2019",
+   "t": "sac2018",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamer2019",
+   "t": "worldmodels2018",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamer2019",
+   "t": "planet2018",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamer2019",
+   "t": "simple2019",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamer2019",
+   "t": "muzero2019",
+   "src": "openalex"
+  },
+  {
+   "s": "muzero2019",
+   "t": "alphago2016",
+   "src": "openalex"
+  },
+  {
+   "s": "muzero2019",
+   "t": "planet2018",
+   "src": "openalex"
+  },
+  {
+   "s": "muzero2019",
+   "t": "alphazero2017",
+   "src": "openalex"
+  },
+  {
+   "s": "muzero2019",
+   "t": "simple2019",
+   "src": "openalex"
+  },
+  {
+   "s": "muzero2019",
+   "t": "alexnet2012",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv2_2020",
+   "t": "vae2013",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv2_2020",
+   "t": "a3c2016",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv2_2020",
+   "t": "ppo2017",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv2_2020",
+   "t": "planet2018",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv2_2020",
+   "t": "simple2019",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv2_2020",
+   "t": "muzero2019",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv2_2020",
+   "t": "dreamer2019",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv3_2023",
+   "t": "vae2013",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv3_2023",
+   "t": "ddpg2015",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv3_2023",
+   "t": "alphago2016",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv3_2023",
+   "t": "ppo2017",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv3_2023",
+   "t": "sac2018",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv3_2023",
+   "t": "worldmodels2018",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv3_2023",
+   "t": "planet2018",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv3_2023",
+   "t": "simple2019",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv3_2023",
+   "t": "muzero2019",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv3_2023",
+   "t": "dreamer2019",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv3_2023",
+   "t": "dreamerv2_2020",
+   "src": "openalex"
+  },
+  {
+   "s": "dreamerv3_2023",
+   "t": "instructgpt2022",
+   "src": "openalex"
+  },
+  {
+   "s": "ijepa2023",
+   "t": "transformer2017",
+   "src": "openalex"
+  },
+  {
+   "s": "ijepa2023",
+   "t": "bert2018",
+   "src": "openalex"
+  },
+  {
+   "s": "ijepa2023",
+   "t": "vit2020",
+   "src": "openalex"
+  },
+  {
+   "s": "genie2024",
+   "t": "gpt3_2020",
+   "src": "openalex"
+  },
+  {
+   "s": "genie2024",
+   "t": "ldm2021",
+   "src": "openalex"
+  },
+  {
+   "s": "diamond2024",
+   "t": "lstm1997",
+   "src": "openalex"
+  },
+  {
+   "s": "diamond2024",
+   "t": "alphago2016",
+   "src": "openalex"
+  },
+  {
+   "s": "diamond2024",
+   "t": "a3c2016",
+   "src": "openalex"
+  },
+  {
+   "s": "diamond2024",
+   "t": "bert2018",
+   "src": "openalex"
+  },
+  {
+   "s": "diamond2024",
+   "t": "simple2019",
+   "src": "openalex"
+  },
+  {
+   "s": "diamond2024",
+   "t": "resnet2015",
+   "src": "openalex"
+  },
+  {
+   "s": "diamond2024",
+   "t": "muzero2019",
+   "src": "openalex"
+  },
+  {
+   "s": "diamond2024",
+   "t": "ldm2021",
+   "src": "openalex"
+  },
+  {
+   "s": "diamond2024",
+   "t": "dit2022",
+   "src": "openalex"
+  },
+  {
+   "s": "diamond2024",
+   "t": "dreamerv3_2023",
+   "src": "openalex"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "vgg2014",
+   "src": "openalex"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "vae2013",
+   "src": "openalex"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "worldmodels2018",
+   "src": "openalex"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "dreamer2019",
+   "src": "openalex"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "scaling2020",
+   "src": "openalex"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "layernorm2016",
+   "src": "openalex"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "scoresde2020",
+   "src": "openalex"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "cfg2022",
+   "src": "openalex"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "flowmatching2022",
+   "src": "openalex"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "ldm2021",
+   "src": "openalex"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "diffpolicy2023",
+   "src": "openalex"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "genie2024",
+   "src": "openalex"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "sd3_2024",
+   "src": "openalex"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "openvla2024",
+   "src": "openalex"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "dreamerv3_2023",
+   "src": "openalex"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "diamond2024",
+   "src": "openalex"
+  },
+  {
+   "s": "vjepa2_2025",
+   "t": "worldmodels2018",
+   "src": "openalex"
+  },
+  {
+   "s": "vjepa2_2025",
+   "t": "muzero2019",
+   "src": "openalex"
+  },
+  {
+   "s": "vjepa2_2025",
+   "t": "dreamer2019",
+   "src": "openalex"
+  },
+  {
+   "s": "vjepa2_2025",
+   "t": "vit2020",
+   "src": "openalex"
+  },
+  {
+   "s": "vjepa2_2025",
+   "t": "clip2021",
+   "src": "openalex"
+  },
+  {
+   "s": "vjepa2_2025",
+   "t": "rt2_2023",
+   "src": "openalex"
+  },
+  {
+   "s": "vjepa2_2025",
+   "t": "ijepa2023",
+   "src": "openalex"
+  },
+  {
+   "s": "vjepa2_2025",
+   "t": "rope2021",
+   "src": "openalex"
+  },
+  {
+   "s": "vjepa2_2025",
+   "t": "genie2024",
+   "src": "openalex"
+  },
+  {
+   "s": "vjepa2_2025",
+   "t": "openvla2024",
+   "src": "openalex"
+  },
+  {
+   "s": "vjepa2_2025",
+   "t": "dreamerv3_2023",
+   "src": "openalex"
+  },
+  {
+   "s": "vjepa2_2025",
+   "t": "pi0_2024",
+   "src": "openalex"
+  },
+  {
+   "s": "rt2_2023",
+   "t": "vit2020",
+   "src": "note"
+  },
+  {
+   "s": "rt2_2023",
+   "t": "transformer2017",
+   "src": "note"
+  },
+  {
+   "s": "llava2023",
+   "t": "vit2020",
+   "src": "note"
+  },
+  {
+   "s": "llava2023",
+   "t": "instructgpt2022",
+   "src": "note"
+  },
+  {
+   "s": "openvla2024",
+   "t": "llava2023",
+   "src": "note"
+  },
+  {
+   "s": "rt2_2023",
+   "t": "llava2023",
+   "src": "note"
+  },
+  {
+   "s": "worldmodels2018",
+   "t": "lstm1997",
+   "src": "note"
+  },
+  {
+   "s": "dreamerv2_2020",
+   "t": "worldmodels2018",
+   "src": "note"
+  },
+  {
+   "s": "dpo2023",
+   "t": "instructgpt2022",
+   "src": "note"
+  },
+  {
+   "s": "flashattn2022",
+   "t": "transformer2017",
+   "src": "note"
+  },
+  {
+   "s": "llama2023",
+   "t": "flashattn2022",
+   "src": "note"
+  },
+  {
+   "s": "layernorm2016",
+   "t": "adam2014",
+   "src": "note"
+  },
+  {
+   "s": "bert2018",
+   "t": "layernorm2016",
+   "src": "note"
+  },
+  {
+   "s": "gpt3_2020",
+   "t": "layernorm2016",
+   "src": "note"
+  },
+  {
+   "s": "dropout2014",
+   "t": "rumelhart1986",
+   "src": "note"
+  },
+  {
+   "s": "dropout2014",
+   "t": "alexnet2012",
+   "src": "note"
+  },
+  {
+   "s": "resnet2015",
+   "t": "dropout2014",
+   "src": "note"
+  },
+  {
+   "s": "alphago2016",
+   "t": "dqn2013",
+   "src": "note"
+  },
+  {
+   "s": "alphago2016",
+   "t": "alexnet2012",
+   "src": "note"
+  },
+  {
+   "s": "resnet2015",
+   "t": "lenet1998",
+   "src": "note"
+  },
+  {
+   "s": "transformer2017",
+   "t": "resnet2015",
+   "src": "note"
+  },
+  {
+   "s": "vit2020",
+   "t": "resnet2015",
+   "src": "note"
+  },
+  {
+   "s": "ddpm2020",
+   "t": "resnet2015",
+   "src": "note"
+  },
+  {
+   "s": "gan2014",
+   "t": "vae2013",
+   "src": "note"
+  },
+  {
+   "s": "gan2014",
+   "t": "dropout2014",
+   "src": "note"
+  },
+  {
+   "s": "ddpm2020",
+   "t": "gan2014",
+   "src": "note"
+  },
+  {
+   "s": "adam2014",
+   "t": "vae2013",
+   "src": "note"
+  },
+  {
+   "s": "transformer2017",
+   "t": "seq2seq2014",
+   "src": "note"
+  },
+  {
+   "s": "transformer2017",
+   "t": "adam2014",
+   "src": "note"
+  },
+  {
+   "s": "alphazero2017",
+   "t": "dqn2013",
+   "src": "note"
+  },
+  {
+   "s": "pi0_2024",
+   "t": "rectflow2022",
+   "src": "note"
+  },
+  {
+   "s": "pi0_2024",
+   "t": "diffpolicy2023",
+   "src": "note"
+  },
+  {
+   "s": "pi0_2024",
+   "t": "vit2020",
+   "src": "note"
+  },
+  {
+   "s": "pi0_2024",
+   "t": "transformer2017",
+   "src": "note"
+  },
+  {
+   "s": "vit2020",
+   "t": "bert2018",
+   "src": "note"
+  },
+  {
+   "s": "flamingo2022",
+   "t": "vit2020",
+   "src": "note"
+  },
+  {
+   "s": "openvla2024",
+   "t": "vit2020",
+   "src": "note"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "dit2022",
+   "src": "note"
+  },
+  {
+   "s": "rope2021",
+   "t": "bert2018",
+   "src": "note"
+  },
+  {
+   "s": "flashattn2022",
+   "t": "rope2021",
+   "src": "note"
+  },
+  {
+   "s": "lenet1998",
+   "t": "rumelhart1986",
+   "src": "note"
+  },
+  {
+   "s": "alexnet2012",
+   "t": "lenet1998",
+   "src": "note"
+  },
+  {
+   "s": "vgg2014",
+   "t": "lenet1998",
+   "src": "note"
+  },
+  {
+   "s": "clip2021",
+   "t": "resnet2015",
+   "src": "note"
+  },
+  {
+   "s": "cfg2022",
+   "t": "ddpm2020",
+   "src": "note"
+  },
+  {
+   "s": "cfg2022",
+   "t": "scoresde2020",
+   "src": "note"
+  },
+  {
+   "s": "flamingo2022",
+   "t": "gpt3_2020",
+   "src": "note"
+  },
+  {
+   "s": "flamingo2022",
+   "t": "transformer2017",
+   "src": "note"
+  },
+  {
+   "s": "lstm1997",
+   "t": "rumelhart1986",
+   "src": "note"
+  },
+  {
+   "s": "sd3_2024",
+   "t": "flowmatching2022",
+   "src": "note"
+  },
+  {
+   "s": "sd3_2024",
+   "t": "rectflow2022",
+   "src": "note"
+  },
+  {
+   "s": "genie2024",
+   "t": "worldmodels2018",
+   "src": "note"
+  },
+  {
+   "s": "genie2024",
+   "t": "transformer2017",
+   "src": "note"
+  },
+  {
+   "s": "genie2024",
+   "t": "vit2020",
+   "src": "note"
+  },
+  {
+   "s": "diffpolicy2023",
+   "t": "scoresde2020",
+   "src": "note"
+  },
+  {
+   "s": "diffpolicy2023",
+   "t": "resnet2015",
+   "src": "note"
+  },
+  {
+   "s": "dqn2013",
+   "t": "alexnet2012",
+   "src": "note"
+  },
+  {
+   "s": "muzero2019",
+   "t": "dqn2013",
+   "src": "note"
+  },
+  {
+   "s": "dreamer2019",
+   "t": "mbpo2019",
+   "src": "note"
+  },
+  {
+   "s": "scoresde2020",
+   "t": "ddpm2020",
+   "src": "note"
+  },
+  {
+   "s": "dit2022",
+   "t": "scoresde2020",
+   "src": "note"
+  },
+  {
+   "s": "rectflow2022",
+   "t": "scoresde2020",
+   "src": "note"
+  },
+  {
+   "s": "simple2019",
+   "t": "worldmodels2018",
+   "src": "note"
+  },
+  {
+   "s": "rectflow2022",
+   "t": "ddpm2020",
+   "src": "note"
+  },
+  {
+   "s": "bert2018",
+   "t": "adam2014",
+   "src": "note"
+  },
+  {
+   "s": "ddpm2020",
+   "t": "adam2014",
+   "src": "note"
+  },
+  {
+   "s": "gpt3_2020",
+   "t": "adam2014",
+   "src": "note"
+  },
+  {
+   "s": "scaling2020",
+   "t": "lstm1997",
+   "src": "note"
+  },
+  {
+   "s": "alexnet2012",
+   "t": "rumelhart1986",
+   "src": "note"
+  },
+  {
+   "s": "bert2018",
+   "t": "bahdanau2014",
+   "src": "note"
+  },
+  {
+   "s": "llama2023",
+   "t": "transformer2017",
+   "src": "note"
+  },
+  {
+   "s": "llama2023",
+   "t": "gpt3_2020",
+   "src": "note"
+  },
+  {
+   "s": "llama2023",
+   "t": "chinchilla2022",
+   "src": "note"
+  },
+  {
+   "s": "flowmatching2022",
+   "t": "ddpm2020",
+   "src": "note"
+  },
+  {
+   "s": "mamba2023",
+   "t": "transformer2017",
+   "src": "note"
+  },
+  {
+   "s": "mamba2023",
+   "t": "gpt3_2020",
+   "src": "note"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "ddpm2020",
+   "src": "note"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "rope2021",
+   "src": "note"
+  },
+  {
+   "s": "cosmos2025",
+   "t": "transformer2017",
+   "src": "note"
+  },
+  {
+   "s": "rectflow2022",
+   "t": "flowmatching2022",
+   "src": "note"
+  },
+  {
+   "s": "r1_2025",
+   "t": "instructgpt2022",
+   "src": "note"
+  },
+  {
+   "s": "chinchilla2022",
+   "t": "transformer2017",
+   "src": "note"
+  },
+  {
+   "s": "chinchilla2022",
+   "t": "adam2014",
+   "src": "note"
+  },
+  {
+   "s": "bahdanau2014",
+   "t": "word2vec2013",
+   "src": "note"
+  },
+  {
+   "s": "bert2018",
+   "t": "word2vec2013",
+   "src": "note"
+  },
+  {
+   "s": "instructgpt2022",
+   "t": "trpo2015",
+   "src": "note"
+  },
+  {
+   "s": "transformer2017",
+   "t": "batchnorm2015",
+   "src": "note"
+  },
+  {
+   "s": "vgg2014",
+   "t": "alexnet2012",
+   "src": "note"
+  },
+  {
+   "s": "vgg2014",
+   "t": "dropout2014",
+   "src": "note"
+  },
+  {
+   "s": "muzero2019",
+   "t": "resnet2015",
+   "src": "note"
+  },
+  {
+   "s": "diamond2024",
+   "t": "worldmodels2018",
+   "src": "note"
+  },
+  {
+   "s": "diamond2024",
+   "t": "ddpm2020",
+   "src": "note"
+  },
+  {
+   "s": "diamond2024",
+   "t": "scoresde2020",
+   "src": "note"
+  }
+ ]
+}
