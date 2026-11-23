@@ -1,0 +1,579 @@
+<title>Attention to World Models</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Layout: one long reading column with full-width figure bands; each model family owns one hue, used only for marks and labels. */
+:root{
+  --bg:#F5F6F8; --surface:#FFFFFF; --fg:#151821; --muted:#555C6A; --line:#DADDE4; --code:#ECEEF3;
+  --tx:#2450D6; --df:#A02876; --vl:#0B7266; --wm:#A86400; --ok:#1B7F3B; --bad:#B3261E;
+  --f-head:"Space Grotesk",system-ui,sans-serif; --f-body:"Inter",system-ui,sans-serif; --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1218; --surface:#171B23; --fg:#E8EAEE; --muted:#A0A7B4; --line:#2A303B; --code:#1D222C;
+  --tx:#7C99FF; --df:#E37CC0; --vl:#3CC2B1; --wm:#E8A23A; --ok:#5CCB7B; --bad:#FF8A80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1218; --surface:#171B23; --fg:#E8EAEE; --muted:#A0A7B4; --line:#2A303B; --code:#1D222C;
+  --tx:#7C99FF; --df:#E37CC0; --vl:#3CC2B1; --wm:#E8A23A; --ok:#5CCB7B; --bad:#FF8A80; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--f-body);padding-block:0 4rem;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:980px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-head);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:700;letter-spacing:-.02em}
+h2{font-size:clamp(1.5rem,3vw,2rem);font-weight:600;letter-spacing:-.01em}
+h3{font-size:1.1rem;font-weight:600}
+p{margin:.6rem 0;max-width:68ch}
+a{color:var(--tx)}
+.lede{font-size:1.15rem;color:var(--muted);max-width:60ch}
+header{padding-block:2.5rem 1.5rem}
+.eyebrow{font:500 .75rem/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+nav{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem}
+nav a{font:500 .85rem var(--f-body);text-decoration:none;color:var(--fg);border:1px solid var(--line);background:var(--surface);padding:.35rem .8rem;border-radius:999px}
+nav a:hover,nav a:focus-visible{border-color:var(--fg)}
+nav a i{display:inline-block;width:.6rem;height:.6rem;border-radius:50%;margin-right:.4rem;vertical-align:baseline}
+section{padding-block:3rem 1rem;border-top:1px solid var(--line);margin-top:2rem}
+.tag{display:inline-block;font:500 .72rem/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.7rem}
+.tx{--c:var(--tx)} .df{--c:var(--df)} .vl{--c:var(--vl)} .wm{--c:var(--wm)}
+.tag,.k{color:var(--c)}
+section h2{border-left:4px solid var(--c);padding-left:.7rem}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:1.5rem;align-items:start}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:1.1rem 1.2rem;min-width:0}
+.panel h3{margin-bottom:.4rem}
+.eq{font:400 .92rem/1.7 var(--f-mono);background:var(--code);border-radius:8px;padding:.7rem .9rem;margin:.7rem 0;overflow-x:auto;white-space:pre}
+.eq b{color:var(--c);font-weight:500}
+.note{font-size:.88rem;color:var(--muted)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.88rem}
+th,td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 .72rem var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+td.lane{font-weight:600;white-space:nowrap}
+.steps{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0;padding:0;list-style:none;counter-reset:s}
+.steps li{flex:1 1 150px;min-width:0;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--c);border-radius:8px;padding:.7rem .8rem;font-size:.86rem}
+.steps li b{display:block;font:600 .95rem var(--f-head);margin-bottom:.2rem}
+.steps li span{color:var(--muted)}
+figure{margin:1rem 0}
+figcaption{font-size:.85rem;color:var(--muted);margin-top:.4rem;max-width:70ch}
+svg{max-width:100%;height:auto;display:block}
+svg text{font:12px var(--f-body);fill:var(--fg)}
+svg .m{fill:var(--muted)} svg .mono{font-family:var(--f-mono);font-size:11px}
+svg .box{fill:var(--surface);stroke:var(--line);stroke-width:1.2}
+svg .cbox{fill:none;stroke:var(--c);stroke-width:1.6}
+svg .line{stroke:var(--fg);stroke-width:1.3;fill:none}
+svg .cline{stroke:var(--c);stroke-width:1.8;fill:none}
+svg .dash{stroke-dasharray:4 3}
+svg .cfill{fill:var(--c)}
+.ctrl{display:flex;flex-wrap:wrap;gap:.6rem 1.2rem;align-items:center;margin:.6rem 0;font-size:.88rem}
+.ctrl label{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;min-width:0;max-width:100%}
+input[type=range]{accent-color:var(--c);width:min(220px,100%);max-width:100%}
+button.tok{font:500 .85rem var(--f-body);background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:.25rem .5rem;cursor:pointer}
+button.tok[aria-pressed=true]{border-color:var(--c);background:var(--c);color:var(--bg)}
+button.tok:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+select{font:inherit;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:.2rem .4rem}
+.bars{display:grid;gap:.25rem;margin-top:.6rem}
+.bar{display:grid;grid-template-columns:5.2rem 1fr 3rem;align-items:center;gap:.5rem;font-size:.83rem}
+.bar .track{background:var(--code);height:14px;border-radius:3px;overflow:hidden}
+.bar .fill{height:100%;background:var(--c)}
+.bar .v{font-family:var(--f-mono);text-align:right}
+.readout{font:500 .85rem var(--f-mono);color:var(--muted)}
+canvas{width:100%;aspect-ratio:16/9;background:var(--surface);border:1px solid var(--line);border-radius:8px;display:block}
+.use{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:.8rem;margin:1rem 0}
+.use div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:.7rem .8rem;font-size:.86rem}
+.use b{display:block;font-family:var(--f-head);margin-bottom:.2rem;color:var(--c)}
+.limit{border-left:3px solid var(--bad);padding:.2rem .9rem;background:var(--surface);border-radius:0 8px 8px 0;font-size:.9rem;margin:1rem 0}
+.limit b{color:var(--bad)}
+footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">A visual report · techniques, mathematics, applications</div>
+  <h1>From Attention to World Models</h1>
+  <p class="lede">One building block, attention, and four ways it is used: to predict the next word, to remove noise, to read images, and to imagine what happens next. Each section has a picture, the maths behind it, something to drag, and where it is used.</p>
+  <nav aria-label="Sections">
+    <a href="#timeline">Timeline</a>
+    <a href="#attention"><i style="background:var(--tx)"></i>Attention &amp; Transformer</a>
+    <a href="#lm"><i style="background:var(--tx)"></i>Language models</a>
+    <a href="#diffusion"><i style="background:var(--df)"></i>Diffusion</a>
+    <a href="#vlm"><i style="background:var(--vl)"></i>Vision-language</a>
+    <a href="#wm"><i style="background:var(--wm)"></i>World models</a>
+    <a href="#together">Putting it together</a>
+  </nav>
+</header>
+
+<section id="timeline" style="border-top:0;margin-top:0;padding-top:1rem">
+  <h2 style="border:0;padding:0">How the field unfolded</h2>
+  <p>The same recipe repeats: turn data into tokens, process with a Transformer, pick an objective. Read the table left to right for time and top to bottom for the model family.</p>
+  <div class="scroll panel" style="padding:.4rem">
+  <table style="min-width:860px">
+    <tr><th></th><th>2014–16</th><th>2017</th><th>2018–19</th><th>2020–21</th><th>2022</th><th>2023</th><th>2024</th><th>2025–26</th></tr>
+    <tr class="tx"><td class="lane k">Attention &amp; Transformer</td><td>Additive attention for translation</td><td><b>Transformer</b>: attention only, no recurrence</td><td></td><td>RoPE positions, ViT-style patches</td><td>FlashAttention</td><td>GQA, state-space (Mamba), MoE</td><td>Hybrid attention + state-space, long context</td><td>Sparse and linear hybrids at scale</td></tr>
+    <tr class="tx"><td class="lane k">Language models</td><td>Seq2seq with attention</td><td></td><td>BERT, GPT-2</td><td>GPT-3, scaling laws</td><td>Chinchilla, RLHF (InstructGPT), chat assistants</td><td>Open LLMs, DPO</td><td>Reasoning models, test-time compute</td><td>RL on verifiable rewards, agents and tools</td></tr>
+    <tr class="df"><td class="lane k">Diffusion &amp; flows</td><td>First diffusion idea</td><td></td><td></td><td>DDPM, score SDEs, DDIM, guidance</td><td>Latent diffusion (Stable Diffusion)</td><td>Diffusion Transformer (DiT), consistency models</td><td>Rectified flow in image models, video DiTs</td><td>Flow matching as default; discrete text diffusion</td></tr>
+    <tr class="vl"><td class="lane k">Vision-language(-action)</td><td></td><td></td><td></td><td>ViT, CLIP</td><td>Flamingo</td><td>LLaVA, GPT-4V, RT-2</td><td>Native multimodal, OpenVLA, π0</td><td>GUI agents, video understanding, unified generation</td></tr>
+    <tr class="wm"><td class="lane k">World models</td><td></td><td></td><td>World Models (Ha &amp; Schmidhuber), PlaNet</td><td>Dreamer v1/v2, MuZero</td><td>JEPA proposal</td><td>DreamerV3, I-JEPA, GAIA-1</td><td>Genie, video-as-simulator, DIAMOND</td><td>Cosmos, V-JEPA 2, interactive world models</td></tr>
+  </table></div>
+  <p class="note">My knowledge ends around mid-2026. Treat the two right-hand columns as directions to verify against recent papers.</p>
+</section>
+
+<!-- ===================== ATTENTION ===================== -->
+<section id="attention" class="tx">
+  <span class="tag">01 Building block</span>
+  <h2>Attention and the Transformer</h2>
+  <p>To read “the animal didn’t cross the street because <em>it</em> was tired”, a model must connect “it” to “animal”. Older networks read one word at a time and carried a single memory that faded. Attention lets every word look at every other word directly and take a weighted average of what helps.</p>
+
+  <div class="grid2">
+    <div class="panel">
+      <h3>Try it: who does each word look at?</h3>
+      <p class="note">Weights below use hand-set illustrative scores (a real model learns them). Click a word.</p>
+      <div id="tokrow" class="ctrl" role="group" aria-label="Choose the query word"></div>
+      <div class="ctrl">
+        <label for="sharp">Sharpness <input id="sharp" type="range" min="0.3" max="3" step="0.1" value="1"><span id="sharpv" class="readout">1.0×</span></label>
+        <label for="causal"><input id="causal" type="checkbox"> Causal mask (GPT-style)</label>
+      </div>
+      <div id="attbars" class="bars"></div>
+    </div>
+    <div class="panel">
+      <h3>The maths in four lines</h3>
+      <div class="eq">q = x·W<sub>Q</sub>   k = x·W<sub>K</sub>   v = x·W<sub>V</sub>
+<b>score</b><sub>ij</sub> = q<sub>i</sub>·k<sub>j</sub> / √d
+<b>weight</b><sub>ij</sub> = softmax<sub>j</sub>(score<sub>ij</sub>)
+<b>out</b><sub>i</sub> = Σ<sub>j</sub> weight<sub>ij</sub> · v<sub>j</sub></div>
+      <p class="note">Query: what I look for. Key: what I offer. Value: what I hand over. Dividing by √d keeps scores small so softmax does not collapse onto one word. The slider on the left mimics changing that scale.</p>
+      <h3 style="margin-top:1rem">One worked example (d = 2)</h3>
+      <div id="worked" class="scroll"></div>
+    </div>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 760 330" role="img" aria-label="One Transformer block: tokens pass through normalisation, multi-head attention, and a feed-forward network, each with a residual skip connection, repeated N times">
+      <defs><marker id="ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" style="fill:var(--fg)"/></marker></defs>
+      <text x="20" y="28" class="m">tokens in (embeddings + position)</text>
+      <rect x="20" y="40" width="230" height="40" rx="6" class="box"/><text x="135" y="65" text-anchor="middle">x  (n tokens × d)</text>
+      <line x1="135" y1="80" x2="135" y2="110" class="line" marker-end="url(#ar)"/>
+      <rect x="20" y="112" width="230" height="34" rx="6" class="box"/><text x="135" y="134" text-anchor="middle">Norm</text>
+      <line x1="135" y1="146" x2="135" y2="166" class="line" marker-end="url(#ar)"/>
+      <rect x="20" y="168" width="230" height="52" rx="6" class="cbox"/><text x="135" y="190" text-anchor="middle" style="font-weight:600">Multi-head self-attention</text><text x="135" y="208" text-anchor="middle" class="m">tokens exchange information</text>
+      <path d="M135 82 L290 82 L290 244 L152 244" class="line dash" marker-end="url(#ar)"/><text x="296" y="164" class="m">residual (+)</text>
+      <circle cx="135" cy="244" r="12" class="box"/><text x="135" y="248" text-anchor="middle">+</text>
+      <line x1="135" y1="220" x2="135" y2="232" class="line"/>
+      <line x1="135" y1="256" x2="135" y2="276" class="line" marker-end="url(#ar)"/>
+      <rect x="20" y="278" width="230" height="40" rx="6" class="cbox"/><text x="135" y="296" text-anchor="middle" style="font-weight:600">Norm → MLP (per token)</text><text x="135" y="311" text-anchor="middle" class="m">+ residual, then repeat × N</text>
+      <rect x="400" y="40" width="340" height="278" rx="8" class="box"/>
+      <text x="420" y="68" style="font-weight:600">Why this design won</text>
+      <text x="420" y="94">• every token sees every token in one step</text>
+      <text x="420" y="116">• all positions compute in parallel on a GPU</text>
+      <text x="420" y="138">• residual paths keep deep stacks trainable</text>
+      <text x="420" y="160">• more data + parameters = steadily lower loss</text>
+      <text x="420" y="196" style="font-weight:600">What it costs</text>
+      <text x="420" y="220">• attention cost grows as n² with length</text>
+      <text x="420" y="242">• generation re-reads the past each token</text>
+      <text x="420" y="264">• no built-in sense of order (needs positions)</text>
+      <text x="420" y="296" class="m">next: the engineering fixes →</text>
+    </svg>
+    <figcaption>One Transformer block. The attention step mixes information between tokens; the MLP step processes each token on its own and holds much of the stored knowledge.</figcaption>
+  </figure>
+
+  <div class="scroll panel"><table style="min-width:640px">
+    <tr><th>Problem</th><th>Fix</th><th>Idea</th></tr>
+    <tr><td>Word order is invisible</td><td>RoPE</td><td>Rotate q and k by position, so only relative distance matters</td></tr>
+    <tr><td>n² attention memory</td><td>FlashAttention, sliding window</td><td>Same maths, fewer memory reads, or look only nearby</td></tr>
+    <tr><td>Re-reading the past</td><td>KV cache</td><td>Store old keys and values once</td></tr>
+    <tr><td>KV cache is huge</td><td>MQA / GQA</td><td>Share keys and values across heads</td></tr>
+    <tr><td>Dense layers cost too much</td><td>Mixture of experts</td><td>A router sends each token to a few MLPs</td></tr>
+    <tr><td>Very long inputs</td><td>State-space and hybrid layers</td><td>Cheap recurrent layers with a few attention layers</td></tr>
+  </table></div>
+</section>
+
+<!-- ===================== LANGUAGE MODELS ===================== -->
+<section id="lm" class="tx">
+  <span class="tag">02 Text</span>
+  <h2>Language models: predict the next token</h2>
+  <p>Cut text into tokens, then train one Transformer to guess the next token. Grammar, facts and reasoning patterns emerge because they all help the guess.</p>
+
+  <ol class="steps">
+    <li><b>Pretrain</b><span>Next-token prediction on trillions of tokens. Knowledge comes from here.</span></li>
+    <li><b>Instruction tune</b><span>Train on examples of requests and good answers.</span></li>
+    <li><b>Preference tune</b><span>RLHF or DPO: learn which of two answers people prefer.</span></li>
+    <li><b>Reason with RL</b><span>Reward correct answers on math and code; the model learns to think longer and check itself.</span></li>
+    <li><b>Use tools</b><span>Search, run code, operate software, loop on the results.</span></li>
+  </ol>
+
+  <div class="grid2">
+    <div class="panel">
+      <h3>The maths</h3>
+      <div class="eq"><b>Pretraining loss</b>
+L = − Σ<sub>t</sub> log p<sub>θ</sub>( x<sub>t</sub> | x<sub>1</sub> … x<sub>t−1</sub> )
+
+<b>Scaling law</b> (N params, D tokens)
+L(N, D) = E + A / N<sup>α</sup> + B / D<sup>β</sup>
+
+<b>RLHF objective</b>
+max E[ r(x, y) ] − β · KL( π<sub>θ</sub> ‖ π<sub>ref</sub> )
+
+<b>DPO loss</b> (y<sub>w</sub> preferred over y<sub>l</sub>)
+−log σ( β [ log π<sub>θ</sub>(y<sub>w</sub>)/π<sub>ref</sub>(y<sub>w</sub>) − log π<sub>θ</sub>(y<sub>l</sub>)/π<sub>ref</sub>(y<sub>l</sub>) ] )</div>
+      <p class="note">The KL term keeps the tuned model close to the original so it does not drift into odd text to please the reward.</p>
+    </div>
+    <div class="panel">
+      <h3>Try it: temperature</h3>
+      <p class="note">Prompt: “The capital of France is …”. Logits are illustrative.</p>
+      <div class="ctrl"><label for="temp">Temperature <input id="temp" type="range" min="0.1" max="2.5" step="0.05" value="1"><span id="tempv" class="readout">1.00</span></label></div>
+      <div id="tempbars" class="bars"></div>
+      <div class="eq" style="margin-bottom:0">p<sub>i</sub> = exp( z<sub>i</sub> / T ) / Σ<sub>j</sub> exp( z<sub>j</sub> / T )</div>
+      <p class="note">Low T concentrates on the top choice. High T spreads probability to unlikely words.</p>
+    </div>
+  </div>
+
+  <div class="use">
+    <div><b>Software</b>Code completion, review and agents that run tests and fix failures.</div>
+    <div><b>Knowledge work</b>Search with citations, drafting, summarising, data extraction.</div>
+    <div><b>Science and maths</b>Proof assistants, literature review, reasoning models checked by verifiers.</div>
+    <div><b>Robotics</b>Turn “tidy the table” into a plan of sub-tasks a controller can follow.</div>
+  </div>
+  <div class="limit"><b>Limits.</b> Models can state wrong facts fluently, and long reasoning chains can contain unchecked errors. Verifiable tasks (code, maths) improve fastest because the reward is trustworthy.</div>
+</section>
+
+<!-- ===================== DIFFUSION ===================== -->
+<section id="diffusion" class="df">
+  <span class="tag">03 Continuous data</span>
+  <h2>Diffusion: generate by removing noise</h2>
+  <p>Take a real sample and add noise in small steps until only static remains. Then train a network to undo one small step. Start from static and apply it repeatedly, and you get a new sample.</p>
+
+  <div class="grid2">
+    <div class="panel">
+      <h3>Try it: add noise to a face</h3>
+      <canvas id="dcanvas" width="640" height="360" role="img" aria-label="Scatter of points forming a face, progressively replaced by noise as the slider moves"></canvas>
+      <div class="ctrl">
+        <label for="dt">Noise level t <input id="dt" type="range" min="0" max="1" step="0.01" value="0.35"></label>
+        <label for="dmode">Path <select id="dmode"><option value="vp">Diffusion (variance-preserving)</option><option value="flow">Flow matching (straight line)</option></select></label>
+      </div>
+      <div id="dread" class="readout"></div>
+      <p class="note">t = 0 is data, t = 1 is pure noise. Faint dots mark where each point began. Every point keeps the same noise direction, which is why it moves smoothly.</p>
+    </div>
+    <div class="panel">
+      <h3>The maths</h3>
+      <div class="eq"><b>Forward (fixed)</b>
+x<sub>t</sub> = √ᾱ<sub>t</sub> · x<sub>0</sub> + √(1−ᾱ<sub>t</sub>) · ε     ε ~ N(0, I)
+
+<b>Learn to predict the noise</b>
+L = E ‖ ε − ε<sub>θ</sub>( x<sub>t</sub>, t, c ) ‖²
+
+<b>Guidance</b> (c = prompt)
+ε̂ = ε<sub>θ</sub>(∅) + w · ( ε<sub>θ</sub>(c) − ε<sub>θ</sub>(∅) )
+
+<b>Flow matching</b> (straight path)
+x<sub>t</sub> = (1−t)·x<sub>0</sub> + t·ε
+L = E ‖ v<sub>θ</sub>( x<sub>t</sub>, t ) − ( ε − x<sub>0</sub> ) ‖²</div>
+      <p class="note">Guidance pushes the result toward the prompt by exaggerating the difference between “with prompt” and “without”. Flow matching learns a velocity along a straight line, so it needs fewer steps.</p>
+    </div>
+  </div>
+
+  <ol class="steps">
+    <li><b>Latent diffusion</b><span>Compress with an autoencoder first, then denoise the small latent. Far cheaper.</span></li>
+    <li><b>U-Net → DiT</b><span>Swap the convolutional net for a Transformer over patches. Scales like an LLM.</span></li>
+    <li><b>Flow matching</b><span>Straight paths, fewer steps. The default in many current systems.</span></li>
+    <li><b>Distillation</b><span>Compress 50 steps into 1–4.</span></li>
+    <li><b>Video and actions</b><span>Denoise space-time patches, or chunks of robot motion.</span></li>
+  </ol>
+
+  <div class="use">
+    <div><b>Images and video</b>Text-to-image, editing, video generation.</div>
+    <div><b>Robot control</b>Diffusion Policy and flow-matching action heads produce smooth motion chunks.</div>
+    <div><b>Molecules and proteins</b>Generate structures that fit a target shape.</div>
+    <div><b>Weather and science</b>Sample many plausible futures instead of one average.</div>
+  </div>
+  <div class="limit"><b>Limits.</b> Sampling takes many network passes unless distilled, and diffusion on discrete text is still maturing against next-token models.</div>
+</section>
+
+<!-- ===================== VLM ===================== -->
+<section id="vlm" class="vl">
+  <span class="tag">04 Seeing and reading</span>
+  <h2>Vision-language models</h2>
+  <p>Cut an image into patches and treat each patch as a token. After that, the image is just more tokens for a language model to read.</p>
+
+  <figure>
+    <svg viewBox="0 0 780 250" role="img" aria-label="Pipeline: an image is cut into patches, encoded by a vision Transformer, projected into the language model's token space, and joined with text tokens; the language model then outputs text or robot actions">
+      <defs><marker id="ar2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" style="fill:var(--fg)"/></marker></defs>
+      <g transform="translate(14,30)">
+        <rect width="96" height="96" rx="4" class="box"/>
+        <path d="M32 0V96M64 0V96M0 32H96M0 64H96" class="line" style="stroke:var(--vl);stroke-width:1"/>
+        <text x="48" y="116" text-anchor="middle" class="m">image → patches</text>
+      </g>
+      <line x1="116" y1="78" x2="158" y2="78" class="line" marker-end="url(#ar2)"/>
+      <rect x="160" y="48" width="110" height="60" rx="6" class="cbox"/><text x="215" y="74" text-anchor="middle" style="font-weight:600">Vision encoder</text><text x="215" y="92" text-anchor="middle" class="m">ViT / CLIP</text>
+      <line x1="270" y1="78" x2="302" y2="78" class="line" marker-end="url(#ar2)"/>
+      <rect x="304" y="48" width="86" height="60" rx="6" class="box"/><text x="347" y="74" text-anchor="middle">Projector</text><text x="347" y="92" text-anchor="middle" class="m">small MLP</text>
+      <path d="M390 78 L430 78 L430 92 L468 92" class="line" marker-end="url(#ar2)"/>
+      <g transform="translate(300,160)"><rect width="140" height="30" rx="5" class="box"/><text x="70" y="19" text-anchor="middle">“What is on the table?”</text><text x="70" y="50" text-anchor="middle" class="m">text → tokens</text></g>
+      <path d="M440 175 L455 175 L455 140 L468 140" class="line" marker-end="url(#ar2)"/>
+            <rect x="470" y="60" width="130" height="110" rx="8" class="cbox"/><text x="535" y="100" text-anchor="middle" style="font-weight:600">Language model</text><text x="535" y="120" text-anchor="middle" class="m">[ visual tokens ;</text><text x="535" y="136" text-anchor="middle" class="m">text tokens ]</text>
+      <line x1="600" y1="115" x2="640" y2="115" class="line" marker-end="url(#ar2)"/>
+      <rect x="642" y="60" width="124" height="48" rx="6" class="box"/><text x="704" y="88" text-anchor="middle">Text answer</text>
+      <rect x="642" y="122" width="124" height="48" rx="6" class="box" style="stroke:var(--c);stroke-dasharray:4 3"/><text x="704" y="144" text-anchor="middle">Robot actions</text><text x="704" y="160" text-anchor="middle" class="m">(VLA models)</text>
+    </svg>
+    <figcaption>The common recipe. Train the small projector first so image features land in the language model’s space, then fine-tune on captioning, question answering, charts, documents and screens.</figcaption>
+  </figure>
+
+  <div class="grid2">
+    <div class="panel">
+      <h3>The maths</h3>
+      <div class="eq"><b>Patch tokens</b>
+t<sub>i</sub> = W<sub>patch</sub> · flatten( patch<sub>i</sub> ) + pos<sub>i</sub>
+
+<b>Bridge to the LLM</b>
+h = LLM( [ W<sub>proj</sub> · ViT(image) ; embed(text) ] )
+
+<b>CLIP contrastive loss</b>
+L = −(1/N) Σ<sub>i</sub> log [ exp( s<sub>ii</sub> / τ )
+                       / Σ<sub>j</sub> exp( s<sub>ij</sub> / τ ) ]
+s<sub>ij</sub> = cos( image<sub>i</sub>, text<sub>j</sub> )</div>
+      <p class="note">CLIP pulls matching image and caption together and pushes mismatches apart. That gives a visual encoder already aligned with language.</p>
+    </div>
+    <div class="panel">
+      <h3>CLIP similarity grid (illustrative)</h3>
+      <svg id="clipsvg" viewBox="0 0 360 300" role="img" aria-label="A four by four grid of image-to-caption similarity where the diagonal is brightest"></svg>
+      <p class="note">Rows are images, columns are captions. Training makes the diagonal bright and everything else dark.</p>
+    </div>
+  </div>
+
+  <div class="use">
+    <div><b>Documents and screens</b>Read invoices, charts, forms and user interfaces.</div>
+    <div><b>Accessibility</b>Describe scenes and read signs aloud.</div>
+    <div><b>Computer-use agents</b>See a screen, decide a click.</div>
+    <div><b>Robots (VLA)</b>Same model, but the output is joint or gripper commands, often from a flow-matching head.</div>
+  </div>
+  <div class="limit"><b>Limits.</b> Fine spatial detail, counting and precise geometry are weaker than reading text. Robots also need grounding in real physics, which a still-image pretraining does not supply.</div>
+</section>
+
+<!-- ===================== WORLD MODELS ===================== -->
+<section id="wm" class="wm">
+  <span class="tag">05 Prediction and planning</span>
+  <h2>World models: imagine what happens next</h2>
+  <p>A language model predicts the next word. A world model predicts the next situation, given the current one and an action. With it, an agent can rehearse in its head instead of on real hardware.</p>
+
+  <figure>
+    <svg viewBox="0 0 780 270" role="img" aria-label="Loop: observe state, imagine many action sequences with the world model, choose the best, execute the first action in the real world, observe again, and update the model from what happened">
+      <defs><marker id="ar3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" style="fill:var(--fg)"/></marker></defs>
+      <rect x="20" y="100" width="130" height="64" rx="8" class="box"/><text x="85" y="128" text-anchor="middle" style="font-weight:600">Real world</text><text x="85" y="146" text-anchor="middle" class="m">slow, costly, risky</text>
+      <line x1="150" y1="122" x2="214" y2="122" class="line" marker-end="url(#ar3)"/><text x="182" y="114" text-anchor="middle" class="m">state s<tspan baseline-shift="sub" font-size="9">t</tspan></text>
+      <rect x="216" y="80" width="190" height="104" rx="8" class="cbox"/><text x="311" y="108" text-anchor="middle" style="font-weight:600">World model</text><text x="311" y="128" text-anchor="middle" class="mono m">s′ = f( s, a )</text><text x="311" y="148" text-anchor="middle" class="m">run 1000 imagined futures</text><text x="311" y="166" text-anchor="middle" class="m">fast, safe, in the head</text>
+      <line x1="406" y1="122" x2="470" y2="122" class="line" marker-end="url(#ar3)"/><text x="438" y="114" text-anchor="middle" class="m">scores</text>
+      <rect x="472" y="90" width="130" height="64" rx="8" class="box"/><text x="537" y="118" text-anchor="middle" style="font-weight:600">Pick the best</text><text x="537" y="136" text-anchor="middle" class="m">goal or reward</text>
+      <path d="M602 122 L690 122 L690 230 L85 230 L85 168" class="line" marker-end="url(#ar3)"/><text x="400" y="222" text-anchor="middle" class="m">do only the first action, then look and think again</text>
+      <path d="M85 98 L85 40 L311 40 L311 78" class="line dash" marker-end="url(#ar3)"/><text x="200" y="32" text-anchor="middle" class="m">compare prediction with what happened → learn</text>
+    </svg>
+    <figcaption>Plan in imagination, act once, observe, repeat. The dashed path is what keeps the model honest: every real step is also a lesson.</figcaption>
+  </figure>
+
+  <div class="grid2">
+    <div class="panel">
+      <h3>The maths</h3>
+      <div class="eq"><b>One-step dynamics</b>
+s<sub>t+1</sub> ~ p<sub>θ</sub>( s<sub>t+1</sub> | s<sub>t</sub>, a<sub>t</sub> )
+
+<b>Dreamer-style latent state (RSSM)</b>
+h<sub>t</sub> = f( h<sub>t−1</sub>, z<sub>t−1</sub>, a<sub>t−1</sub> )   memory
+z<sub>t</sub> ~ q( z | h<sub>t</sub>, o<sub>t</sub> )   posterior
+ẑ<sub>t</sub> ~ p( ẑ | h<sub>t</sub> )   prior
+L = ‖ decode(h,z) − o ‖² + KL( q ‖ p )
+
+<b>JEPA</b> (predict in representation space)
+L = ‖ predictor( s<sub>x</sub>, a ) − stopgrad( s<sub>y</sub> ) ‖²
+
+<b>Training the policy</b>
+maximise  E[ Σ<sub>k</sub> γ<sup>k</sup> r̂<sub>t+k</sub> ]  over imagined rollouts</div>
+      <p class="note">Predicting in latent space ignores detail that does not affect decisions, such as leaf motion in the background.</p>
+    </div>
+    <div class="panel">
+      <h3>Try it: why long rollouts go wrong</h3>
+      <p class="note">Error after k steps when each step adds ε and the model amplifies earlier error by λ.</p>
+      <div class="ctrl">
+        <label for="eps">Per-step error ε <input id="eps" type="range" min="0.002" max="0.05" step="0.002" value="0.01"><span id="epsv" class="readout"></span></label>
+        <label for="lam">Amplification λ <input id="lam" type="range" min="0.95" max="1.1" step="0.005" value="1.03"><span id="lamv" class="readout"></span></label>
+      </div>
+      <svg id="errsvg" viewBox="0 0 520 262" role="img" aria-label="Line chart of accumulated prediction error versus rollout length"></svg>
+      <div id="errread" class="readout"></div>
+      <div class="eq" style="margin-bottom:0">e<sub>k</sub> = ε · ( λ<sup>k</sup> − 1 ) / ( λ − 1 )</div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:1.5rem">A measured example from this project</h3>
+  <p>We tested whether physics plus a learned actuator model predicts a hopping robot better than a plain neural network that also sees the last few actions. The result went against the hypothesis.</p>
+  <div class="grid2">
+    <div class="panel"><svg id="pocsvg" viewBox="0 0 520 280" role="img" aria-label="Grouped bars of one-second open-loop prediction error for the history MLP and the hybrid model at three data sizes, with the nominal simulator as a dashed line"></svg>
+      <p class="note">One-second open-loop error (metres, lower is better) on out-of-distribution test logs; medians of 5 seeds. Source: <code>poc_hybrid_wm/MEMO.md</code>.</p></div>
+    <div class="panel"><h3>What it shows</h3>
+      <p>Every learned model beat the nominal simulator (0.29 m). The constrained hybrid, however, was 2.1–2.6× worse than the plain history model at every data size, and its training loss stayed about 4× higher, which points to a mis-specified structure, not too little training.</p>
+      <p class="note">Limits: the “real” plant was synthetic and low-dimensional, and the review was by one author. It is a result about this mechanism, not about real robots.</p></div>
+  </div>
+
+  <div class="use">
+    <div><b>Plan</b>Sample action sequences, roll them out, keep the best (model-predictive control).</div>
+    <div><b>Train in imagination</b>Dreamer and similar agents learn policies inside the model.</div>
+    <div><b>Simulate</b>Video-based world models generate driving and manipulation scenarios.</div>
+    <div><b>Evaluate and augment</b>Test a policy or create training data without new hardware time.</div>
+  </div>
+  <div class="limit"><b>Limits.</b> Small errors compound, policies exploit model mistakes, generated video can look right while breaking contact physics, and data with real actions is scarce compared with internet video.</div>
+</section>
+
+<!-- ===================== TOGETHER ===================== -->
+<section id="together">
+  <h2 style="border-left:4px solid var(--fg);padding-left:.7rem">Putting it together</h2>
+  <div class="scroll panel"><table style="min-width:720px">
+    <tr><th>Family</th><th>Data as</th><th>Objective</th><th>Output</th><th>Strength</th></tr>
+    <tr class="tx"><td class="k"><b>Language model</b></td><td>text tokens</td><td>predict next token</td><td>text, code</td><td>Reasoning, tools, flexible interface</td></tr>
+    <tr class="df"><td class="k"><b>Diffusion / flow</b></td><td>patches, latents, action chunks</td><td>predict noise or velocity</td><td>images, video, motion</td><td>High-dimensional continuous output</td></tr>
+    <tr class="vl"><td class="k"><b>Vision-language</b></td><td>image patches + text</td><td>next token given vision</td><td>text, actions</td><td>Reads the visual world</td></tr>
+    <tr class="wm"><td class="k"><b>World model</b></td><td>observations + actions</td><td>predict next state</td><td>imagined futures</td><td>Planning and safe practice</td></tr>
+  </table></div>
+
+  <figure>
+    <svg viewBox="0 0 780 190" role="img" aria-label="A robot stack: a vision-language model decides what to do, a world model checks what would happen, and an action policy using diffusion or flow matching produces smooth motion that the robot executes">
+      <defs><marker id="ar4" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" style="fill:var(--fg)"/></marker></defs>
+      <rect x="10" y="60" width="140" height="64" rx="8" class="box"/><text x="80" y="88" text-anchor="middle" style="font-weight:600">Camera + goal</text><text x="80" y="106" text-anchor="middle" class="m">“put the cup away”</text>
+      <line x1="150" y1="92" x2="198" y2="92" class="line" marker-end="url(#ar4)"/>
+      <rect x="200" y="60" width="150" height="64" rx="8" class="box" style="stroke:var(--vl);stroke-width:2"/><text x="275" y="86" text-anchor="middle" style="font-weight:600;fill:var(--vl)">Vision-language</text><text x="275" y="104" text-anchor="middle" class="m">what to do next</text>
+      <line x1="350" y1="92" x2="398" y2="92" class="line" marker-end="url(#ar4)"/>
+      <rect x="400" y="60" width="150" height="64" rx="8" class="box" style="stroke:var(--df);stroke-width:2"/><text x="475" y="86" text-anchor="middle" style="font-weight:600;fill:var(--df)">Action policy</text><text x="475" y="104" text-anchor="middle" class="m">diffusion / flow chunks</text>
+      <line x1="550" y1="92" x2="598" y2="92" class="line" marker-end="url(#ar4)"/>
+      <rect x="600" y="60" width="150" height="64" rx="8" class="box"/><text x="675" y="86" text-anchor="middle" style="font-weight:600">Robot</text><text x="675" y="104" text-anchor="middle" class="m">acts, sensors reply</text>
+      <rect x="400" y="140" width="150" height="40" rx="8" class="box" style="stroke:var(--wm);stroke-width:2"/><text x="475" y="165" text-anchor="middle" style="font-weight:600;fill:var(--wm)">World model</text>
+      <path d="M475 124 L475 140" class="line dash" marker-end="url(#ar4)"/><text x="560" y="156" class="m">predicts outcome</text>
+      <path d="M400 160 L275 160 L275 126" class="line dash" marker-end="url(#ar4)"/><text x="288" y="154" class="m">veto / re-plan</text>
+    </svg>
+    <figcaption>One plausible way the four fit together on a robot. Real systems vary, and the world-model check is the least mature piece.</figcaption>
+  </figure>
+
+  <h3>Where it is heading</h3>
+  <ul>
+    <li><b>Reasoning with RL</b> on checkable tasks, spreading from maths and code to agents and robotics.</li>
+    <li><b>Cheaper attention</b>: mixtures of experts, hybrid state-space stacks, very long context.</li>
+    <li><b>Flow matching</b> as the common generator, including for actions and discrete data.</li>
+    <li><b>Unified multimodal models</b> that read and write any medium.</li>
+    <li><b>World models</b> as learned simulators for training and testing physical AI. The open problem is staying correct under real contact and long horizons.</li>
+  </ul>
+  <footer>The techniques and dates are summarised from the literature up to mid-2026; verify recent items. The “illustrative” widgets use made-up numbers to show the mechanics. The robot result comes from this project’s own experiment and is documented in <code>poc_hybrid_wm/</code>.</footer>
+</section>
+</div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function softmax(a){const m=Math.max(...a);const e=a.map(x=>Math.exp(x-m));const s=e.reduce((p,c)=>p+c,0);return e.map(x=>x/s)}
+
+/* ---------- attention demo ---------- */
+const toks=["The","animal","didn't","cross","the","street","because","it","was","tired"];
+const boost={"7,1":3.2,"7,5":1.8,"9,1":2.4,"3,5":1.9,"3,1":0.9,"6,9":0.8,"8,7":1.2};
+let q=7;
+function scoreRow(i,causal){return toks.map((_,j)=>{if(causal&&j>i)return -Infinity;let s=-0.35*Math.abs(i-j)+(boost[i+","+j]||0)+(i===j?0.8:0);return s})}
+function drawAtt(){
+  const sh=+$("sharp").value, causal=$("causal").checked;
+  $("sharpv").textContent=sh.toFixed(1)+"×";
+  const sc=scoreRow(q,causal).map(s=>s*sh);const w=softmax(sc);
+  $("attbars").innerHTML=toks.map((t,j)=>`<div class="bar"><span>${t}</span><span class="track"><span class="fill" style="display:block;width:${(w[j]*100).toFixed(1)}%"></span></span><span class="v">${w[j].toFixed(2)}</span></div>`).join("");
+  document.querySelectorAll("#tokrow button").forEach((b,i)=>b.setAttribute("aria-pressed",i===q));
+}
+$("tokrow").innerHTML=toks.map((t,i)=>`<button type="button" class="tok" data-i="${i}" aria-pressed="false">${t}</button>`).join("");
+$("tokrow").addEventListener("click",e=>{const b=e.target.closest("button");if(b){q=+b.dataset.i;drawAtt()}});
+$("sharp").addEventListener("input",drawAtt);$("causal").addEventListener("change",drawAtt);
+drawAtt();
+
+/* worked example */
+(function(){
+  const qv=[1,0.5],K=[[1,0],[0,1],[1,1]],V=[[2,0],[0,2],[1,1]],d=2;
+  const sc=K.map(k=>(qv[0]*k[0]+qv[1]*k[1])/Math.sqrt(d)),w=softmax(sc);
+  const out=[0,1].map(c=>w.reduce((s,wi,i)=>s+wi*V[i][c],0));
+  const f=x=>x.toFixed(3);
+  $("worked").innerHTML=`<table style="min-width:420px"><tr><th>key</th><th>k</th><th>v</th><th>q·k/√2</th><th>weight</th></tr>`+
+    K.map((k,i)=>`<tr><td>${i+1}</td><td>[${k}]</td><td>[${V[i]}]</td><td>${f(sc[i])}</td><td><b>${f(w[i])}</b></td></tr>`).join("")+
+    `</table><div class="eq" style="margin-bottom:0">q = [${qv}]  →  out = Σ weight·v = [${f(out[0])}, ${f(out[1])}]</div>`;
+})();
+
+/* ---------- temperature ---------- */
+const words=["Paris","Lyon","a","the","located","Berlin"],logit=[6.0,3.5,3.0,2.5,2.0,1.5];
+function drawTemp(){const T=+$("temp").value;$("tempv").textContent=T.toFixed(2);
+  const p=softmax(logit.map(z=>z/T));
+  $("tempbars").innerHTML=words.map((w,i)=>`<div class="bar"><span>${w}</span><span class="track"><span class="fill" style="display:block;width:${(p[i]*100).toFixed(1)}%"></span></span><span class="v">${(p[i]*100).toFixed(0)}%</span></div>`).join("")}
+$("temp").addEventListener("input",drawTemp);drawTemp();
+
+/* ---------- diffusion canvas ---------- */
+function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const R=rng(7);function gauss(){return Math.sqrt(-2*Math.log(R()+1e-9))*Math.cos(2*Math.PI*R())}
+const pts=[];
+for(let i=0;i<220;i++){const a=2*Math.PI*i/220;pts.push([1.4*Math.cos(a),1.4*Math.sin(a)])}
+for(let i=0;i<30;i++){const a=2*Math.PI*i/30;pts.push([-0.5+0.12*Math.cos(a),0.5+0.12*Math.sin(a)]);pts.push([0.5+0.12*Math.cos(a),0.5+0.12*Math.sin(a)])}
+for(let i=0;i<70;i++){const a=Math.PI*(1.15+0.7*i/69);pts.push([0.85*Math.cos(a),0.85*Math.sin(a)+0.1])}
+const eps=pts.map(()=>[gauss()*0.9,gauss()*0.9]);
+function drawDiff(){
+  const c=$("dcanvas"),dpr=window.devicePixelRatio||1,W=c.clientWidth||640,H=W*9/16;
+  c.width=W*dpr;c.height=H*dpr;const g=c.getContext("2d");g.setTransform(dpr,0,0,dpr,0,0);
+  g.clearRect(0,0,W,H);
+  const t=+$("dt").value,mode=$("dmode").value;
+  let a,b;if(mode==="vp"){const ab=Math.cos(t*Math.PI/2)**2;a=Math.sqrt(ab);b=Math.sqrt(1-ab)}else{a=1-t;b=t}
+  const sx=H/4.4,cx=W/2,cy=H/2;
+  const P=(x,y)=>[cx+x*sx,cy-y*sx];
+  g.fillStyle=css("--muted");g.globalAlpha=.22;
+  pts.forEach(p=>{const [x,y]=P(p[0],p[1]);g.beginPath();g.arc(x,y,2,0,7);g.fill()});
+  g.globalAlpha=1;g.fillStyle=css("--df");
+  pts.forEach((p,i)=>{const x0=p[0],y0=p[1];const [x,y]=P(a*x0+b*eps[i][0],a*y0+b*eps[i][1]);g.beginPath();g.arc(x,y,2.6,0,7);g.fill()});
+  $("dread").textContent=`t = ${t.toFixed(2)}   signal weight ${a.toFixed(2)}   noise weight ${b.toFixed(2)}   `+(mode==="vp"?"(ᾱ = cos²(πt/2))":"(a = 1−t, b = t)");
+}
+$("dt").addEventListener("input",drawDiff);$("dmode").addEventListener("change",drawDiff);
+
+/* ---------- CLIP grid ---------- */
+function drawClip(){
+  const n=4,cs=64,ox=70,oy=36,s=$("clipsvg");let h="";
+  const imgs=["dog photo","car photo","chart","kitchen"],caps=["a dog","a car","a chart","a kitchen"];
+  const val=[[.92,.18,.05,.12],[.10,.90,.08,.15],[.04,.07,.88,.10],[.14,.12,.09,.91]];
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){const v=val[i][j];
+    h+=`<rect x="${ox+j*cs}" y="${oy+i*cs}" width="${cs-2}" height="${cs-2}" rx="4" style="fill:var(--vl);fill-opacity:${(0.08+0.92*v).toFixed(2)}"/><text x="${ox+j*cs+cs/2-1}" y="${oy+i*cs+cs/2+4}" text-anchor="middle" class="mono" style="fill:${v>.5?"var(--bg)":"var(--fg)"}">${v.toFixed(2)}</text>`}
+  caps.forEach((c,j)=>h+=`<text x="${ox+j*cs+cs/2-1}" y="${oy-10}" text-anchor="middle" class="m">${c}</text>`);
+  imgs.forEach((c,i)=>h+=`<text x="${ox-8}" y="${oy+i*cs+cs/2+4}" text-anchor="end" class="m">${c}</text>`);
+  s.innerHTML=h}
+drawClip();
+
+/* ---------- error growth ---------- */
+function drawErr(){
+  const e=+$("eps").value,l=+$("lam").value;$("epsv").textContent=e.toFixed(3);$("lamv").textContent=l.toFixed(3);
+  const N=50,X0=50,X1=500,Y0=216,Y1=28,thr=0.25;
+  const ek=k=>Math.abs(l-1)<1e-9?e*k:e*(Math.pow(l,k)-1)/(l-1);
+  const xs=k=>X0+(X1-X0)*k/N, ys=v=>Y0-(Y0-Y1)*Math.min(v,1);
+  let path="",cross=null;
+  for(let k=0;k<=N;k++){const v=ek(k);path+=(k?"L":"M")+xs(k).toFixed(1)+" "+ys(v).toFixed(1);if(cross===null&&v>=thr)cross=k}
+  let h="";
+  [0,.25,.5,.75,1].forEach(v=>h+=`<line x1="${X0}" x2="${X1}" y1="${ys(v)}" y2="${ys(v)}" style="stroke:var(--line)"/><text x="${X0-8}" y="${ys(v)+4}" text-anchor="end" class="m">${v}</text>`);
+  [0,10,20,30,40,50].forEach(k=>h+=`<text x="${xs(k)}" y="236" text-anchor="middle" class="m">${k}</text>`);
+  h+=`<text x="${(X0+X1)/2}" y="256" text-anchor="middle" class="m">imagined steps k</text>`;
+  h+=`<line x1="${X0}" x2="${X1}" y1="${ys(thr)}" y2="${ys(thr)}" style="stroke:var(--bad)" stroke-dasharray="4 3"/><text x="${X1}" y="${ys(thr)-5}" text-anchor="end" style="fill:var(--bad)">error as big as the signal (0.25)</text>`;
+  h+=`<path d="${path}" style="stroke:var(--wm);stroke-width:2.2;fill:none"/>`;
+  if(cross!==null)h+=`<circle cx="${xs(cross)}" cy="${ys(ek(cross))}" r="4" style="fill:var(--bad)"/>`;
+  h+=`<text x="${X0}" y="12" class="m">error (state units)</text>`;
+  $("errsvg").innerHTML=h;
+  $("errread").textContent=cross===null?"Stays below the limit for all 50 steps.":`Rollout becomes unreliable after about ${cross} steps (${(cross*0.02).toFixed(1)} s at a 50 Hz control rate).`;
+}
+$("eps").addEventListener("input",drawErr);$("lam").addEventListener("input",drawErr);
+
+/* ---------- PoC bars (measured) ---------- */
+function drawPoc(){
+  const data=[{n:"500",b1:.092,h:.195},{n:"2000",b1:.079,h:.203},{n:"8000",b1:.071,h:.155}],nom=.289;
+  const X0=50,X1=500,Y0=230,Y1=20,ymax=.32,ys=v=>Y0-(Y0-Y1)*v/ymax;
+  let h="";
+  [0,.1,.2,.3].forEach(v=>h+=`<line x1="${X0}" x2="${X1}" y1="${ys(v)}" y2="${ys(v)}" style="stroke:var(--line)"/><text x="${X0-8}" y="${ys(v)+4}" text-anchor="end" class="m">${v}</text>`);
+  const gw=(X1-X0)/3;
+  data.forEach((d,i)=>{const gx=X0+i*gw+gw/2,bw=46;
+    [["b1",d.b1,"var(--tx)",-bw-3],["h",d.h,"var(--wm)",3]].forEach(([k,v,col,dx])=>{
+      h+=`<rect x="${gx+dx}" y="${ys(v)}" width="${bw}" height="${Y0-ys(v)}" rx="3" style="fill:${col}"/><text x="${gx+dx+bw/2}" y="${ys(v)-5}" text-anchor="middle" class="mono">${v.toFixed(3)}</text>`});
+    h+=`<text x="${gx}" y="${Y0+18}" text-anchor="middle">${d.n} steps of data</text>`});
+  h+=`<line x1="${X0}" x2="${X1}" y1="${ys(nom)}" y2="${ys(nom)}" style="stroke:var(--fg)" stroke-dasharray="5 4"/><text x="${X1}" y="${ys(nom)-5}" text-anchor="end">nominal simulator 0.289</text>`;
+  h+=`<rect x="${X0}" y="${Y0+30}" width="10" height="10" style="fill:var(--tx)"/><text x="${X0+16}" y="${Y0+39}">history MLP</text><rect x="${X0+110}" y="${Y0+30}" width="10" height="10" style="fill:var(--wm)"/><text x="${X0+126}" y="${Y0+39}">physics + learned actuator</text>`;
+  $("pocsvg").innerHTML=h}
+drawPoc();
+
+drawErr();drawDiff();
+window.addEventListener("resize",drawDiff);
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>setTimeout(drawDiff,50));
+new MutationObserver(()=>setTimeout(drawDiff,50)).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+})();
+</script>
