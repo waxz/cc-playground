@@ -89,6 +89,26 @@ The cookbook defines each entry with an explicit HTML anchor, e.g. `<a id="m-mdp
 | `m-attention` | Attention and transformer map encoders |
 | `m-symmetry` | Symmetry augmentation and equivariance for locomotion |
 
+Anchors added in the integration pass (requested by the group agents):
+
+| Anchor | Topic |
+|---|---|
+| `m-stopping-time-truncation` | Returns truncated at a state-dependent stopping time and bootstrapped by a critic; λ-return with state-dependent $\lambda_t$; TGI's event-gated return |
+| `m-straight-through` | Straight-through estimators: exact forward value, surrogate backward gradient |
+| `m-variance-scaling` | Variance of score-function vs pathwise estimators in action dimension, horizon and $1/\sigma^2$; Gaussian smoothing; expected signal-to-noise ratio (ESNR) |
+| `m-estimator-mixing` | Inverse-variance weighting, total propagation (PIPPS), α-order mixing (Suh), fixed-weight hybrids (TGI `lr_coef`) |
+| `m-slip` | Spring-loaded inverted pendulum and Raibert foot placement |
+| `m-centroidal-srbd` | Centroidal and single-rigid-body dynamics, convex-MPC linearisation |
+| `m-shooting` | Single vs multiple shooting, collocation, real-time iteration |
+| `m-wbc` | Hierarchical task-space whole-body control |
+| `m-diffusion-guidance` | DDPM, latent diffusion, classifier / cost guidance |
+| `m-retargeting` | Kinematic retargeting: keypoint IK, SMPL shape fitting, scaling |
+| `m-residual-dynamics` | Delta-action vs delta-state model correction (ASAP) |
+| `m-skill-composition` | Multiplicative composition of primitives (MCP), progressive networks |
+| `m-multi-critic` | Multiple critics per reward group with separately normalised advantages |
+| `m-timeout-bootstrap` | Bootstrapping at time-limit truncation vs true termination |
+| `m-intrinsic-motivation` | Curiosity and random network distillation |
+
 If an essential concept is missing, do not edit the cookbook yourself; list it under "Cookbook requests" at the end of your final message to the orchestrator, with a proposed anchor id.
 
 ## Paper report template (`papers/<key>.md`)
