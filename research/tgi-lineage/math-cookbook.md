@@ -262,7 +262,7 @@ $$L^{\mathrm{CLIP}}(\theta) = \hat{\mathbb E}_t\left[\min\left(\rho_t(\theta)\ha
 
 **Practical loop.** Collect $N$ parallel rollouts of $T$ steps with $\pi_{\theta_{\text{old}}}$; compute GAE advantages ([m-advantage-gae](#m-advantage-gae)) and value targets; for $K$ epochs over shuffled minibatches, minimise $-L^{\mathrm{CLIP}} + c_1(V_\psi(s_t) - \hat V_t^{\text{targ}})^2 - c_2\,\mathcal H[\pi_\theta(\cdot\mid s_t)]$; repeat. Massive GPU parallelism (thousands of environments, short rollouts of 24 steps) made PPO the default for legged robots ([legged-gym](papers/legged-gym.md)).
 
-**Intuition.** PPO is first-order trust-region optimisation with a soft wall. Its estimator is still the score function, so the per-sample gradient carries the high variance of [m-pg-theorem](#m-pg-theorem); PPO compensates with very large batches. TGI and SuperMimic replace this estimator, not the outer actor–critic structure.
+**Intuition.** PPO is first-order trust-region optimisation with a soft wall. Its estimator is still the score function, so the per-sample gradient carries the high variance of [m-pg-theorem](#m-pg-theorem); PPO compensates with very large batches. SuperMimic replaces this estimator by a pathwise one, and TGI largely does (keeping a score-function term at weight 0.1, [m-estimator-mixing](#m-estimator-mixing)), without changing the outer actor–critic structure.
 
 **Used in:** [PPO](papers/ppo.md), [legged-gym](papers/legged-gym.md), [hwangbo-anymal](papers/hwangbo-anymal.md), [RMA](papers/rma.md), [miki-wild](papers/miki-wild.md), [extreme-parkour](papers/extreme-parkour.md), [watch-your-step](papers/watch-your-step.md), [DeepMimic](papers/deepmimic.md), [AMP](papers/amp.md), [BeyondMimic](papers/beyondmimic.md), [RWM](papers/rwm.md), [SuperMimic](papers/supermimic.md).
 
@@ -780,6 +780,67 @@ which is the LIPM relation read the other way: the ZMP is the pivot that produce
 
 **Used in:** [kajita-zmp-preview](papers/kajita-zmp-preview.md), [capture-point](papers/capture-point.md), [raibert](papers/raibert.md) (foot placement heuristics), [convex-mpc-cheetah](papers/convex-mpc-cheetah.md), [DTC](papers/dtc.md), [watch-your-step](papers/watch-your-step.md) (foothold anticipation), [TGI](papers/tgi.md).
 
+<a id="m-slip"></a>
+### Spring-loaded inverted pendulum and Raibert foot placement
+
+**SLIP.** The spring-loaded inverted pendulum models a running robot as a point mass $m$ on a massless leg of rest length $r_0$ and stiffness $k$. In stance, with the foot pinned at the origin and the mass at polar coordinates $(r,\vartheta)$ measured from vertical,
+
+$$m\ddot r = k(r_0 - r) + mr\dot\vartheta^2 - mg\cos\vartheta, \qquad mr^2\ddot\vartheta + 2mr\dot r\dot\vartheta = mgr\sin\vartheta,$$
+
+and in flight the mass follows a ballistic parabola. Touchdown occurs when the foot, placed at a commanded angle of attack $\vartheta_{\text{td}}$, reaches the ground; lift-off when the spring returns to $r_0$. The model is conservative, so energy is fixed and the stance phase maps apex height and forward speed to the next apex. Unlike the LIPM ([m-lipm-zmp](#m-lipm-zmp)), whose height is held constant, SLIP captures the vertical bounce of running and hopping, and the stance dynamics are not integrable in closed form, so apex-return maps are computed numerically.
+
+**Self-stability and the role of the angle of attack.** For fixed $(k, r_0, \vartheta_{\text{td}})$ the apex-to-apex map has fixed points (periodic running gaits), and for a band of angles of attack these fixed points are stable without any feedback: a perturbation in speed changes the stance trajectory so as to return the next apex towards the fixed point. The foot-placement angle is therefore the principal control input, which is the template behind both Raibert's controller and the capture point.
+
+**Raibert foot placement.** [Raibert](papers/raibert.md) decomposed hopping control into three decoupled loops: hop height by the thrust delivered in stance, body attitude by hip torque in stance, and forward speed by foot placement in flight. The neutral point is the foothold for which stance is symmetric and speed is unchanged, approximately $x_{\text{neutral}} = \dot xT_s/2$ ahead of the hip for stance duration $T_s$. The placement law adds a correction proportional to the speed error,
+
+$$x_f = \frac{\dot xT_s}{2} + k_{\dot x}(\dot x - \dot x_d),$$
+
+so placing the foot ahead of the neutral point decelerates the body and placing it behind accelerates it. In LIPM terms this is a discrete-time version of stepping towards the capture point, since $\xi - x = \dot x/\omega$ is likewise proportional to velocity ([m-lipm-zmp](#m-lipm-zmp)). Quadruped trots and bounds are handled by the virtual-leg idea (legs moving in unison act as one leg), and the same heuristic survives as the footstep reference in convex MPC and as the default foothold that learned planners correct.
+
+**Relevance to learned locomotion.** Learned policies are not given these templates, yet their gaits often exhibit them (speed-proportional foot placement, compliant stance). On sparse terrain the template breaks down because the neutral point may lie over a gap, and foot placement must be traded against terrain support; this is the decision that foothold-prediction models and terrain-dependent rewards in [Watch Your Step](papers/watch-your-step.md) and [TGI](papers/tgi.md) push into the learned policy.
+
+**Intuition.** Running is bouncing on a spring; balance and speed are controlled almost entirely by where the next foot goes.
+
+**Used in:** [raibert](papers/raibert.md), [capture-point](papers/capture-point.md), [convex-mpc-cheetah](papers/convex-mpc-cheetah.md), [song-diffsim-quadruped](papers/song-diffsim-quadruped.md), [deepgait](papers/deepgait.md), [watch-your-step](papers/watch-your-step.md).
+
+<a id="m-centroidal-srbd"></a>
+### Centroidal and single-rigid-body dynamics, convex-MPC linearisation
+
+**Centroidal dynamics.** The first six rows of the floating-base equation of motion ([m-rigid-contact](#m-rigid-contact)) state that the rate of change of the robot's centroidal momentum equals the external wrench. With centre of mass $c$, total mass $m$, linear momentum $m\dot c$ and centroidal angular momentum $k$,
+
+$$m\ddot c = \sum_i f_i + mg, \qquad \dot k = \sum_i (p_i - c)\times f_i,$$
+
+for point contacts at $p_i$ with forces $f_i$. The relation $h_G = A_G(q)\dot q$ maps joint velocities to centroidal momentum through the centroidal momentum matrix. These equations are exact for any robot, but the angular momentum depends on the full configuration and velocity; the joints influence the base only through contact forces and through internal momentum redistribution.
+
+**Single-rigid-body model (SRBD).** If the legs are light relative to the body, $k\approx I_w\omega$ with a world-frame inertia $I_w = RI_bR^\top$, and the robot becomes one rigid body actuated by contact forces:
+
+$$\dot p = v,\quad \dot v = \tfrac1m\sum_i f_i + g,\quad \dot R = R[\omega_b]_\times,\quad I_w\dot\omega + \omega\times I_w\omega = \sum_i (p_i - p)\times f_i.$$
+
+The model is nonlinear through the rotation, the cross products and the $\omega\times I\omega$ term, and has the contact forces, not joint torques, as inputs.
+
+**Convex-MPC linearisation.** [Convex MPC on Cheetah 3](papers/convex-mpc-cheetah.md) makes the SRBD problem a quadratic programme by three approximations: small roll and pitch, so that the Euler-angle rates depend on yaw only, $\dot\Theta\approx R_z(\psi)^\top\omega$; neglect of $\omega\times I\omega$; and foothold positions $p_i$ and the body trajectory taken from a reference over the horizon, so that $(p_i - p)\times f_i$ is linear in $f_i$. The result is a linear time-varying system $x_{k+1} = A_kx_k + B_kf_k + g$ in the state $x = (\Theta, p, \omega, v)$, a quadratic tracking cost and linear constraints: the linearised friction pyramid $\lvert f_{x}\rvert, \lvert f_{y}\rvert\le\mu f_z$, force bounds $f_{\min}\le f_z\le f_{\max}$, and $f_i = 0$ for swing legs given a gait schedule. The QP is solved every control period; joint torques follow from $\tau = J^\top f$ for stance legs, and swing legs track Raibert-style footholds ([m-slip](#m-slip)).
+
+**Uses beyond MPC.** The same model serves as a differentiable surrogate: [Song et al.](papers/song-diffsim-quadruped.md) backpropagate through SRBD dynamics with torques mapped to foot forces by $f = (J^\top)^{-1}\tau$, and [TAMOLS](papers/tamols.md) builds its stability conditions on it. TGI's world model can be read as a learned generalisation of the centroidal equations: its exact contact Jacobian $J^\top W$ supplies the base force and moment $\sum_b F_b$ and $\sum_b(x_b - p)\times F_b + M_b$, while the learned matrix $B$ replaces the analytic inverse inertia of the SRBD ([m-model-learning](#m-model-learning)).
+
+**Intuition.** Whatever the legs do, the body moves only by the contact wrench; treat the body as one rigid object and the problem of where to push becomes convex.
+
+**Used in:** [convex-mpc-cheetah](papers/convex-mpc-cheetah.md), [song-diffsim-quadruped](papers/song-diffsim-quadruped.md), [TAMOLS](papers/tamols.md), [perceptive-nmpc](papers/perceptive-nmpc.md), [kajita-zmp-preview](papers/kajita-zmp-preview.md), [capture-point](papers/capture-point.md), [DTC](papers/dtc.md), [TGI](papers/tgi.md).
+
+<a id="m-wbc"></a>
+### Hierarchical task-space whole-body control
+
+**Tasks.** Whole-body control converts desired task-space motions (base orientation, CoM acceleration, swing-foot trajectories, stance-foot no-slip) into joint torques and contact forces consistent with the full rigid-body dynamics ([m-rigid-contact](#m-rigid-contact)). A task $i$ is a linear equation in the decision variables $z = (\dot v, \lambda, \tau)$, typically an acceleration task $J_i\dot v + \dot J_iv = \ddot x_i^{\text{des}}$ with $\ddot x_i^{\text{des}} = \ddot x_i^{\text{ref}} + K_d(\dot x_i^{\text{ref}} - \dot x_i) + K_p(x_i^{\text{ref}} - x_i)$.
+
+**Weighted vs strict hierarchies.** A weighted QP minimises $\sum_i w_i\lVert A_iz - b_i\rVert^2$ subject to the equations of motion and inequality constraints (friction cone, torque limits, unilateral contact). A strict hierarchy instead solves a sequence of QPs: task 1 is optimised first; task 2 is optimised within the set of optimal solutions of task 1; and so on. With equality tasks only, this is achieved by null-space projection: if $z_1$ solves task 1 and $N_1 = I - A_1^+A_1$ projects onto its null space, then $z = z_1 + N_1\zeta$ leaves task 1 unaffected for any $\zeta$, and the next task is solved for $\zeta$. With inequalities, each level adds the previous levels' optimal residuals as constraints (hierarchical QP). Typical orderings put the equations of motion and contact constraints first, then base and CoM motion, then swing feet, then posture regularisation.
+
+**Floating base and contacts.** Stance contacts appear as constraints $J_c\dot v + \dot J_cv = 0$ (no acceleration of the contact point), and contact forces must lie in the friction cone; only the bottom $n$ rows of the dynamics involve $\tau$, so a common simplification solves for $(\dot v, \lambda)$ from the first six (unactuated) rows and the tasks, then recovers $\tau$ from the remaining rows.
+
+**Place in the lineage.** WBC is the lower layer of model-based legged control stacks: an MPC on a reduced model ([m-centroidal-srbd](#m-centroidal-srbd)) or a trajectory optimiser such as [TAMOLS](papers/tamols.md) plans base motion and footholds, and WBC tracks the plan at kilohertz rates. Hybrid methods such as [DTC](papers/dtc.md) replace the WBC by a learned policy that tracks optimised footholds. In learned humanoid motion tracking, "whole-body control" denotes the task rather than the method: [ExBody](papers/exbody.md), [ExBody2](papers/exbody2.md) and [SONIC](papers/sonic.md) learn a single policy that tracks all body links, and the prioritisation that a hierarchy would enforce is expressed instead by reward weights ([m-tracking-reward](#m-tracking-reward)). TGI has no explicit task hierarchy; priorities between base tracking, footholds and regularisation are set by reward weights in the imagined return.
+
+**Intuition.** Ask for what matters most first, and let less important goals use only the freedom that remains.
+
+**Used in:** [TAMOLS](papers/tamols.md), [DTC](papers/dtc.md), [perceptive-nmpc](papers/perceptive-nmpc.md), [convex-mpc-cheetah](papers/convex-mpc-cheetah.md), [ExBody](papers/exbody.md), [ExBody2](papers/exbody2.md), [SONIC](papers/sonic.md).
+
 <a id="m-terrain-lookup"></a>
 ### Heightmaps, bilinear interpolation, differentiable lookups, signed distance fields
 
@@ -795,7 +856,13 @@ $$\frac{\partial\mathcal H}{\partial x} = \frac{1}{\Delta}\left[(1-\beta)(\maths
 
 Three properties matter for differentiable use. The gradient is discontinuous across cell boundaries (bilinear interpolation is $C^0$, not $C^1$). At a step of height $\Delta h$ (a stair riser), the gradient is $\Delta h/\Delta$ inside the one cell that straddles the edge and zero elsewhere, an artificial ramp whose slope depends on grid resolution, not on the terrain; for $\Delta h = 0.15$ m and $\Delta = 0.05$ m it is 3, a 72° slope. And nearest-neighbour lookup has zero gradient almost everywhere. Bicubic interpolation or pre-blurring the map yields $C^1$ surfaces at the price of rounding edges, i.e. bias in where the robot believes support ends.
 
-**Differentiable terrain terms in imagination.** In TGI the world model is grounded by terrain lookups: quantities such as the gap of each foot to the ground, $\phi_{\mathrm{foot}} = p_z - \mathcal H(p_x, p_y)$, are computed analytically from the predicted foot position and the heightmap rather than predicted by the network, so the policy receives gradients through $\partial\mathcal H/\partial(p_x, p_y)$. The lookup gradient enters the guard derivative $D_xg$ of the saltation matrix ([m-contact-gradients](#m-contact-gradients)) and every terrain-dependent reward. A touchdown that straddles an edge cell, or a foot whose footprint covers cells of widely different heights, is "poorly supported" in two senses at once: physically, part of the sole has no ground beneath it; numerically, the lookup gradient there is a resolution artefact. A support measure computed from the footprint, for example the fraction of footprint samples whose height lies within a tolerance of the sole, or the spread of $\mathsf H$ under the foot, is a natural criterion for the gradient cut. (The [TGI](papers/tgi.md) report gives the exact criterion used.)
+**Differentiable terrain terms in imagination (TGI).** In TGI the terrain is not learned; it is read from the simulator. For the G1, the training mesh is ray-cast once on the GPU into a 4 cm heightmap, queried bilinearly and differentiably in $(x,y)$. Quantities computed analytically from the predicted state and this map, rather than predicted by the network, are: the world model's terrain input (pelvis height above terrain, a 7×5 base scan, and 5×3 per-sole relative heights); the contact geometry of each sole, where the gap $\phi_b = p_z - h_{i^\ast}$ is taken to the highest of the 15 sole points ($i^\ast$ selected without gradient, the selected height differentiated) and the normal is fixed to $(0,0,1)$ because heightmap surfaces face up; rewards; soft terminations; and the critic's scan, which is bilinear "so the value gradient reaches the base position". The policy therefore receives gradients through $\partial\mathcal H/\partial(p_x,p_y)$, which enter the guard derivative $D_xg$ of the saltation matrix ([m-contact-gradients](#m-contact-gradients)) and every terrain-dependent reward. Three derived fields supply gradients where the raw lookup's gradient is a resolution artefact:
+
+- The *unsupported sole share* $u_b = \frac1{15}\sum_i\sigma\big((\lvert\tilde h_i\rvert - 0.03)/0.01\big)$, with $\tilde h_i$ the height of sole point $i$ relative to the sole centre, uses nearest-node heights in the forward pass and bilinear heights in the backward pass ([m-straight-through](#m-straight-through)), because bilinear values smear stone edges over a cell and would make a foot centred on a 20 cm stone read as unsupported. This is the quantity that gates TGI's return ([m-stopping-time-truncation](#m-stopping-time-truncation)).
+- The *support field* is a binary map (1 on cells within 25 cm of the local maximum in a 0.5 m window, so stair treads count and gaps between stones do not; lava floors excluded) blurred by a separable Gaussian with σ = 5 cm and queried bilinearly; its gradient points towards the middle of supports over a band of a few σ, and $1 - \bar S_b$ under the sole enters the foothold reward.
+- The *edge field* is a binary indicator of a height range above 3 cm within a 4 cm radius, queried bilinearly but *not* blurred; its gradient is non-zero only in the one-cell band at the indicator's border and pushes stance soles off step nosings and stone rims.
+
+The policy's own exteroception is deliberately non-differentiable: the foothold-gated scan uses rounded indices and nearest-node heights and the foothold predictor runs under `no_grad`, so terrain enters the policy gradient only through the model, rewards, terminations and critic. For ANYmal-D, each heightmap cell is treated as a column from its top downward, and a signed distance to the nearest column is computed for collision spheres on knees, shanks, thighs and belly: the nearest column in a 7×7 window is selected without gradient and the distance to it is re-evaluated with gradient (Euclidean above the column, lateral beside it, negative inside), which gives the model clearances and normals for whole-body contact. The design principle is that the forward pass is exact and the backward pass uses smooth surrogates whose bandwidth (σ = 5 cm, 1 cm sigmoid temperatures) determines which footholds are reachable by gradient.
 
 **Surface normal and slope.** The upward normal of the height surface is $n = (-\partial_x\mathcal H, -\partial_y\mathcal H, 1)/\sqrt{1 + \lVert\nabla\mathcal H\rVert^2}$, needed to decompose contact forces into normal and tangential parts for the friction cone ([m-rigid-contact](#m-rigid-contact)).
 
@@ -803,7 +870,7 @@ Three properties matter for differentiable use. The gradient is discontinuous ac
 
 **Intuition.** A heightmap lookup is cheap and differentiable almost everywhere, but its derivatives inherit the grid: they are informative on smooth slopes and fictitious at edges. Using them for gradients requires deciding where they can be believed.
 
-**Used in:** [lee-challenging-terrain](papers/lee-challenging-terrain.md), [miki-wild](papers/miki-wild.md), [legged-gym](papers/legged-gym.md), [anymal-parkour](papers/anymal-parkour.md), [extreme-parkour](papers/extreme-parkour.md), [humanoid-parkour](papers/humanoid-parkour.md), [beamdojo](papers/beamdojo.md), [attention-map-encoding](papers/attention-map-encoding.md), [watch-your-step](papers/watch-your-step.md), [deepgait](papers/deepgait.md), [DTC](papers/dtc.md), [TGI](papers/tgi.md).
+**Used in:** [elevation-mapping-gpu](papers/elevation-mapping-gpu.md), [TAMOLS](papers/tamols.md), [lee-challenging-terrain](papers/lee-challenging-terrain.md), [miki-wild](papers/miki-wild.md), [legged-gym](papers/legged-gym.md), [anymal-parkour](papers/anymal-parkour.md), [extreme-parkour](papers/extreme-parkour.md), [humanoid-parkour](papers/humanoid-parkour.md), [beamdojo](papers/beamdojo.md), [attention-map-encoding](papers/attention-map-encoding.md), [watch-your-step](papers/watch-your-step.md), [deepgait](papers/deepgait.md), [DTC](papers/dtc.md), [TGI](papers/tgi.md).
 
 <a id="m-domain-rand"></a>
 ### Domain randomisation, privileged teacher–student, DAgger, latent adaptation
@@ -836,6 +903,25 @@ Three properties matter for differentiable use. The gradient is discontinuous ac
 ---
 
 ## 7. Imitation
+
+<a id="m-retargeting"></a>
+### Kinematic retargeting: keypoint IK, SMPL shape fitting, scaling
+
+**Problem.** A reference motion recorded on a human or animal (motion capture, SMPL fits to video) must be expressed in the robot's configuration space before it can be tracked. Morphologies differ in limb lengths, joint axes and limits, and number of degrees of freedom, so retargeting is an optimisation, and its errors (foot sliding, penetration, self-collision, infeasible contacts) become tracking targets that the policy cannot meet.
+
+**Keypoint inverse kinematics.** Choose corresponding keypoints $j\in\mathcal K$ on source and robot (feet, hands, hips, head) and solve per frame, or for a whole clip,
+
+$$q_t^\ast = \arg\min_{q\in\mathcal Q}\sum_{j\in\mathcal K}w_j\lVert \mathrm{FK}_j(q) - \hat p_{j,t}\rVert^2 + \sum_{j}w^R_j\,d_{SO(3)}\big(R_j(q),\hat R_{j,t}\big)^2 + \eta\lVert q - q_{t-1}^\ast\rVert^2,$$
+
+subject to joint limits, with orientation errors measured on $SO(3)$ ([m-rotations](#m-rotations)) and a temporal smoothness term. [Peng et al.](papers/peng-animals.md) solve such a problem with feet and hip keypoints for dog-to-quadruped transfer; differential IK linearises it, $\min_{\dot q}\lVert e(q) + J(q)\dot q\rVert_W^2$, and integrates, as in [GMR](papers/gmr.md).
+
+**Shape fitting and scaling.** Target positions must first be made reachable. [H2O](papers/h2o.md) fits an SMPL body shape $\beta'$ whose rest pose matches the robot skeleton over 12 corresponding joints, re-poses each sequence with $\beta'$, and then optimises robot joint angles to match the joint positions; fitting the shape first removes the in-toed artefact caused by the robot's wider stance. GMR instead scales source positions relative to the root, $p^{\text{target}}_b = \frac{h}{h_{\text{ref}}}\big[s_b(p^{\text{src}}_b - p^{\text{src}}_{\text{root}}) + s_{\text{root}}\,p^{\text{src}}_{\text{root}}\big]$, with per-body factors $s_b$ and a uniform root factor that its authors identify as essential against foot sliding, followed by IK on orientations and end-effector positions and a final height correction.
+
+**Feasibility filtering.** Kinematic retargeting ignores dynamics, so some clips remain physically infeasible. "Sim-to-data" filtering trains a privileged tracker in simulation and discards clips it cannot follow ([H2O](papers/h2o.md), [ASAP](papers/asap.md)); [ExBody2](papers/exbody2.md) automates curation by the tracking error of an initial policy. Learned alternatives fold retargeting into the policy's latent space, as in [SONIC](papers/sonic.md)'s human encoder.
+
+**Intuition.** Retargeting decides what "imitating the human" means for a body that is not human; errors here are not noise for the tracker to average but targets it is asked to reproduce.
+
+**Used in:** [peng-animals](papers/peng-animals.md), [H2O](papers/h2o.md), [OmniH2O](papers/omnih2o.md), [ExBody](papers/exbody.md), [ExBody2](papers/exbody2.md), [ASAP](papers/asap.md), [GMR](papers/gmr.md), [BeyondMimic](papers/beyondmimic.md), [SONIC](papers/sonic.md), [SuperMimic](papers/supermimic.md).
 
 <a id="m-tracking-reward"></a>
 ### Motion-tracking rewards (exp kernels), phase, reference state initialisation, early termination
@@ -873,6 +959,16 @@ $$\min_D\ \mathbb E_{\mathcal M}[(D(s,s') - 1)^2] + \mathbb E_{\pi}[(D(s,s') + 1
 
 with style reward $r = \max\left(0, 1 - \tfrac14(D(s,s') - 1)^2\right)$, combined with a task reward. Least squares avoids the saturating log loss; the gradient penalty on dataset samples stabilises training by keeping the discriminator flat on the data manifold. The LSGAN objective corresponds to minimising a Pearson $\chi^2$ divergence under suitable target choices.
 
+**IRL and occupancy matching are dual (GAIL's derivation).** Maximum-causal-entropy IRL with a convex cost regulariser $\psi$ seeks $\tilde c = \arg\max_c\,-\psi(c) + \big(\min_\pi -\mathcal H(\pi) + \mathbb E_{\rho^\pi}[c]\big) - \mathbb E_{\rho^E}[c]$, after which RL finds the policy for $\tilde c$. GAIL shows that this two-stage procedure returns
+
+$$\mathrm{RL}\circ\mathrm{IRL}_\psi(\pi_E) = \arg\min_\pi\ -\mathcal H(\pi) + \psi^\ast\big(\rho^\pi - \rho^E\big), \qquad \psi^\ast(x) = \sup_c\ x^\top c - \psi(c),$$
+
+by writing the problem as a saddle point over $(\pi, c)$, using that occupancy measures are in one-to-one correspondence with policies and that the Lagrangian is convex in $\rho$ and concave in $c$, so min and max may be exchanged. The convex conjugate $\psi^\ast$ is therefore a penalty on the occupancy difference. Two choices make this concrete. With $\psi\equiv 0$ (no regularisation, all costs allowed), $\psi^\ast$ is the indicator of $\rho^\pi = \rho^E$: exact occupancy matching, which is impractical with finite data. With GAIL's regulariser $\psi_{\mathrm{GA}}$, $\psi^\ast_{\mathrm{GA}}(\rho^\pi - \rho^E) = \sup_D\ \mathbb E_{\rho^\pi}[\log D(s,a)] + \mathbb E_{\rho^E}[\log(1 - D(s,a))]$, which equals the Jensen–Shannon divergence up to constants and yields the adversarial objective above. Adversarial imitation is thus inverse RL with the cost restricted by $\psi$, solved in its dual.
+
+**State-only discriminators.** When the demonstrator's actions are unavailable or meaningless for the robot (motion capture, video, a different morphology), the discriminator is applied to transitions, $D(s, s')$, which matches the state-transition occupancy $\rho^\pi(s,s') = \sum_a\rho^\pi(s,a)p(s'\mid s,a)$ instead of $\rho^\pi(s,a)$. Under deterministic, injective-in-action dynamics the two are equivalent; otherwise state-only matching is weaker, admitting any policy that produces the same transitions. AMP, [ASE](papers/ase.md) and [PULSE](papers/pulse.md)'s adversarial terms use features of $(s,s')$, often a hand-designed observation map $\Phi(s)$ of body positions and velocities so that the discriminator ignores irrelevant state components.
+
+**Gradient penalty.** Discriminators trained to separate two distributions with disjoint supports become sharp, their gradients vanish or explode, and the policy's reward becomes uninformative. Penalising $\lVert\nabla_xD(x)\rVert^2$ on data samples (the zero-centred "R1" penalty used by AMP) or on interpolates (WGAN-GP's $(\lVert\nabla D\rVert - 1)^2$) keeps the discriminator smooth. In AMP's form the penalty makes $D$ flat on the dataset manifold, so that small deviations of the policy's transitions from the data produce graded, not saturated, rewards; AMP reports it as essential for stable training.
+
 **Intuition.** Instead of telling the policy what to do at each instant, a discriminator tells it whether its motion looks like the data. This gives style without frame-by-frame tracking, at the price of a non-stationary reward.
 
 **Used in:** [GAIL](papers/gail.md), [AMP](papers/amp.md), [ASE](papers/ase.md), [peng-animals](papers/peng-animals.md) (contrast), [radosavovic-humanoid](papers/radosavovic-humanoid.md) (contrast), [PULSE](papers/pulse.md).
@@ -894,22 +990,72 @@ $$I(s,s'; z) \ge \mathcal H(z) + \mathbb E_{p(z)\,p(s,s'\mid z)}[\log q(z\mid s,
 
 since the gap is an expected KL between the true posterior and $q$. With $z$ uniform on the unit hypersphere ($\mathcal H(z)$ constant) and $q$ a von Mises–Fisher density, the bound gives the per-step reward $\kappa\,\mu_q(s, s')^\top z$. A diversity term further encourages different latents to produce different actions.
 
-**Vector quantisation.** VQ-VAE replaces the continuous posterior by the nearest codebook vector, $z_q = e_{k^\ast}$, $k^\ast = \arg\min_k\lVert z_e - e_k\rVert$, passes gradients straight through ($\partial z_q/\partial z_e := I$), and adds codebook and commitment losses $\lVert\mathrm{sg}(z_e) - e\rVert^2 + \beta\lVert z_e - \mathrm{sg}(e)\rVert^2$.
+**Learned and conditional priors.** With a fixed prior $p(z) = \mathcal N(0, I)$ the KL term pulls every posterior towards the same point regardless of context, which is wrong when the plausible next skills depend on the current state. A conditional prior $p_\vartheta(z\mid s)$ learned jointly makes the KL $D_{\mathrm{KL}}(q(z\mid s, x)\Vert p_\vartheta(z\mid s))$ measure only the information in $x$ (the future motion or goal) beyond what the state already predicts. Sampling from $p_\vartheta(z\mid s)$ then generates plausible behaviour without a goal, and a downstream task policy can act in $z$ with the prior as a behavioural regulariser. [ControlVAE](papers/controlvae.md), [PULSE](papers/pulse.md) and [MaskedMimic](papers/maskedmimic.md) all use state-conditional learned priors.
+
+**Posterior as a residual on the prior.** ControlVAE and MaskedMimic parameterise the posterior relative to the prior: $\mu_q = \mu_p(s) + \Delta\mu(s, x)$ (MaskedMimic also with its own variance), so that the encoder outputs only a correction. For Gaussians with shared variance the KL then reduces to $\lVert\Delta\mu\rVert^2/(2\sigma^2)$, a penalty on the correction alone; the encoder no longer has to reproduce the prior's mean, the KL cannot be lowered by moving the prior towards an encoder that is itself wrong, and at test time dropping the residual (setting $\Delta\mu = 0$) recovers the prior's behaviour. The cost is that the prior must be good enough for small residuals to suffice. ControlVAE fixes $\sigma_q = \sigma_p = 0.3$, so its KL is exactly $\lVert\Delta\mu\rVert^2/(2\sigma_p^2)$; MaskedMimic reports that removing the residual prior drops success at sitting on held-out objects from 96.9 % to 21.1 %.
+
+**Vector quantisation.** VQ-VAE replaces the continuous posterior by the nearest codebook vector, $z_q = e_{k^\ast}$, $k^\ast = \arg\min_k\lVert z_e - e_k\rVert$, passes gradients straight through ($\partial z_q/\partial z_e := I$, [m-straight-through](#m-straight-through)), and adds codebook and commitment losses $\lVert\mathrm{sg}(z_e) - e\rVert^2 + \beta\lVert z_e - \mathrm{sg}(e)\rVert^2$.
+
+**Residual vector quantisation.** A single codebook of size $K$ represents at most $K$ distinct latents per code and loses detail. Residual VQ quantises in $L$ stages: $r_0 = z_e$, $e^{(l)} = \mathrm{VQ}_l(r_{l-1})$, $r_l = r_{l-1} - e^{(l)}$, and $z_q = \sum_{l=1}^L e^{(l)}$, so that each layer encodes the error left by the previous ones and the representable set grows as $K^L$ with only $LK$ stored vectors. Coarse layers capture the gist and later layers detail, which also gives a natural ordering for autoregressive generation over tokens. [MoConVQ](papers/moconvq.md) uses $L = 8$ layers of 512 entries per code and reports that residual layers recover detail lost by a single VQ layer and that the discrete latent is markedly more robust to input noise than a continuous VAE latent.
 
 **Intuition.** Latent skill spaces separate how to move from what to do, so that downstream tasks search a low-dimensional, behaviourally meaningful space instead of raw actions.
 
-**Used in:** [World Models](papers/world-models.md), [ASE](papers/ase.md), [ControlVAE](papers/controlvae.md), [PULSE](papers/pulse.md), [MaskedMimic](papers/maskedmimic.md), [SONIC](papers/sonic.md), [SuperMimic](papers/supermimic.md) (goal encoders with a shared decoder).
+**Used in:** [World Models](papers/world-models.md), [ASE](papers/ase.md), [ControlVAE](papers/controlvae.md), [PULSE](papers/pulse.md), [MaskedMimic](papers/maskedmimic.md), [MoConVQ](papers/moconvq.md), [npmp](papers/npmp.md), [SONIC](papers/sonic.md), [BeyondMimic](papers/beyondmimic.md), [SuperMimic](papers/supermimic.md) (goal encoders with a shared decoder).
+
+<a id="m-skill-composition"></a>
+### Multiplicative composition of primitives (MCP), progressive networks
+
+**Additive vs multiplicative mixtures.** Given $K$ primitive policies $\pi_i(a\mid s)$ and state-dependent gating weights $w_i(s)\ge 0$, a mixture of experts samples one primitive, $\pi(a\mid s) = \sum_iw_i(s)\pi_i(a\mid s)$, so at each step only one primitive acts. Multiplicative composition (MCP) instead forms a product of experts,
+
+$$\pi(a\mid s) = \frac1{Z(s)}\prod_{i=1}^K\pi_i(a\mid s)^{w_i(s)},$$
+
+so that all primitives act simultaneously and each can veto actions it finds implausible. For Gaussian primitives with diagonal covariances $\mathcal N(\mu_i, \sigma_i^2)$ the product is Gaussian in closed form, per action dimension $j$:
+
+$$\sigma_j^{-2} = \sum_i\frac{w_i}{\sigma_{i,j}^2}, \qquad \mu_j = \sigma_j^2\sum_i\frac{w_i}{\sigma_{i,j}^2}\mu_{i,j},$$
+
+a precision-weighted average in which a confident primitive (small $\sigma_{i,j}$) dominates the dimensions it cares about. Composition can therefore specialise primitives to subsets of the body and blend them, which an additive mixture cannot.
+
+**Progressive networks and capacity growth.** When a single network trained on a growing or hard-mined dataset forgets earlier skills, progressive networks freeze the trained column and add a new column with lateral connections from the frozen activations, so new capacity reuses old features without overwriting them. [PHC](papers/phc.md) combines both ideas: primitives $P^{(1)}, P^{(2)},\dots$ are trained in sequence on successively harder subsets of motion clips (each frozen when its success plateaus, the next initialised from it or connected laterally), a fail-state recovery primitive is added, and a composer outputs non-negative weights that combine all frozen Gaussian primitives multiplicatively. The design addresses catastrophic forgetting under hard-negative mining; the price is inference cost linear in $K$ and a composer that must learn when each primitive applies.
+
+**Intuition.** Let every specialist vote on every action dimension, weighted by its confidence, and add specialists rather than retraining one generalist.
+
+**Used in:** [PHC](papers/phc.md), [PULSE](papers/pulse.md) (distils the composed tracker into a latent space), [ASE](papers/ase.md) (contrast: single latent-conditioned policy).
+
+<a id="m-diffusion-guidance"></a>
+### DDPM, latent diffusion, classifier and cost guidance
+
+**Forward and reverse processes.** A denoising diffusion probabilistic model (DDPM) defines a fixed forward chain that gradually adds Gaussian noise to data $x_0$, $q(x_k\mid x_{k-1}) = \mathcal N(\sqrt{1-\beta_k}\,x_{k-1}, \beta_kI)$, with closed-form marginal $x_k = \sqrt{\bar\alpha_k}\,x_0 + \sqrt{1-\bar\alpha_k}\,\epsilon$, $\bar\alpha_k = \prod_{i\le k}(1-\beta_i)$, $\epsilon\sim\mathcal N(0, I)$. A network $\epsilon_\theta(x_k, k)$ is trained to predict the noise,
+
+$$\mathcal L(\theta) = \mathbb E_{x_0, k, \epsilon}\left[\lVert\epsilon - \epsilon_\theta(\sqrt{\bar\alpha_k}x_0 + \sqrt{1-\bar\alpha_k}\epsilon,\ k)\rVert^2\right],$$
+
+a reweighted form of the ELBO ([m-latent-skills](#m-latent-skills)). Sampling runs the learned reverse chain from $x_K\sim\mathcal N(0, I)$, $x_{k-1} = \frac{1}{\sqrt{1-\beta_k}}\big(x_k - \frac{\beta_k}{\sqrt{1-\bar\alpha_k}}\epsilon_\theta(x_k,k)\big) + \sigma_kz$. The noise predictor is, up to scale, the score of the noised marginal: $\nabla_{x_k}\log q(x_k)\approx -\epsilon_\theta(x_k,k)/\sqrt{1-\bar\alpha_k}$.
+
+**Latent and trajectory diffusion.** Diffusing in a learned latent space (latent diffusion) reduces dimension and lets the decoder enforce structure. For control, $x_0$ is a trajectory window of states, actions or latents, and the model learns the distribution of plausible futures given the recent past; executing only the first action and re-sampling each step gives a receding-horizon controller ([m-mpc](#m-mpc)). Per-token noise levels allow conditioning on observed (noise-free) past tokens while denoising future ones.
+
+**Classifier and cost guidance.** To sample from $p(\tau\mid y)\propto p(\tau)\,p(y\mid\tau)$ without retraining, Bayes' rule adds the gradient of the log-likelihood to the score, $\nabla\log p(\tau_k\mid y) = \nabla\log p(\tau_k) + \nabla\log p(y\mid\tau_k)$, so each denoising step is shifted by $s\,\Sigma_k\nabla_{\tau_k}\log p(y\mid\tau_k)$ with a guidance scale $s$. Choosing $p(y\mid\tau)\propto\exp(-G(\tau))$ for a differentiable cost $G$ turns guidance into gradient descent on $G$ interleaved with denoising: the prior keeps samples on the data manifold while the cost steers them. [BeyondMimic](papers/beyondmimic.md) trains a transformer DDPM on state–latent windows of a VAE distilled from its trackers and guides it at test time with costs for joystick velocity, waypoints, keyframe inpainting and obstacle avoidance. Guidance applies the cost gradient to noised samples, where $G$ is evaluated off-manifold, and strong guidance trades fidelity to the data for cost reduction; classifier-free guidance avoids an external gradient by mixing conditional and unconditional score estimates.
+
+**Relation to analytic policy gradients.** Cost guidance and BPTT through a model both use $\nabla G$ with respect to a trajectory; guidance applies it at inference to individual samples under a learned prior, whereas TGI and SuperMimic amortise it into policy parameters during training.
+
+**Intuition.** Learn what plausible motion looks like by learning to remove noise from it; steer generation by nudging each denoising step down the gradient of the cost you care about.
+
+**Used in:** [BeyondMimic](papers/beyondmimic.md), [ExBody](papers/exbody.md) (motions generated by a text-to-motion diffusion model), [MaskedMimic](papers/maskedmimic.md) (contrast: conditional VAE).
 
 <a id="m-distillation"></a>
 ### Behaviour cloning, DAgger, policy distillation
 
-**Behaviour cloning.** Given expert state–action pairs, minimise a supervised loss $\mathbb E_{s\sim d^{\pi^\ast}}[\ell(\pi_\theta(s), \pi^\ast(s))]$. If the learner errs with probability at most $\epsilon$ on the expert's state distribution and a mistake can lead to states the expert never visits, the expected cost over horizon $T$ can grow as $J(\pi_\theta)\le J(\pi^\ast) + T^2\epsilon$: an early mistake moves the learner off-distribution, where further mistakes are uncontrolled. This quadratic compounding is the imitation analogue of model compounding error ([m-model-learning](#m-model-learning)).
+**Behaviour cloning.** Given expert state–action pairs, minimise a supervised loss $\mathbb E_{s\sim d^{\pi^\ast}}[\ell(\pi_\theta(s), \pi^\ast(s))]$. If the learner errs with probability at most $\epsilon$ on the expert's state distribution and a mistake can lead to states the expert never visits, the expected cost over horizon $T$ (costs in $[0,1]$, $\epsilon$ an upper bound on the 0-1 loss) satisfies $J(\pi_\theta)\le J(\pi^\ast) + T^2\epsilon$ (Ross and Bagnell 2010, restated as Theorem 2.1 of the DAgger paper), and the bound is tight: an early mistake moves the learner off-distribution, where further mistakes are uncontrolled. This quadratic compounding is the imitation analogue of model compounding error ([m-model-learning](#m-model-learning)).
 
-**DAgger.** Ross, Gordon and Bagnell (2011) iterate: roll out a mixture $\pi_i = \beta_i\pi^\ast + (1-\beta_i)\hat\pi_i$, label the visited states with expert actions, aggregate all data, and train $\hat\pi_{i+1}$ on the aggregate. Because training on the aggregate is a follow-the-leader strategy in an online learning game whose losses are the per-iteration imitation losses on the learner's own distribution, a no-regret argument shows that after $N$ iterations some policy in the sequence satisfies
+**DAgger.** Ross, Gordon and Bagnell ("A Reduction of Imitation Learning and Structured Prediction to No-Regret Online Learning", AISTATS 2011, arXiv 1011.0686) iterate: roll out the mixture $\pi_i = \beta_i\pi^\ast + (1-\beta_i)\hat\pi_i$ for $T$ steps, label every visited state with the expert's action, aggregate all datasets, and train $\hat\pi_{i+1}$ on the aggregate (with $\beta_1 = 1$; the parameter-free choice $\beta_i = \mathbb 1[i = 1]$ often works best). Training on the aggregate is Follow-The-Leader in an online learning game whose loss at round $i$ is the surrogate imitation loss $\ell$ under $d_{\pi_i}$, and their analysis uses only the no-regret property of that learner. In the standard form of their main results (infinite samples per iteration; $\ell$ strongly convex, bounded, and an upper bound on the 0-1 loss with respect to $\pi^\ast$; $\beta_i\le(1-\alpha)^{i-1}$ for a constant $\alpha$ independent of $T$), with
 
-$$J(\hat\pi)\le J(\pi^\ast) + uT\epsilon_N + O\left(\frac{1}{N}\right)$$
+$$\epsilon_N = \min_{\pi\in\Pi}\frac1N\sum_{i=1}^N\mathbb E_{s\sim d_{\pi_i}}[\ell(s,\pi)]$$
 
-(for suitable $\beta_i$ and enough samples per iteration), where $\epsilon_N$ is the best achievable imitation loss on the aggregated distribution and $u$ bounds how much one deviation from the expert can increase the cost-to-go. The dependence on $T$ becomes linear because the learner is trained on its own state distribution.
+the loss of the best policy in hindsight on the aggregated distributions, they show:
+
+$$\text{if } N = \tilde O(T):\ \exists\,\hat\pi\in\hat\pi_{1:N}\ \text{with}\ \mathbb E_{s\sim d_{\hat\pi}}[\ell(s,\hat\pi)]\le\epsilon_N + O(1/T);$$
+
+$$\text{if } N = \tilde O(uT):\ \exists\,\hat\pi\in\hat\pi_{1:N}\ \text{with}\ J(\hat\pi)\le J(\pi^\ast) + uT\epsilon_N + O(1),$$
+
+where task costs lie in $[0,1]$ and $u$ bounds the increase in the expert's cost-to-go caused by one deviating action, $Q^{\pi^\ast}_{T-t+1}(s,a) - Q^{\pi^\ast}_{T-t+1}(s,\pi^\ast)\le u$ for all $a$, $t$ and reachable $s$ (their Theorem 2.2, due to Ross and Bagnell 2010, converts the first statement into the second). The general version (their Theorem 4.1) reads $\mathbb E_{s\sim d_{\hat\pi}}[\ell(s,\hat\pi)]\le\epsilon_N + \gamma_N + \frac{2\ell_{\max}}{N}\big[n_\beta + T\sum_{i=n_\beta+1}^N\beta_i\big]$ with $\gamma_N$ the average regret and $n_\beta$ the last iteration with $\beta_i > 1/T$; finite-sample versions add an Azuma–Hoeffding term. The dependence on $T$ is linear, against the tight $T^2\epsilon$ of behaviour cloning, because the loss is measured on the learner's own state distribution. Two caveats: $\epsilon_N$ is a loss on the learner-induced distributions and can exceed the behaviour-cloning $\epsilon$ on the expert's distribution, and $u$ can be of order $T$ when single mistakes are unrecoverable, in which case the bound is again quadratic.
 
 **Policy distillation.** In teacher–student pipelines ([m-domain-rand](#m-domain-rand)) and multi-policy consolidation ([PHC](papers/phc.md), [omnih2o](papers/omnih2o.md), [BeyondMimic](papers/beyondmimic.md)), the student minimises $\mathbb E[D_{\mathrm{KL}}(\pi^T(\cdot\mid s)\Vert\pi^S(\cdot\mid o))]$ or the squared error between mean actions, on states from DAgger-style student rollouts.
 
